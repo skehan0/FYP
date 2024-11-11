@@ -1,0 +1,9 @@
+pandas
+numpy
+requests
+websocket
+ccxt
+python-dotenv
+alpaca-py
+alpaca-trade-api
+websockets
