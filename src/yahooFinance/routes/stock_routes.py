@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from src.services.stock_services import (
+from src.yahooFinance.services.stock_services import (
     fetch_stock_metadata,
     fetch_historical_data,
     fetch_news_headlines,
