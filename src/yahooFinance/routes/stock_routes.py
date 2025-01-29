@@ -1,33 +1,21 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from src.yahooFinance.services.stock_services import (
     fetch_stock_metadata,
     fetch_historical_data,
     fetch_news_headlines,
+    fetch_financial_statements,
 )
 
 router = APIRouter()
 
-@router.get("/stocks/{ticker}")
-async def get_stock_details(ticker: str):
-    """
-    Endpoint to retrieve stock details for a given ticker.
-    """
-    try:
-        metadata = fetch_stock_metadata(ticker)
-        historical_data = {
-            "1d": fetch_historical_data(ticker, "1d"),
-            "1w": fetch_historical_data(ticker, "7d"),
-            "1m": fetch_historical_data(ticker, "1mo"),
-            "1y": fetch_historical_data(ticker, "1y"),
-            "5y": fetch_historical_data(ticker, "5y"),
-        }
-        news = fetch_news_headlines(ticker)
+@router.get("/metadata/{ticker}")
+async def get_stock_metadata(ticker: str):
+    return fetch_stock_metadata(ticker)
 
-        return {
-            "ticker": ticker.upper(),
-            "metadata": metadata,
-            "charts": historical_data,
-            "news": news,
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching stock details: {str(e)}")
+@router.get("/historical/{ticker}")
+async def get_historical_data(ticker: str, period: str = "1mo"):
+    return fetch_historical_data(ticker, period)
+
+@router.get("/news/{ticker}")
+async def get_news_headlines(ticker: str, limit: int = Query(8, description="Number of news items to return")):
+    return fetch_news_headlines(ticker, limit)

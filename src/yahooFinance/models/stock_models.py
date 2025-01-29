@@ -1,15 +1,20 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 class StockMetadata(BaseModel):
     name: str
     sector: str
     industry: str
     market_cap: int
-    dividend_yield: float
-    pe_ratio: float
-    beta: float
+    dividend_yield: Optional[float]
+    pe_ratio: Optional[float]
+    eps: Optional[float]
+    beta: Optional[float]
     current_price: float
+    analyst_ratings: float
+    price_tartgets: float
+    events: str
+    about_{ticker}: str
 
 class StockHistoricalData(BaseModel):
     Date: str
@@ -18,9 +23,20 @@ class StockHistoricalData(BaseModel):
     Low: float
     Close: float
     Volume: int
+    
+class NewsHeadline(BaseModel):
+    number: int
+    title: str
+    summary: str
+    pubDate: str
+    conicalURL: str
+
 
 class StockResponse(BaseModel):
     ticker: str
     metadata: StockMetadata
-    charts: Dict[str, List[StockHistoricalData]]
-    news: List[Dict[str, str]]
+    news: List[NewsHeadline]
+    
+class TrendingNews(BaseModel):
+    news: List[NewsHeadline]
+    
