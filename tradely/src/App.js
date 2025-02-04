@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import './App.css';
-import StockData from './StockData';
+import './Styles/App.css';
+import StockData from './Components/StockData';
+import Metadata from './Components/Metadata';
+import News from './Components/News';
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -28,6 +30,8 @@ function App() {
           <button type="submit">Fetch Data</button>
         </form>
         <StockData ticker={ticker} />
+        <Metadata ticker={ticker} />
+        <News ticker={ticker} />
       </header>
     </div>
   );

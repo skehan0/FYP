@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Chart from './Chart';
+import { fetchHistoricalData } from '../Services/api';
 
 function StockData({ ticker }) {
   const [data, setData] = useState(null);
@@ -6,14 +8,14 @@ function StockData({ ticker }) {
 
   useEffect(() => {
     if (ticker) {
-      fetch(`http://localhost:8000/api/stock/${ticker}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
+      fetchHistoricalData(ticker)
+        .then((data) => {
+          const chartData = data.rows.map(row => ({
+            time: row.Date,
+            value: row.Close,
+          }));
+          setData(chartData);
         })
-        .then((data) => setData(data))
         .catch((error) => setError(error));
     }
   }, [ticker]);
@@ -29,7 +31,7 @@ function StockData({ ticker }) {
   return (
     <div>
       <h2>Stock Data for {ticker}</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <Chart data={data} />
     </div>
   );
 }
