@@ -1,3 +1,13 @@
+import axios from 'axios';
+
+// Create an instance of axios with the base URL
+const api = axios.create({
+  baseURL: "http://localhost:8000"
+});
+
+// Export the Axios instance
+export default api;
+
 // Fetch historical stock data
 export const fetchHistoricalData = async (ticker, period = '1mo') => {
     const response = await fetch(`http://localhost:8000/historical/${ticker}?period=${period}`);

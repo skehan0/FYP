@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { fetchStockMetadata } from '../Services/api';
+import React from 'react';
 
-function Metadata({ ticker }) {
-  const [metadata, setMetadata] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (ticker) {
-      fetchStockMetadata(ticker)
-        .then((data) => setMetadata(data))
-        .catch((error) => setError(error));
-    }
-  }, [ticker]);
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (!metadata) {
+function Metadata({ data }) {
+  if (!data) {
     return <div>No metadata available</div>;
   }
 
   return (
     <div>
-      <h2>Metadata for {ticker}</h2>
-      <pre>{JSON.stringify(metadata, null, 2)}</pre>
+      <h2>Metadata</h2>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
