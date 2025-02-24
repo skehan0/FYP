@@ -12,9 +12,9 @@ class StockMetadata(BaseModel):
     beta: Optional[float]
     current_price: float
     analyst_ratings: float
-    price_tartgets: float
+    price_targets: float
     events: str
-    about_{ticker}: str
+    about_ticker: str
 
 class StockHistoricalData(BaseModel):
     Date: str

@@ -27,6 +27,10 @@ def fetch_stock_metadata(ticker: str):
     try:
         stock = yf.Ticker(ticker)
         info = stock.info
+        
+        # Log the raw response for debugging
+        print(f"Raw response for {ticker}: {info}")
+        
         return {
             "industry": info.get("industry", "N/A"),
             "market_cap": info.get("marketCap", "N/A"),
@@ -42,6 +46,9 @@ def fetch_stock_metadata(ticker: str):
             "events": info.get("earningsQuarterlyGrowth", "N/A"),
             f"about_{ticker}": info.get("longBusinessSummary", "N/A"),
         }
+        return metadata
+    except KeyError as e:
+        raise HTTPException(status_code=500, detail=f"Missing key in stock metadata: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching stock metadata: {str(e)}")
 
