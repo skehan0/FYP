@@ -3,6 +3,8 @@ from src.yahooFinance.services.stock_services import (
     fetch_stock_metadata,
     fetch_historical_data,
     fetch_news_headlines,
+    # fetch_sma,
+    # fetch_ema
 )
 
 router = APIRouter()
@@ -18,3 +20,11 @@ async def get_historical_data(ticker: str, period: str = "1mo"):
 @router.get("/news/{ticker}")
 async def get_news_headlines(ticker: str, limit: int = Query(8, description="Number of news items to return")):
     return fetch_news_headlines(ticker, limit)
+
+@router.get("/sma/{ticker}")
+async def get_sma(ticker: str, period: str, window: int):
+    return fetch_sma(ticker, period, window)
+
+@router.get("/ema/{ticker}")
+async def get_ema(ticker: str, period: str, window: int):
+    return fetch_ema(ticker, period, window)

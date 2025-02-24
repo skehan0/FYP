@@ -116,3 +116,64 @@ def fetch_news_headlines(ticker: str, limit: int = 8):
         raise HTTPException(status_code=500, detail=f"Missing key in news data: {str(e)}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching news headlines: {str(e)}")
+    
+    
+# def fetch_sma(ticker: str, period: str, window: int):
+#     """
+#     Fetch Simple Moving Average (SMA) for a given stock ticker and period.
+
+#     Args:
+#         ticker (str): The stock ticker symbol.
+#         period (str): The period for which to fetch historical data (e.g., '1mo', '1y').
+#         window (int): The window size for the SMA calculation.
+
+#     Returns:
+#         dict: A dictionary containing the dates and SMA values.
+
+#     Raises:
+#         HTTPException: If there is an error fetching the data.
+#     """
+#     try:
+#         stock = yf.Ticker(ticker)
+#         data = stock.history(period=period)
+#         data['SMA'] = data['Close'].rolling(window=window).mean()
+#         data.reset_index(inplace=True)
+#         sma_data = data[['Date', 'SMA']].dropna().to_dict(orient='records')
+#         return {
+#             "ticker": ticker,
+#             "period": period,
+#             "window": window,
+#             "sma": sma_data
+#         }
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error fetching SMA data: {str(e)}")
+
+# def fetch_ema(ticker: str, period: str, window: int):
+#     """
+#     Fetch Exponential Moving Average (EMA) for a given stock ticker and period.
+
+#     Args:
+#         ticker (str): The stock ticker symbol.
+#         period (str): The period for which to fetch historical data (e.g., '1mo', '1y').
+#         window (int): The window size for the EMA calculation.
+
+#     Returns:
+#         dict: A dictionary containing the dates and EMA values.
+
+#     Raises:
+#         HTTPException: If there is an error fetching the data.
+#     """
+#     try:
+#         stock = yf.Ticker(ticker)
+#         data = stock.history(period=period)
+#         data['EMA'] = data['Close'].ewm(span=window, adjust=False).mean()
+#         data.reset_index(inplace=True)
+#         ema_data = data[['Date', 'EMA']].dropna().to_dict(orient='records')
+#         return {
+#             "ticker": ticker,
+#             "period": period,
+#             "window": window,
+#             "ema": ema_data
+#         }
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error fetching EMA data: {str(e)}")
