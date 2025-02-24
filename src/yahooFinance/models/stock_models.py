@@ -14,7 +14,7 @@ class StockMetadata(BaseModel):
     analyst_ratings: float
     price_tartgets: float
     events: str
-    about_{ticker}: str
+    about: str
 
 class StockHistoricalData(BaseModel):
     Date: str
