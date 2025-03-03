@@ -3,7 +3,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
 
 load_dotenv()
-DATABASE = "tradely"
+
+DATABASE_NAME = "tradely"
 COLLECTION_NAMES = {'historical_data', 'stock_metadata'}
 
 class DatabaseManager:
