@@ -32,11 +32,11 @@ class NewsHeadline(BaseModel):
     conicalURL: str
 
 
-class StockResponse(BaseModel):
-    ticker: str
-    metadata: StockMetadata
-    news: List[NewsHeadline]
+# class StockResponse(BaseModel):
+#     ticker: str
+#     metadata: StockMetadata
+#     news: List[NewsHeadline]
     
-class TrendingNews(BaseModel):
-    news: List[NewsHeadline]
+# class TrendingNews(BaseModel):
+#     news: List[NewsHeadline]
     
