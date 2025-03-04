@@ -1,4 +1,14 @@
 {
     "python.pythonPath": ".venv\\Scripts\\python.exe",
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.unitTest.unittestArgs": [
+        "-v",
+        "-s",
+        "./src",
+        "-p",
+        "test*.py"
+    ],
+    "python.unitTest.pyTestEnabled": false,
+    "python.unitTest.nosetestsEnabled": false,
+    "python.unitTest.unittestEnabled": true
 }
