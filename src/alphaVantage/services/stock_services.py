@@ -5,6 +5,10 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from alpha_vantage.timeseries import TimeSeries
+from src.alphaVantage.models.stock_models import StockMetadata, StockHistoricalData
+from src.mongoDB.database import database
+from motor.motor_asyncio import AsyncIOMotorClient
+import asyncio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -14,13 +18,17 @@ API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 if not API_KEY:
     raise ValueError("Alpha Vantage API key is not set in environment variables.")
 
+# MongoDB setup
+client = AsyncIOMotorClient(os.getenv("MONGODB_URI"))
+db = client.tradely  # Use the 'tradely' database
+
 # Caches with a TTL of 1 hour and a max size of 100 items
 metadata_cache = TTLCache(maxsize=100, ttl=3600)
 historical_data_cache = TTLCache(maxsize=100, ttl=3600)
 news_cache = TTLCache(maxsize=100, ttl=3600)
 
 # Helper function for API requests
-def make_request(url: str):
+async def make_request(url: str):
     """Handles API requests and rate limit errors."""
     response = requests.get(url)
     if response.status_code == 429:
@@ -29,13 +37,18 @@ def make_request(url: str):
         raise HTTPException(status_code=response.status_code, detail="Failed to fetch data from Alpha Vantage.")
     return response.json()
 
-# Fetch stock metadata
-def fetch_stock_metadata(ticker: str):
+async def fetch_stock_metadata(ticker: str):
     if ticker in metadata_cache:
         return metadata_cache[ticker]
+    
+    # Check if metadata is already stored in the database
+    existing_metadata = await db.stock_metadata.find_one({"ticker": ticker})
+    if existing_metadata:
+        existing_metadata["_id"] = str(existing_metadata["_id"])
+        return existing_metadata
 
     url = f"https://www.alphavantage.co/query?function=OVERVIEW&symbol={ticker}&apikey={API_KEY}"
-    data = make_request(url)
+    data = await make_request(url)
 
     metadata = {
         "industry": data.get("Industry", "N/A"),
@@ -46,32 +59,77 @@ def fetch_stock_metadata(ticker: str):
         "beta": data.get("Beta", "N/A"),
         "52_week_high": data.get("52WeekHigh", "N/A"),
         "52_week_low": data.get("52WeekLow", "N/A"),
-        "current_price": data.get("50DayMovingAverage", "N/A"),  # Approximate as Alpha Vantage doesn't provide live prices
+        "current_price": data.get("50DayMovingAverage", "N/A"),
         "analyst_ratings": data.get("AnalystTargetPrice", "N/A"),
         "price_targets": data.get("AnalystTargetPrice", "N/A"),
         "events": data.get("QuarterlyEarningsGrowthYOY", "N/A"),
         f"about_{ticker}": data.get("Description", "N/A"),
     }
 
+    # Store in MongoDB
+    result = await db.stock_metadata.insert_one(metadata)
+    metadata["_id"] = str(result.inserted_id)
+
+    # Update cache
     metadata_cache[ticker] = metadata
+
     return metadata
 
-def fetch_historical_data(ticker: str):
-    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol={ticker}&apikey={API_KEY}"
-        
-    ts = TimeSeries(key = API_KEY, output_format='json')
-    data = ts.get_weekly_adjusted(ticker)
-    
-    return data
+async def fetch_historical_data(ticker: str):
+    """Fetch weekly historical stock data."""
+    if ticker in historical_data_cache:
+        return historical_data_cache[ticker]
+
+    # Check if historical data is already stored in the database
+    existing_data = await db.historical_data.find_one({"ticker": ticker})
+    if existing_data:
+        existing_data["_id"] = str(existing_data["_id"])
+        return existing_data
+
+    try:
+        ts = TimeSeries(key=os.getenv("ALPHA_VANTAGE_API_KEY"), output_format='json')
+        data, _ = ts.get_weekly_adjusted(ticker)
+
+        # Extract relevant details (adjust as needed)
+        cleaned_data = [
+            {
+                "date": date,
+                "open": values["1. open"],
+                "high": values["2. high"],
+                "low": values["3. low"],
+                "close": values["4. close"],
+                "adjusted_close": values["5. adjusted close"],
+                "volume": values["6. volume"],
+                "dividend_amount": values["7. dividend amount"]
+            }
+            for date, values in data.items()
+        ]
+
+        historical_data = {
+            "ticker": ticker,
+            "historical_data": cleaned_data
+        }
+
+        # Store in MongoDB
+        result = await db.historical_data.insert_one(historical_data)
+        historical_data["_id"] = str(result.inserted_id)
+
+        # Update cache
+        historical_data_cache[ticker] = historical_data
+
+        return historical_data
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch historical data: {str(e)}")
 
 # Fetch news headlines
-def fetch_news_headlines(ticker: str, limit: int = 8):
+async def fetch_news_headlines(ticker: str, limit: int = 8):
     cache_key = f"{ticker}_{limit}"
     if cache_key in news_cache:
         return news_cache[cache_key]
 
     url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={API_KEY}"
-    news_data = make_request(url).get("feed", [])
+    news_data = await make_request(url).get("feed", [])
 
     cleaned_news = [
         {
@@ -87,3 +145,33 @@ def fetch_news_headlines(ticker: str, limit: int = 8):
     result = {"company": ticker, "news": cleaned_news}
     news_cache[cache_key] = result
     return result
+
+# # Fetch the Income Statement
+# async def fetch_income_statement(ticker: str):
+#     if ticker in metadata_cache:
+#         return metadata_cache[ticker]
+    
+#     # Check if income statement is already stored in the database
+#     existing_income_statement = await db.stock_income_statement.find_one({"ticker": ticker})
+#     if (existing_income_statement):
+#         existing_income_statement["_id"] = str(existing_income_statement["_id"])
+#         return existing_income_statement
+
+#     url = f"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={ticker}&apikey={API_KEY}"
+#     data = await make_request(url)
+
+#     income_statement = {
+#         "ticker": ticker,
+#         "annual_reports": data.get("annualReports", []),
+#         "quarterly_reports": data.get("quarterlyReports", [])
+#     }
+
+#     # Store in MongoDB
+#     result = await db.stock_income_statement.insert_one(income_statement)
+#     income_statement["_id"] = str(result.inserted_id)
+
+#     # Update cache
+#     metadata_cache[ticker] = income_statement
+
+#     return income_statement
+    

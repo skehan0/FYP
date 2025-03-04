@@ -30,13 +30,19 @@ class NewsHeadline(BaseModel):
     summary: str
     pubDate: str
     conicalURL: str
-
-
-class StockResponse(BaseModel):
-    ticker: str
-    metadata: StockMetadata
-    news: List[NewsHeadline]
     
-class TrendingNews(BaseModel):
-    news: List[NewsHeadline]
-    
+# class IncomeStatement(BaseModel):
+#     fiscal_date_ending: str
+#     reported_currency: str
+#     gross_profit: Optional[float]
+#     total_revenue: Optional[float]
+#     operating_income: Optional[float]
+#     net_income: Optional[float]
+#     research_and_development: Optional[float]
+#     operating_expense: Optional[float]
+#     current_assets: Optional[float]
+#     total_assets: Optional[float]
+#     total_liabilities: Optional[float]
+#     shareholder_equity: Optional[float]
+#     cash_and_cash_equivalents: Optional[float]
+#     capital_expenditures: Optional[float] 

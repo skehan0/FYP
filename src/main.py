@@ -1,14 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-# from src.yahooFinance.routes import stock_routes
 from typing import List
 import uvicorn
 from dotenv import load_dotenv
 import os
 from src.alphaVantage.routes import stock_routes
+from motor.motor_asyncio import AsyncIOMotorClient
+from contextlib import asynccontextmanager
+from logging import info
 
 load_dotenv()
-ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 
 app = FastAPI()
 

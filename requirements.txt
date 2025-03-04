@@ -3,11 +3,13 @@ fastapi
 uvicorn
 pydantic
 mplfinance
-yfinance
+# yfinance
 multitasking
 requests
 numpy
 pandas
 pytest
+alphavantage
 
 # Frontent
+pymongo==4.11.1
