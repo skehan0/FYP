@@ -145,3 +145,33 @@ async def fetch_news_headlines(ticker: str, limit: int = 8):
     result = {"company": ticker, "news": cleaned_news}
     news_cache[cache_key] = result
     return result
+
+# # Fetch the Income Statement
+# async def fetch_income_statement(ticker: str):
+#     if ticker in metadata_cache:
+#         return metadata_cache[ticker]
+    
+#     # Check if income statement is already stored in the database
+#     existing_income_statement = await db.stock_income_statement.find_one({"ticker": ticker})
+#     if (existing_income_statement):
+#         existing_income_statement["_id"] = str(existing_income_statement["_id"])
+#         return existing_income_statement
+
+#     url = f"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={ticker}&apikey={API_KEY}"
+#     data = await make_request(url)
+
+#     income_statement = {
+#         "ticker": ticker,
+#         "annual_reports": data.get("annualReports", []),
+#         "quarterly_reports": data.get("quarterlyReports", [])
+#     }
+
+#     # Store in MongoDB
+#     result = await db.stock_income_statement.insert_one(income_statement)
+#     income_statement["_id"] = str(result.inserted_id)
+
+#     # Update cache
+#     metadata_cache[ticker] = income_statement
+
+#     return income_statement
+    

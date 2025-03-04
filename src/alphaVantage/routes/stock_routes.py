@@ -3,6 +3,7 @@ from src.alphaVantage.services.stock_services import (
     fetch_stock_metadata,
     fetch_historical_data,
     fetch_news_headlines,
+    # fetch_income_statement,
 )
 from src.mongoDB.database import database 
 
@@ -19,6 +20,10 @@ async def get_historical_data(ticker: str):
 @router.get("/news/{ticker}")
 async def get_news_headlines(ticker: str, limit: int = Query(8, description="Number of news items to return")):
     return await fetch_news_headlines(ticker, limit)
+
+# @router.get("/incomeStatement/{ticker}")
+# async def get_income_statement(ticker: str):
+#     return await fetch_income_statement(ticker)
 
 @router.get("/status")
 async def check_db_status():
