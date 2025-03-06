@@ -1,15 +1,20 @@
 # Backend
-fastapi
-uvicorn
-pydantic
+fastapi~=0.115.5
+uvicorn~=0.32.1
+pydantic~=2.9.2
 mplfinance
 # yfinance
 multitasking
-requests
+requests~=2.32.3
 numpy
 pandas
-pytest
+pytest~=8.3.4
 alphavantage
 
 # Frontent
 pymongo==4.11.1
+motor~=3.7.0
+python-dotenv~=1.0.1
+cachetools~=5.5.2
+alpha_vantage~=3.0.0
+yfinance~=0.2.51
