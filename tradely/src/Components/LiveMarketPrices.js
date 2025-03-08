@@ -1,8 +1,8 @@
 import React from 'react';
 
-const LiveMarketData = ({ data }) => {
+const LiveMarketPrices = ({ data }) => {
   return (
-    <div className="live-market-data">
+    <div className="live-market-prices">
       <h2>Live Market Data</h2>
       <ul>
         {Object.keys(data).map((symbol) => {
@@ -21,4 +21,4 @@ const LiveMarketData = ({ data }) => {
   );
 };
 
-export default LiveMarketData;
+export default LiveMarketPrices;
