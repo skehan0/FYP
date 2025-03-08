@@ -9,7 +9,9 @@ from src.alphaVantage.services.stock_services import (
     fetch_earnings,
     fetch_SMA,
     fetch_EMA,
+    fetch_live_market_data
 )
+# from src.LLM.analysis import analyze_data
 from src.mongoDB.database import database 
 
 router = APIRouter()
@@ -42,13 +44,27 @@ async def get_cash_flow(ticker: str, limit: int = Query(5, description="Number o
 async def get_earnings(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_earnings(ticker)
 
+@router.get("/live-market-data")
+async def get_live_market_data():
+    try:
+        data = await fetch_live_market_data()
+        return data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/sma/{ticker}")
 async def get_SMA(ticker: str):
     return await fetch_SMA(ticker)
 
 @router.get("/ema/{ticker}")
-async def get_SMA(ticker: str):
+async def get_EMA(ticker: str):
     return await fetch_SMA(ticker)
+
+
+# # AI 
+# @app.post("/analze")
+# async def analyze_data(ticker: str):
+#     return await analyze_data(ticker)
 
 @router.get("/status")
 async def check_db_status():

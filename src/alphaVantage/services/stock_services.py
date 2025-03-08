@@ -10,6 +10,9 @@ from src.mongoDB.database import database
 from motor.motor_asyncio import AsyncIOMotorClient
 import asyncio
 import logging
+import time
+# from src.LLM.gpt import analyze_with_gpt
+# from src.LLM.deepseek import analyze_with_deepseek
 
 # Load environment variables from .env file
 load_dotenv()
@@ -33,6 +36,7 @@ cash_flow_cache = TTLCache(maxsize=100, ttl=3600)
 earnings_cache = TTLCache(maxsize=100, ttl=3600)
 sma_cache = TTLCache(maxsize=100, ttl=3600)
 ema_cache = TTLCache(maxsize=100, ttl=3600)
+market_data_cache = {"data": {}, "last_updated": 0}
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -150,8 +154,9 @@ async def fetch_news_headlines(ticker: str, limit: int = 8):
     if cache_key in news_cache:
         return news_cache[cache_key]
 
-    url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={API_KEY}"
-    news_data = await make_request(url).get("feed", [])
+    url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={API_KEY}&sort=RELEVANCE"
+    data = await make_request(url)
+    news_data = data.get("feed", [])
 
     cleaned_news = [
         {
@@ -159,7 +164,10 @@ async def fetch_news_headlines(ticker: str, limit: int = 8):
             "title": item.get("title", "N/A"),
             "summary": item.get("summary", "N/A"),
             "pubDate": item.get("time_published", "N/A"),
-            "url": item.get("url", "N/A")
+            "url": item.get("url", "N/A"),
+            "thumbnail": item.get("banner_image", "N/A"),
+            "sentimentScore": item.get("overall_sentiment_score", "N/A"),
+            "sentimentLabel": item.get("overall_sentiment_label", "N/A"),
         }
         for index, item in enumerate(news_data[:limit])
     ]
@@ -343,3 +351,108 @@ async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60
     ema_cache[cache_key] = limited_ema_data
 
     return limited_ema_data
+
+# Fetching live market data
+async def fetch_live_market_data():
+    global market_data_cache
+    current_time = time.time()
+    
+    # Refresh market data every 60 minutes
+    if current_time - market_data_cache["last_updated"] < 3600:
+        print("Returning cached market data")
+        return market_data_cache["data"]
+    
+    symbols = ["AAPL"]
+    interval = "60min"
+    
+    market_data = {}
+
+    for symbol in symbols:
+        try:
+            url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&apikey={API_KEY}"
+            data = await make_request(url)
+            
+            # Check if API returned an error
+            if "Error Message" in data or not data:
+                print(f"API Error for {symbol}: {data.get('Error Message', 'Unknown error')}")
+                market_data[symbol] = {"current_price": None}
+                continue
+
+            # Verify correct data structure
+            time_series_key = f"Time Series ({interval})"
+            time_series = data.get(time_series_key, {})
+
+            if not time_series:
+                print(f"Warning: No time series data found for {symbol}")
+                market_data[symbol] = {"current_price": None}
+                continue
+
+            # Get the latest timestamp
+            latest_time = max(time_series.keys(), default=None)
+
+            if not latest_time:
+                print(f"Warning: No valid timestamp for {symbol}")
+                market_data[symbol] = {"current_price": None}
+                continue
+
+            latest_data = time_series[latest_time]
+
+            # Extract closing price as current price
+            market_data[symbol] = {"current_price": float(latest_data["4. close"])}
+
+        except Exception as e:
+            print(f"Error fetching data for {symbol}: {e}")
+            market_data[symbol] = {"current_price": None}
+
+    # Update cache
+    market_data_cache["data"] = market_data
+    market_data_cache["last_updated"] = current_time
+
+    return market_data
+
+
+# # Fetching live market data
+# async def fetch_live_market_data():
+#     symbols = ["AAPL"]
+#     interval = "60min"
+#     outputsize = "compact"
+#     adjusted = "true"
+#     extended_hours = "false"
+    
+#     market_data = {}
+
+#     for symbol in symbols:
+#         url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&outputsize={outputsize}&adjusted={adjusted}&extended_hours={extended_hours}&apikey={API_KEY}"
+#         response = requests.get(url)
+#         if response.status_code != 200:
+#             raise HTTPException(status_code=response.status_code, detail=f"Failed to fetch data for {symbol}")
+#         data = response.json()
+#         market_data[symbol] = data.get("Time Series (60min)", {})
+
+#     return market_data
+
+
+# LLM Sevices
+
+async def analyze_data(ticker: str):
+    try:
+        # Step 1: Retrieve data
+        data = await fetch_stock_metadata(ticker)
+        
+        # Step 2: Initial analysis with GPT
+        gpt_analysis = await analyze_with_gpt(data)
+        
+        # Step 3: Further analysis with DeepSeek
+        deepseek_analysis = await analyze_with_deepseek(gpt_analysis)
+        
+        # Step 4: Combine results
+        result = {
+            "ticker": ticker,
+            "gpt_analysis": gpt_analysis,
+            "deepseek_analysis": deepseek_analysis
+        }
+        
+        return result
+    except Exception as e:
+        logger.error(f"Failed to analyze data for {ticker}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to analyze data: {str(e)}")

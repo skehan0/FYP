@@ -38,9 +38,11 @@ export const fetchNewsHeadlines = async (ticker, limit = 8) => {
 
 // Fetch live market data (general)
 export const fetchLiveMarketData = async () => {
-  const response = await fetch(`https://www.alphavantage.co/query?function=MARKET_STATUS&apikey=${API_KEY}`);
-  const data = await response.json();
-  return data['Market Status'];
+  const response = await fetch(`http://localhost:8000/market/live-market-data`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
 };
 
 // Fetch live news headlines (general)
@@ -50,21 +52,3 @@ export const fetchLiveNewsHeadlines = async (limit = 12) => {
   return data.feed;
 };
 
-
-// Fetch popular stocks
-export const fetchPopularStocks = async () => {
-  const response = await fetch(`http://localhost:8000/market/popular-stocks`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
-
-// Fetch winners and losers
-export const fetchWinnersAndLosers = async () => {
-  const response = await fetch(`http://localhost:8000/market/winners-losers`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
