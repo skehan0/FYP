@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Styles/App.css';
 import StockData from './Components/StockData';
 import Metadata from './Components/Metadata';
 import News from './Components/News';
-import { fetchStockMetadata, fetchHistoricalData, fetchNewsHeadlines } from './Services/api';
+import LiveMarketData from './Components/LiveMarketData';
+import Footer from './Components/footer';
+import { fetchStockMetadata, fetchHistoricalData, fetchNewsHeadlines, fetchLiveMarketData, fetchLiveNewsHeadlines } from './Services/api';
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -11,7 +13,24 @@ function App() {
   const [metadata, setMetadata] = useState(null);
   const [historicalData, setHistoricalData] = useState(null);
   const [news, setNews] = useState(null);
+  const [liveMarketData, setLiveMarketData] = useState(null);
+  const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLiveData = async () => {
+      try {
+        const marketData = await fetchLiveMarketData();
+        const newsData = await fetchLiveNewsHeadlines();
+        setLiveMarketData(marketData);
+        setLiveNews(newsData);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchLiveData();
+  }, []);
 
   const handleInputChange = (event) => {
     setTicker(event.target.value);
@@ -39,7 +58,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Stock Data Visualizer</h1>
+        <h1>Tradeskee</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -59,7 +78,10 @@ function App() {
         {metadata && <Metadata data={metadata} />}
         {historicalData && <StockData data={historicalData} />}
         {news && <News data={news} />}
+        {liveMarketData && <LiveMarketData data={liveMarketData} />}
+        {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
       </header>
+      <Footer />
     </div>
   );
 }
