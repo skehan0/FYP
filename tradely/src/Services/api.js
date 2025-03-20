@@ -41,7 +41,7 @@ export const fetchNewsHeadlines = async (ticker, limit = 8) => {
 
 export const fetchLiveMarketPrices = async () => {
   try {
-    const response = await fetch(`http://localhost:8000/market/live-market-data`);
+    const response = await fetch(`http://localhost:8000/live-market-prices`);
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`Live market prices not ok: ${errorText}`);
@@ -56,7 +56,7 @@ export const fetchLiveMarketPrices = async () => {
 };
 
 // Fetch live news headlines (general)
-export const fetchLiveNewsHeadlines = async (limit = 6) => {
+export const fetchLiveNewsHeadlines = async (limit = 3) => {
   try {
     const response = await fetch(`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey=${API_KEY}&limit=${limit}`);
     if (!response.ok) {

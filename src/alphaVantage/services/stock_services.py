@@ -353,7 +353,7 @@ async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60
     return limited_ema_data
 
 # Fetching live market data
-async def fetch_live_market_data():
+async def fetch_live_market_prices():
     global market_data_cache
     current_time = time.time()
     
@@ -362,74 +362,61 @@ async def fetch_live_market_data():
         print("Returning cached market data")
         return market_data_cache["data"]
     
-    symbols = ["AAPL"]
-    interval = "60min"
+    symbols = ["AAPL", "AMZN", "TSLA", "MSFT", "GOOG", "NVDA"]
+    interval = "daily"
     
     market_data = {}
 
     for symbol in symbols:
         try:
-            url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&apikey={API_KEY}"
+            url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
             data = await make_request(url)
             
             # Check if API returned an error
             if "Error Message" in data or not data:
                 print(f"API Error for {symbol}: {data.get('Error Message', 'Unknown error')}")
-                market_data[symbol] = {"current_price": None}
+                market_data[symbol] = {"current_price": None, "price_5_days_ago": None}
                 continue
 
             # Verify correct data structure
-            time_series_key = f"Time Series ({interval})"
-            time_series = data.get(time_series_key, {})
+            time_series = data.get("Time Series (Daily)", {})
 
             if not time_series:
                 print(f"Warning: No time series data found for {symbol}")
-                market_data[symbol] = {"current_price": None}
+                market_data[symbol] = {"current_price": None, "price_5_days_ago": None}
                 continue
 
             # Get the latest timestamp
-            latest_time = max(time_series.keys(), default=None)
+            sorted_dates = sorted(time_series.keys(), reverse=True)
+            latest_time = sorted_dates[0] if sorted_dates else None
+            time_5_days_ago = sorted_dates[5] if len(sorted_dates) > 5 else None
 
-            if not latest_time:
+            if not latest_time or not time_5_days_ago:
                 print(f"Warning: No valid timestamp for {symbol}")
-                market_data[symbol] = {"current_price": None}
+                market_data[symbol] = {"current_price": None, "price_5_days_ago": None}
                 continue
 
             latest_data = time_series[latest_time]
+            data_5_days_ago = time_series[time_5_days_ago]
 
-            # Extract closing price as current price
-            market_data[symbol] = {"current_price": float(latest_data["4. close"])}
+            # Extract closing prices
+            current_price = float(latest_data["4. close"])
+            price_5_days_ago = float(data_5_days_ago["4. close"])
+
+            market_data[symbol] = {
+                "current_price": current_price,
+                "price_5_days_ago": price_5_days_ago
+            }
 
         except Exception as e:
             print(f"Error fetching data for {symbol}: {e}")
-            market_data[symbol] = {"current_price": None}
+            market_data[symbol] = {"current_price": None, "price_5_days_ago": None}
 
     # Update cache
     market_data_cache["data"] = market_data
     market_data_cache["last_updated"] = current_time
 
     return market_data
-
-
-# # Fetching live market data
-# async def fetch_live_market_data():
-#     symbols = ["AAPL"]
-#     interval = "60min"
-#     outputsize = "compact"
-#     adjusted = "true"
-#     extended_hours = "false"
-    
-#     market_data = {}
-
-#     for symbol in symbols:
-#         url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval={interval}&outputsize={outputsize}&adjusted={adjusted}&extended_hours={extended_hours}&apikey={API_KEY}"
-#         response = requests.get(url)
-#         if response.status_code != 200:
-#             raise HTTPException(status_code=response.status_code, detail=f"Failed to fetch data for {symbol}")
-#         data = response.json()
-#         market_data[symbol] = data.get("Time Series (60min)", {})
-
-#     return market_data
 
 
 # LLM Sevices

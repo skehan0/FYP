@@ -21,9 +21,9 @@ function App() {
   useEffect(() => {
     const fetchLiveData = async () => {
       try {
-        // const marketData = await fetchLiveMarketPrices();
-        // console.log('Live Market Data:', marketData);
-        // setLiveMarketPrices(marketData);
+        const marketData = await fetchLiveMarketPrices();
+        console.log('Live Market Data:', marketData);
+        setLiveMarketPrices(marketData);
 
         const newsData = await fetchLiveNewsHeadlines();
         console.log('Live News Data:', newsData);

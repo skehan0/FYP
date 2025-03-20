@@ -1,25 +1,48 @@
-.live-market-data {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .live-market-data ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .live-market-data li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .live-market-data h3 {
-    margin: 0;
-  }
-  
-  .live-market-data p {
-    margin: 5px 0;
-  }
+.live-market-prices {
+  padding: 20px;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1e1e1e; /* Dark background similar to the image */
+  color: #00bfff; /* Light blue text color */
+  padding: 10px; /* Reduce padding inside each item */
+  border: 1px solid #333; /* Darker border */
+  border-radius: 8px;
+  margin-bottom: 10px; /* Space between items */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.item-container:hover {
+  transform: translateY(-5px); /* Slightly reduce the hover effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.item-container h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.price-info {
+  text-align: left;
+}
+
+.price-info p {
+  margin: 5px 0 0;
+  font-size: 1em;
+}
+
+.price-change {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.price-change.positive {
+  color: #00ff00; /* Green for positive change */
+}
+
+.price-change.negative {
+  color: #ff0000; /* Red for negative change */
+}

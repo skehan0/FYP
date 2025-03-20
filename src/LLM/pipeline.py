@@ -2,7 +2,7 @@ import json
 import requests
 from pymongo import MongoClient
 from datetime import datetime
-from src.alphaVantage.services.stock_services import fetch_live_market_data
+from src.alphaVantage.services.stock_services import fetch_live_market_prices
 
 # MongoDB setup
 client = MongoClient("mongodb://localhost:27017/")
@@ -67,7 +67,7 @@ def send_analysis_to_ai(analysis):
 # Main pipeline function
 def main():
     symbol = "AAPL"  # Replace with the desired stock symbol
-    stock_data = fetch_live_market_data()
+    stock_data = fetch_live_market_prices()
     if symbol in stock_data:
         specific_stock_data = stock_data[symbol]
         specific_stock_data['symbol'] = symbol

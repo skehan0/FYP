@@ -9,7 +9,7 @@ from src.alphaVantage.services.stock_services import (
     fetch_earnings,
     fetch_SMA,
     fetch_EMA,
-    fetch_live_market_data
+    fetch_live_market_prices
 )
 # from src.LLM.analysis import analyze_data
 from src.mongoDB.database import database 
@@ -44,10 +44,10 @@ async def get_cash_flow(ticker: str, limit: int = Query(5, description="Number o
 async def get_earnings(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_earnings(ticker)
 
-@router.get("/live-market-data")
-async def get_live_market_data():
+@router.get("/live-market-prices")
+async def get_live_market_prices():
     try:
-        data = await fetch_live_market_data()
+        data = await fetch_live_market_prices()
         return data
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

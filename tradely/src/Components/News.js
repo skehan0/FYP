@@ -54,7 +54,7 @@ const News = ({ fetchNews, isLiveNews = false }) => {
             {article.banner_image && <img src={article.banner_image} alt="Thumbnail" />}
             <div className="news-content">
               <h3>{article.title}</h3>
-              <p>{article.summary}</p>
+              <p className="summary">{article.summary}</p>
               <a href={article.url} target="_blank" rel="noopener noreferrer">Read more</a>
             </div>
           </div>
