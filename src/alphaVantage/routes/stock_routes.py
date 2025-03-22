@@ -9,12 +9,30 @@ from src.alphaVantage.services.stock_services import (
     fetch_earnings,
     fetch_SMA,
     fetch_EMA,
-    fetch_live_market_prices
+    fetch_live_market_prices,
+    fetch_all_stock_data
 )
-# from src.LLM.analysis import analyze_data
+from src.LLM.LLM_service import fetch_and_analyze_all_stock_data
 from src.mongoDB.database import database 
 
 router = APIRouter()
+
+# Main Endpoint
+@router.get("/analyze_all")
+async def analyze_all_stock_data(ticker: str = Query(..., description="Stock ticker to analyze")):
+    """
+    Endpoint to fetch all stock data, analyze it, and send it to the LLM.
+    """
+    try:
+        # Call the service function to fetch, analyze, and send data to the LLM
+        result = await fetch_and_analyze_all_stock_data(ticker)
+
+        # Return the result
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/metadata/{ticker}")
 async def get_stock_metadata(ticker: str):
@@ -60,11 +78,9 @@ async def get_SMA(ticker: str):
 async def get_EMA(ticker: str):
     return await fetch_SMA(ticker)
 
-
-# # AI 
-# @app.post("/analze")
-# async def analyze_data(ticker: str):
-#     return await analyze_data(ticker)
+@router.get("/all-stock-data/{ticker}")
+async def get_all_stock_data(ticker: str):
+    return await fetch_all_stock_data(ticker)
 
 @router.get("/status")
 async def check_db_status():

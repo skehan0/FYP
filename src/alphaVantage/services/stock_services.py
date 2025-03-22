@@ -11,8 +11,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import asyncio
 import logging
 import time
-# from src.LLM.gpt import analyze_with_gpt
-# from src.LLM.deepseek import analyze_with_deepseek
 
 # Load environment variables from .env file
 load_dotenv()
@@ -57,6 +55,62 @@ async def make_request(url: str, retries: int = 3, backoff_factor: float = 0.5):
         return response.json()
     raise HTTPException(status_code=500, detail="Failed to fetch data after multiple attempts.")
 
+async def fetch_all_stock_data(ticker: str):
+    """
+    Fetch all relevant stock data by calling multiple endpoints.
+    """
+    try:
+        # Step 1: Fetch metadata
+        metadata = await fetch_stock_metadata(ticker)
+
+        # Step 2: Fetch historical data
+        historical_data = await fetch_historical_data(ticker)
+
+        # Step 3: Fetch news headlines
+        news = await fetch_news_headlines(ticker)
+
+        # Step 4: Fetch income statement
+        income_statement = await fetch_income_statement(ticker)
+
+        # Step 5: Fetch balance sheet
+        balance_sheet = await fetch_balance_sheet(ticker)
+
+        # Step 6: Fetch cash flow
+        cash_flow = await fetch_cash_flow(ticker)
+
+        # Step 7: Fetch earnings
+        earnings = await fetch_earnings(ticker)
+
+        # Step 8: Fetch SMA (Simple Moving Average)
+        sma = await fetch_SMA(ticker)
+
+        # Step 9: Fetch EMA (Exponential Moving Average)
+        ema = await fetch_EMA(ticker)
+
+        # Step 10: Fetch live market prices
+        live_market_prices = await fetch_live_market_prices()
+
+        # Step 11: Consolidate all data into a single dictionary
+        consolidated_data = {
+            "metadata": metadata,
+            "historical_data": historical_data,
+            "news": news,
+            "income_statement": income_statement,
+            "balance_sheet": balance_sheet,
+            "cash_flow": cash_flow,
+            "earnings": earnings,
+            "sma": sma,
+            "ema": ema,
+        }
+
+        return consolidated_data
+
+    except Exception as e:
+        logger.error(f"Failed to fetch all stock data for {ticker}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch all stock data: {str(e)}")
+
+
+# Specific Data Calls
 async def fetch_stock_metadata(ticker: str):
     if ticker in metadata_cache:
         return metadata_cache[ticker]
@@ -95,22 +149,29 @@ async def fetch_stock_metadata(ticker: str):
 
     return metadata
 
-async def fetch_historical_data(ticker: str):
-    """Fetch weekly historical stock data."""
+async def fetch_historical_data(ticker: str, limit: int = 10):
+    """
+    Fetch weekly historical stock data with a limit on the number of entries.
+    """
     if ticker in historical_data_cache:
-        return historical_data_cache[ticker]
+        # Return limited data from the cache
+        cached_data = historical_data_cache[ticker]
+        cached_data["historical_data"] = cached_data["historical_data"][:limit]
+        return cached_data
 
     # Check if historical data is already stored in the database
     existing_data = await db.historical_data.find_one({"ticker": ticker})
     if existing_data:
         existing_data["_id"] = str(existing_data["_id"])
+        # Limit the number of entries
+        existing_data["historical_data"] = existing_data["historical_data"][:limit]
         return existing_data
 
     try:
         ts = TimeSeries(key=os.getenv("ALPHA_VANTAGE_API_KEY"), output_format='json')
         data, _ = ts.get_weekly_adjusted(ticker)
 
-        # Extract relevant details (adjust as needed)
+        # Extract relevant details and limit the number of entries
         cleaned_data = [
             {
                 "date": date,
@@ -123,7 +184,7 @@ async def fetch_historical_data(ticker: str):
                 "dividend_amount": values["7. dividend amount"]
             }
             for date, values in data.items()
-        ]
+        ][:limit]  # Apply the limit here
 
         historical_data = {
             "ticker": ticker,
@@ -149,7 +210,7 @@ async def fetch_historical_data(ticker: str):
         raise HTTPException(status_code=500, detail=f"Failed to fetch historical data: {str(e)}")
 
 # Fetch news headlines
-async def fetch_news_headlines(ticker: str, limit: int = 8):
+async def fetch_news_headlines(ticker: str, limit: int = 3):
     cache_key = f"{ticker}_{limit}"
     if cache_key in news_cache:
         return news_cache[cache_key]
@@ -177,7 +238,7 @@ async def fetch_news_headlines(ticker: str, limit: int = 8):
     return result
 
 # Fetch Income Statement
-async def fetch_income_statement(ticker: str, limit: int = 5):
+async def fetch_income_statement(ticker: str, limit: int = 2):
     cache_key = f"{ticker}_{limit}"
     if cache_key in income_statement_cache:
         return income_statement_cache[cache_key]
@@ -212,7 +273,7 @@ async def fetch_income_statement(ticker: str, limit: int = 5):
     return limited_data
 
 # Fetch Balance Sheet
-async def fetch_balance_sheet(ticker: str, limit: int = 5):
+async def fetch_balance_sheet(ticker: str, limit: int = 1):
     cache_key = f"{ticker}_{limit}"
     if cache_key in balance_sheet_cache:
         return balance_sheet_cache[cache_key]
@@ -247,7 +308,7 @@ async def fetch_balance_sheet(ticker: str, limit: int = 5):
     return limited_data
 
 # Fetch Cash Flow
-async def fetch_cash_flow(ticker: str, limit: int = 5):
+async def fetch_cash_flow(ticker: str, limit: int = 1):
     cache_key = f"{ticker}_{limit}"
     if cache_key in cash_flow_cache:
         return cash_flow_cache[cache_key]
@@ -282,7 +343,7 @@ async def fetch_cash_flow(ticker: str, limit: int = 5):
     return limited_data
 
 # Fetch Earnings
-async def fetch_earnings(ticker: str, limit: int = 5):
+async def fetch_earnings(ticker: str, limit: int = 1):
     cache_key = f"{ticker}_{limit}"
     if cache_key in earnings_cache:
         return earnings_cache[cache_key]
@@ -417,29 +478,3 @@ async def fetch_live_market_prices():
     market_data_cache["last_updated"] = current_time
 
     return market_data
-
-
-# LLM Sevices
-
-async def analyze_data(ticker: str):
-    try:
-        # Step 1: Retrieve data
-        data = await fetch_stock_metadata(ticker)
-        
-        # Step 2: Initial analysis with GPT
-        gpt_analysis = await analyze_with_gpt(data)
-        
-        # Step 3: Further analysis with DeepSeek
-        deepseek_analysis = await analyze_with_deepseek(gpt_analysis)
-        
-        # Step 4: Combine results
-        result = {
-            "ticker": ticker,
-            "gpt_analysis": gpt_analysis,
-            "deepseek_analysis": deepseek_analysis
-        }
-        
-        return result
-    except Exception as e:
-        logger.error(f"Failed to analyze data for {ticker}: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to analyze data: {str(e)}")
