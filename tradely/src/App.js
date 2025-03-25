@@ -6,7 +6,7 @@ import Metadata from './Components/Metadata';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/Footer';
-import { fetchStockMetadata, fetchHistoricalData, fetchNewsHeadlines, fetchLiveMarketPrices, fetchLiveNewsHeadlines } from './Services/api';
+import { fetchStockMetadata, fetchHistoricalData, fetchNewsHeadlines, fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -17,6 +17,7 @@ function App() {
   const [liveMarketData, setLiveMarketPrices] = useState(null);
   const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
 
   useEffect(() => {
     const fetchLiveData = async () => {
@@ -48,17 +49,21 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const metadata = await fetchStockMetadata(ticker);
-      console.log('Stock Metadata:', metadata);
-      setMetadata(metadata);
+      // const metadata = await fetchStockMetadata(ticker);
+      // console.log('Stock Metadata:', metadata);
+      // setMetadata(metadata);
 
-      const historicalData = await fetchHistoricalData(ticker, range);
-      console.log('Historical Data:', historicalData);
-      setHistoricalData(historicalData);
+      // const historicalData = await fetchHistoricalData(ticker, range);
+      // console.log('Historical Data:', historicalData);
+      // setHistoricalData(historicalData);
 
-      const news = await fetchNewsHeadlines(ticker);
-      console.log('News Data:', news);
-      setNews(news);
+      // const news = await fetchNewsHeadlines(ticker);
+      // console.log('News Data:', news);
+      // setNews(news);
+
+      const analysisResult = await analyzeStock(ticker);
+      console.log('Analysis Result:', analysisResult);
+      setAnalysis(analysisResult);
 
       setError(null);
     } catch (error) {
@@ -111,6 +116,12 @@ function App() {
         {news && <News data={news} />}
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
+        {analysis && (
+        <div className="analysis-section">
+          <h3>Analysis</h3>
+          <p>{analysis.analysis}</p>
+        </div>
+        )}
       </header>
       <section id="features" className="features-section">
         <h2>Features</h2>

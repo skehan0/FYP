@@ -63,44 +63,44 @@ async def fetch_all_stock_data(ticker: str):
         # Step 1: Fetch metadata
         metadata = await fetch_stock_metadata(ticker)
 
-        # Step 2: Fetch historical data
-        historical_data = await fetch_historical_data(ticker)
+        # # Step 2: Fetch historical data
+        # historical_data = await fetch_historical_data(ticker)
+        #
+        # # # Step 3: Fetch news headlines
+        # # news = await fetch_news_headlines(ticker)
+        #
+        # # Step 4: Fetch income statement
+        # income_statement = await fetch_income_statement(ticker)
+        #
+        # # Step 5: Fetch balance sheet
+        # balance_sheet = await fetch_balance_sheet(ticker)
 
-        # Step 3: Fetch news headlines
-        news = await fetch_news_headlines(ticker)
+        # # Step 6: Fetch cash flow
+        # cash_flow = await fetch_cash_flow(ticker)
 
-        # Step 4: Fetch income statement
-        income_statement = await fetch_income_statement(ticker)
+        # # Step 7: Fetch earnings
+        # earnings = await fetch_earnings(ticker)
 
-        # Step 5: Fetch balance sheet
-        balance_sheet = await fetch_balance_sheet(ticker)
+        # # Step 8: Fetch SMA (Simple Moving Average)
+        # sma = await fetch_SMA(ticker)
 
-        # Step 6: Fetch cash flow
-        cash_flow = await fetch_cash_flow(ticker)
+        # # Step 9: Fetch EMA (Exponential Moving Average)
+        # ema = await fetch_EMA(ticker)
 
-        # Step 7: Fetch earnings
-        earnings = await fetch_earnings(ticker)
-
-        # Step 8: Fetch SMA (Simple Moving Average)
-        sma = await fetch_SMA(ticker)
-
-        # Step 9: Fetch EMA (Exponential Moving Average)
-        ema = await fetch_EMA(ticker)
-
-        # Step 10: Fetch live market prices
-        live_market_prices = await fetch_live_market_prices()
+        # # Step 10: Fetch live market prices
+        # live_market_prices = await fetch_live_market_prices()
 
         # Step 11: Consolidate all data into a single dictionary
         consolidated_data = {
             "metadata": metadata,
-            "historical_data": historical_data,
-            "news": news,
-            "income_statement": income_statement,
-            "balance_sheet": balance_sheet,
-            "cash_flow": cash_flow,
-            "earnings": earnings,
-            "sma": sma,
-            "ema": ema,
+            # "historical_data": historical_data,
+            # "news": news,
+            # "income_statement": income_statement,
+            # "balance_sheet": balance_sheet,
+            # "cash_flow": cash_flow,
+            # "earnings": earnings,
+            # "sma": sma,
+            # "ema": ema,
         }
 
         return consolidated_data
@@ -149,7 +149,7 @@ async def fetch_stock_metadata(ticker: str):
 
     return metadata
 
-async def fetch_historical_data(ticker: str, limit: int = 10):
+async def fetch_historical_data(ticker: str, limit: int = 5):
     """
     Fetch weekly historical stock data with a limit on the number of entries.
     """
@@ -238,7 +238,7 @@ async def fetch_news_headlines(ticker: str, limit: int = 3):
     return result
 
 # Fetch Income Statement
-async def fetch_income_statement(ticker: str, limit: int = 2):
+async def fetch_income_statement(ticker: str, limit: int = 1):
     cache_key = f"{ticker}_{limit}"
     if cache_key in income_statement_cache:
         return income_statement_cache[cache_key]

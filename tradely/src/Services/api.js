@@ -9,32 +9,54 @@ const api = axios.create({
 // Export the Axios instance
 export default api;
 
-// Fetch historical stock data
-export const fetchHistoricalData = async (ticker, period = '1mo') => {
-  const response = await fetch(`http://localhost:8000/historical/${ticker}?period=${period}`);
+// Fetch and Analze Stock Data
+export const analyzeStock = async (ticker) => {
+  const response = await fetch(`http://localhost:8000/analyze_all?ticker=${ticker}`);
+  const contentType = response.headers.get('content-type');
+
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    if (contentType && contentType.includes('application/json')) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to analyze stock');
+    } else {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Failed to analyze stock');
+    }
   }
-  return response.json();
+
+  if (contentType && contentType.includes('application/json')) {
+    return await response.json();
+  } else {
+    throw new Error('Unexpected response format');
+  }
 };
 
-// Fetch stock metadata
-export const fetchStockMetadata = async (ticker) => {
-  const response = await fetch(`http://localhost:8000/metadata/${ticker}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
+// // Fetch historical stock data
+// export const fetchHistoricalData = async (ticker, period = '1mo') => {
+//   const response = await fetch(`http://localhost:8000/historical/${ticker}?period=${period}`);
+//   if (!response.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// };
 
-// Fetch news headlines
-export const fetchNewsHeadlines = async (ticker, limit = 8) => {
-  const response = await fetch(`http://localhost:8000/news/${ticker}?limit=${limit}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
+// // Fetch stock metadata
+// export const fetchStockMetadata = async (ticker) => {
+//   const response = await fetch(`http://localhost:8000/metadata/${ticker}`);
+//   if (!response.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// };
+
+// // Fetch news headlines
+// export const fetchNewsHeadlines = async (ticker, limit = 8) => {
+//   const response = await fetch(`http://localhost:8000/news/${ticker}?limit=${limit}`);
+//   if (!response.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return response.json();
+// };
 
 
 /* Live Market Functions for the Home Page */
