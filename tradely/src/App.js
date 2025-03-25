@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/App.css';
 import Header from './Components/Header';
-import StockData from './Components/StockData';
-import Metadata from './Components/Metadata';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/Footer';
-import { fetchStockMetadata, fetchHistoricalData, fetchNewsHeadlines, fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
+import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
 
 function App() {
   const [ticker, setTicker] = useState('');
   const [range, setRange] = useState('1mo');
-  const [metadata, setMetadata] = useState(null);
-  const [historicalData, setHistoricalData] = useState(null);
-  const [news, setNews] = useState(null);
   const [liveMarketData, setLiveMarketPrices] = useState(null);
   const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);
@@ -49,18 +44,6 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // const metadata = await fetchStockMetadata(ticker);
-      // console.log('Stock Metadata:', metadata);
-      // setMetadata(metadata);
-
-      // const historicalData = await fetchHistoricalData(ticker, range);
-      // console.log('Historical Data:', historicalData);
-      // setHistoricalData(historicalData);
-
-      // const news = await fetchNewsHeadlines(ticker);
-      // console.log('News Data:', news);
-      // setNews(news);
-
       const analysisResult = await analyzeStock(ticker);
       console.log('Analysis Result:', analysisResult);
       setAnalysis(analysisResult);
@@ -110,18 +93,24 @@ function App() {
           </select>
           <button type="submit">Analyze Stock</button>
         </form>
+        {/* Error message */}
         {error && <div>Error: {error}</div>}
-        {metadata && <Metadata data={metadata} />}
-        {historicalData && <StockData data={historicalData} />}
-        {news && <News data={news} />}
-        {liveMarketData && <LiveMarketData data={liveMarketData} />}
-        {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
-        {analysis && (
-        <div className="analysis-section">
-          <h3>Analysis</h3>
-          <p>{analysis.analysis}</p>
-        </div>
+
+        {/* Analysis section */}
+        {analysis ? (
+          <div className="analysis-section">
+            <h3>Analysis</h3>
+            <pre>{JSON.stringify(analysis, null, 2)}</pre> {/* Display the full object for debugging */}
+          </div>
+        ) : (
+          <p>No analysis data yet. Submit a stock ticker to analyze.</p>
         )}
+
+        {/* Live market data */}
+        {liveMarketData && <LiveMarketData data={liveMarketData} />}
+
+        {/* Live news */}
+        {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
       </header>
       <section id="features" className="features-section">
         <h2>Features</h2>
