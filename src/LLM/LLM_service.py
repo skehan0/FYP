@@ -79,20 +79,28 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     # if stock_data:
     #     payload["messages"].insert(0, {"role": "user", "content": f"Stock Data: {stock_data}"})
     
+    print("Debug: Payload being sent to DeepThinking API:", payload)
+
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.post(url, json=payload, timeout=60.0)
+            response = await client.post(url, json=payload, timeout=100.0)
 
-        if response.status_code == 200:
-            deepthinking_response = ""
-            for content in process_streaming_response(response):
-                deepthinking_response += content
-            return deepthinking_response
-        else:
-            raise RuntimeError(f"Error {response.status_code}: {response.text}")
+            if response.status_code == 200:
+                deepthinking_response = ""
+                async for content in process_streaming_response(response):
+                    deepthinking_response += content
+                return deepthinking_response
+            else:
+                print(f"Debug: DeepThinking API response status: {response.status_code}")
+                print(f"Debug: DeepThinking API response text: {response.text}")
+                raise RuntimeError(f"Error {response.status_code}: {response.text}")
+    except httpx.RequestError as e:
+        print(f"Debug: HTTP request error: {str(e)}")
+        raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")
     except Exception as e:
-        raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")                  
-
+        print(f"Debug: General exception: {str(e)}")
+        raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")
+    
 def store_analysis(symbol, analysis):
     """
     Store the analysis in the database, avoiding duplicates.
@@ -135,8 +143,8 @@ async def fetch_and_analyze_all_stock_data(ticker: str):
         print("Debug: LLM response:", llm_response)
 
         # # Send the LLM response to the DeepThinking model
-        # deepthinking_response = send_to_deepseek(llm_response)
-        # print("Debug: DeepThinking response:", deepthinking_response)
+        deepthinking_response = await send_to_deepseek(llm_response)
+        print("Debug: DeepThinking response:", deepthinking_response)
 
         return {
             "symbol": ticker,
