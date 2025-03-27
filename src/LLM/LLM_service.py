@@ -90,6 +90,7 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
                     # Process the response using process_streaming_response
                     deepthinking_response = ""
                     async for content in process_streaming_response(response):
+                        print(content, end="", flush=True)  # Print each chunk as it arrives
                         deepthinking_response += content
                     return deepthinking_response
                 else:
