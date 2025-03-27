@@ -7,6 +7,8 @@ __pycache__/
 dist/
 build/
 node_modules
-yahooFinance
 alpaca
 lumibot
+mock_data
+services/crypto_services
+services/economic_services

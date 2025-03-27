@@ -76,7 +76,7 @@ async def get_SMA(ticker: str):
 
 @router.get("/ema/{ticker}")
 async def get_EMA(ticker: str):
-    return await fetch_SMA(ticker)
+    return await fetch_EMA(ticker)
 
 @router.get("/all-stock-data/{ticker}")
 async def get_all_stock_data(ticker: str):

@@ -22,7 +22,7 @@ if not API_KEY:
 
 # MongoDB setup
 client = AsyncIOMotorClient(os.getenv("MONGODB_URI"))
-db = client.tradely  # Use the 'tradely' database
+db = client.tradely
 
 # Caches with a TTL of 1 hour and a max size of 100 items
 metadata_cache = TTLCache(maxsize=100, ttl=3600)
