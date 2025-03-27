@@ -1,3 +1,5 @@
+from unittest.mock import patch, AsyncMock
+
 import pytest
 from src.alphaVantage.services.stock_services import fetch_all_stock_data
 from src.LLM.LLM_service import (
