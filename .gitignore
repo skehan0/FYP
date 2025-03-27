@@ -10,3 +10,7 @@ node_modules
 yahooFinance
 alpaca
 lumibot
+deepseekapi
+mock_data
+crypto_services
+economic_services
