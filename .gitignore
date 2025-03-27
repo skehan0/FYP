@@ -9,7 +9,6 @@ build/
 node_modules
 alpaca
 lumibot
-deepseekapi
 mock_data
 services/crypto_services
 services/economic_services
