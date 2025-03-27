@@ -103,7 +103,7 @@ function App() {
             <pre>{JSON.stringify(analysis, null, 2)}</pre> {/* Display the full object for debugging */}
           </div>
         ) : (
-          <p>No analysis data yet. Submit a stock ticker to analyze.</p>
+          <p></p>
         )}
 
         {/* Live market data */}
