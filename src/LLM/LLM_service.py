@@ -1,4 +1,4 @@
-from src.alphaVantage.services.stock_services import fetch_all_stock_data, fetch_income_statement
+from src.alphaVantage.services.stock_services import fetch_all_stock_data
 from pymongo import MongoClient
 from datetime import datetime
 import requests
@@ -63,7 +63,7 @@ async def send_prompt_to_llm(prompt: str, model="gemma3:4b") -> str:
     except Exception as e:
         raise RuntimeError(f"Failed to send prompt to LLM: {str(e)}")
     
-def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
+async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     """
     Send the LLM response to the DeepThinking model for final analysis.
     """
@@ -80,7 +80,8 @@ def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     #     payload["messages"].insert(0, {"role": "user", "content": f"Stock Data: {stock_data}"})
     
     try:
-        response = requests.post(url, json=payload, stream=True)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, json=payload, timeout=60.0)
 
         if response.status_code == 200:
             deepthinking_response = ""

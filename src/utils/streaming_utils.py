@@ -1,11 +1,11 @@
 import json
 
-def process_streaming_response(response):
+async def process_streaming_response(response):
     """
-    Process a streaming HTTP response and yield parsed JSON content.
+    Process a streaming HTTP response asynchronously and yield parsed JSON content.
     """
     buffer = ""
-    for line in response.iter_lines(decode_unicode=True):
+    async for line in response.aiter_lines():
         if line:
             buffer += line
             try:
