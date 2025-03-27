@@ -12,7 +12,7 @@ def perform_analysis(stock_data):
     """
     Perform analysis on the stock data.
     """
-    analize = f"""
+    analysis = f"""
     Analyze the following stock data:
 
     Metadata: {stock_data}
@@ -31,7 +31,7 @@ def perform_analysis(stock_data):
     SMA: {stock_data['sma'] or 'No SMA data available'}
     EMA: {stock_data['ema'] or 'No EMA data available'}
     """
-    return analize
+    return analysis
 
 def send_prompt_to_llm(prompt, model="gemma3:4b"):
     """
