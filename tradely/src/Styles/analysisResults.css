@@ -1,0 +1,49 @@
+.analysis-results {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #1e1e2f, #2a2a3d);
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    overflow-x: auto; /* Ensure horizontal scrolling for large data */
+  }
+  
+  .analysis-results h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #00d1ff;
+    margin-bottom: 15px;
+  }
+  
+  .analysis-content {
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word; /* Break long words */
+    background: #2a2a3d;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .analysis-results {
+      padding: 15px;
+      font-size: 14px;
+    }
+  
+    .analysis-results h3 {
+      font-size: 20px;
+    }
+  }
+
+  .analysis-item {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .analysis-item strong {
+    color: #00d1ff;
+  }

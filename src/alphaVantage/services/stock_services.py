@@ -34,6 +34,7 @@ cash_flow_cache = TTLCache(maxsize=100, ttl=3600)
 earnings_cache = TTLCache(maxsize=100, ttl=3600)
 sma_cache = TTLCache(maxsize=100, ttl=3600)
 ema_cache = TTLCache(maxsize=100, ttl=3600)
+top_gainers_losers_cache = TTLCache(maxsize=100, ttl=3600)
 market_data_cache = {"data": {}, "last_updated": 0}
 
 # Configure logging
@@ -413,7 +414,10 @@ async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60
 
     return limited_ema_data
 
-# Fetching live market data
+"""
+Fetching live market data -----------------------
+"""
+
 async def fetch_live_market_prices():
     global market_data_cache
     current_time = time.time()
@@ -478,3 +482,105 @@ async def fetch_live_market_prices():
     market_data_cache["last_updated"] = current_time
 
     return market_data
+
+async def fetch_top_gainers_losers(limit: int = 5):
+    """
+    Fetch the top gainers and losers from the Alpha Vantage API.
+    If the API fails or returns no data, return mock data.
+    """
+    cache_key = f"top_gainers_losers_{limit}"
+    if cache_key in top_gainers_losers_cache:
+        return top_gainers_losers_cache[cache_key]
+    
+    try:
+        # Corrected URL without the 'symbol' parameter
+        url = f"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={API_KEY}"
+        data = await make_request(url)
+        
+        # Check if API returned a valid response
+        gainers = data.get("top_gainers", [])[:limit]  # Use an empty list as fallback
+        losers = data.get("top_losers", [])[:limit]    # Use an empty list as fallback
+
+        # If gainers or losers are empty, use mock data
+        if not gainers:
+            gainers = [
+                {
+                    "ticker": f"MOCK_GAINER_{i+1}",
+                    "price": round(100 + i * 10, 2),
+                    "change_amount": round(5 + i, 2),
+                    "change_percentage": round(2.5 + i * 0.5, 2),
+                    "volume": 100000 + i * 1000
+                }
+                for i in range(limit)
+            ]
+        
+        if not losers:
+            losers = [
+                {
+                    "ticker": f"MOCK_LOSER_{i+1}",
+                    "price": round(100 - i * 10, 2),
+                    "change_amount": round(-5 - i, 2),
+                    "change_percentage": round(-2.5 - i * 0.5, 2),
+                    "volume": 100000 - i * 1000
+                }
+                for i in range(limit)
+            ]
+
+        # Format the result
+        result = {
+            "metadata": data.get("metadata", "No metadata available"),
+            "last_updated": data.get("last_updated", "Unknown"),
+            "gainers": [
+                {
+                    "ticker": gainer.get("ticker", "N/A"),
+                    "price": gainer.get("price", "N/A"),
+                    "change_amount": gainer.get("change_amount", "N/A"),
+                    "change_percentage": gainer.get("change_percentage", "N/A"),
+                    "volume": gainer.get("volume", "N/A")
+                }
+                for gainer in gainers
+            ],
+            "losers": [
+                {
+                    "ticker": loser.get("ticker", "N/A"),
+                    "price": loser.get("price", "N/A"),
+                    "change_amount": loser.get("change_amount", "N/A"),
+                    "change_percentage": loser.get("change_percentage", "N/A"),
+                    "volume": loser.get("volume", "N/A")
+                }
+                for loser in losers
+            ]
+        }
+
+        # Cache the result
+        top_gainers_losers_cache[cache_key] = result
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Failed to fetch top gainers and losers: {str(e)}")
+        # Return mock data as a fallback
+        return {
+            "metadata": "Mock metadata",
+            "last_updated": "Mock timestamp",
+            "gainers": [
+                {
+                    "ticker": f"MOCK_GAINER_{i+1}",
+                    "price": round(100 + i * 10, 2),
+                    "change_amount": round(5 + i, 2),
+                    "change_percentage": round(2.5 + i * 0.5, 2),
+                    "volume": 100000 + i * 1000
+                }
+                for i in range(limit)
+            ],
+            "losers": [
+                {
+                    "ticker": f"MOCK_LOSER_{i+1}",
+                    "price": round(100 - i * 10, 2),
+                    "change_amount": round(-5 - i, 2),
+                    "change_percentage": round(-2.5 - i * 0.5, 2),
+                    "volume": 100000 - i * 1000
+                }
+                for i in range(limit)
+            ]
+        }

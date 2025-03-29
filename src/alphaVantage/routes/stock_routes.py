@@ -10,7 +10,8 @@ from src.alphaVantage.services.stock_services import (
     fetch_SMA,
     fetch_EMA,
     fetch_live_market_prices,
-    fetch_all_stock_data
+    fetch_all_stock_data,
+    fetch_top_gainers_losers
 )
 from src.LLM.LLM_service import fetch_and_analyze_all_stock_data
 from src.mongoDB.database import database 
@@ -81,6 +82,10 @@ async def get_EMA(ticker: str):
 @router.get("/all-stock-data/{ticker}")
 async def get_all_stock_data(ticker: str):
     return await fetch_all_stock_data(ticker)
+
+@router.get("/top-gainers-losers")
+async def get_top_gainers_losers(limit: int = Query(5, description="Number of gainers and losers to return")):
+    return await fetch_top_gainers_losers(limit)
 
 @router.get("/status")
 async def check_db_status():
