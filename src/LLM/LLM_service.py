@@ -26,11 +26,12 @@ def perform_analysis(stock_data: dict) -> str:
     Perform analysis on the stock data.
     """
     sections = [
-        "Metadata", 
+        # "Metadata", 
         # "Historical Data", "Income Statement", "Balance Sheet",
         # "News", "Cash Flow", "Earnings", "SMA", "EMA"
     ]
-    analysis = "Analyze the following stock data:\n\n"
+    # analysis = "Analyze the following stock data:\n\n"
+    analysis = "Im testing the system, just say hi!:\n\n"
     for section in sections:
         data = stock_data.get(section.lower().replace(" ", "_"), "No data available")
         analysis += f"{section}: {data}\n"
@@ -71,7 +72,9 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     payload = {
         "model": model,
         "messages": [
-            {"role": "user", "content": "As a financial advicer with years of experience with stock markets, please perform a deeper analysis based on the following response, keep it short and to the point:"},
+            {"role": "user", "content": "Im testing just say hi"},
+            # {"role": "user", "content": "As a financial advicer with years of experience with stock markets, please perform a deeper analysis based on the following response, keep it short and to the point:"},
+           
             {"role": "user", "content": llm_response}
         ]
     }
@@ -163,39 +166,38 @@ async def fetch_and_analyze_all_stock_data(ticker: str):
         stock_data = validate_stock_data(await fetch_all_stock_data(ticker))
         print("Debug: Fetched stock data:", stock_data)
 
-        if not stock_data:
-            raise ValueError(f"Stock data is empty or None for ticker: {ticker}")
+        if not stock_data or "metadata" not in stock_data:
+            # If no stock data is available, use a default prompt
+            print("Debug: No stock data available, using default prompt.")
+            prompt = "I'm testing the system, just say hi!"
+        else:
+            metadata = stock_data["metadata"]
+            print("Debug: Metadata:", metadata)
 
-        if "metadata" not in stock_data:
-            raise KeyError(f"'metadata' key missing in stock data: {stock_data}")
+            analysis = perform_analysis(metadata)
+            print("Debug: Analysis result:", analysis)
 
-        metadata = stock_data["metadata"]
-        print("Debug: Metadata:", metadata)
+            prompt = f"""
+            Analyze the following stock data:
 
-        analysis = perform_analysis(metadata)
-        print("Debug: Analysis result:", analysis)
-
-        prompt = f"""
-        Analyze the following stock data:
-
-        Metadata: {metadata}
-        """
-        print("Debug: Prompt for LLM:", prompt)
+            Metadata: {metadata}
+            """
+            print("Debug: Prompt for LLM:", prompt)
 
         # Await the send_prompt_to_llm function
         llm_response = await send_prompt_to_llm(prompt)
         print("Debug: LLM response:", llm_response)
 
-        # # Send the LLM response to the DeepThinking model
+        # Send the LLM response to the DeepThinking model
         deepthinking_response = await send_to_deepseek(llm_response)
         print("Debug: DeepThinking response:", deepthinking_response)
 
         return {
             "symbol": ticker,
-            "analysis": analysis,
+            "analysis": analysis if 'analysis' in locals() else "No analysis performed",
             "llm_response": llm_response,
             "deepthinking_response": deepthinking_response,
-            "stock_data": stock_data
+            "stock_data": stock_data if stock_data else "No stock data available"
         }
     except Exception as e:
         print(f"Debug: Exception occurred: {e}")

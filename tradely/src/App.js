@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/App.css';
-import './Styles/topGainersLosers.css'; 
+import './Styles/topGainersLosers.css';
 import Header from './Components/Header';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/footer';
+import TradingViewChart from './Components/TradingViewChart';
 import TopGainersLosers from './Components/TopGainersLosers'; // Import the new component
 import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
+import AnalysisSection from './Components/AnalysisSection';
+import ChartSection from './Components/ChartSection';
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -15,7 +18,8 @@ function App() {
   const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);
   const [analysis, setAnalysis] = useState(null);
-  const [gainersLosers, setGainersLosers] = useState({ gainers: [], losers: [] }); // State for top gainers and losers
+  const [isLoading, setIsLoading] = useState(false);
+  const [gainersLosers, setGainersLosers] = useState({ gainers: [], losers: [] });
 
   useEffect(() => {
     const fetchLiveData = async () => {
@@ -50,17 +54,63 @@ function App() {
     setRange(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const analysisResult = await analyzeStock(ticker);
-      console.log('Analysis Result:', analysisResult);
-      setAnalysis(analysisResult);
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setAnalysis('');
+  //   setError(null);
+  //   setIsLoading(true);
 
-      setError(null);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setError(error.message);
+  //   try {
+  //     const response = await fetch(`http://localhost:8000/analyze-stock?ticker=${ticker}`, {
+  //       method: 'GET',
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch analysis');
+  //     }
+
+  //     const reader = response.body.getReader();
+  //     const decoder = new TextDecoder('utf-8');
+  //     let result = '';
+
+  //     while (true) {
+  //       const { done, value } = await reader.read();
+  //       if (done) break;
+
+  //       const chunk = decoder.decode(value, { stream: true });
+  //       result += chunk;
+  //       setAnalysis((prev) => prev + chunk); // Update analysis as it streams
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the form from reloading the page
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Simulate fetching analysis
+      const mockAnalysis = `
+        Analyzing stock data for ticker: ${ticker}...
+        Step 1: Fetching metadata...
+        Step 2: Performing technical analysis...
+        Step 3: Generating insights...
+        Analysis complete! Here's the summary:
+        ${ticker} is a leading technology company...
+        Recommendation: Strong Buy based on current trends.
+      `;
+      setTimeout(() => {
+        setAnalysis(mockAnalysis);
+        setIsLoading(false);
+      }, 2000); // Simulate a 2-second delay
+    } catch (err) {
+      setError('Failed to fetch analysis. Please try again.');
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +128,7 @@ function App() {
             value={ticker}
             onChange={handleInputChange}
             placeholder="Enter stock ticker"
-            className='stock-input'
+            className="stock-input"
           />
           <datalist id="tickers">
             <option value="AAPL">Apple</option>
@@ -103,12 +153,8 @@ function App() {
           <button type="submit">Analyze Stock</button>
         </form>
         {error && <div>Error: {error}</div>}
-        {analysis && (
-          <div className="analysis-section">
-            <h3>Analysis</h3>
-            <pre>{JSON.stringify(analysis, null, 2)}</pre>
-          </div>
-        )}
+        <AnalysisSection analysis={analysis} isLoading={isLoading} error={error} />
+        <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} />
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
         <TopGainersLosers gainers={gainersLosers.gainers} losers={gainersLosers.losers} />
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
