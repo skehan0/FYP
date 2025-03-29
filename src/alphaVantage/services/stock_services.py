@@ -34,6 +34,7 @@ cash_flow_cache = TTLCache(maxsize=100, ttl=3600)
 earnings_cache = TTLCache(maxsize=100, ttl=3600)
 sma_cache = TTLCache(maxsize=100, ttl=3600)
 ema_cache = TTLCache(maxsize=100, ttl=3600)
+top_gainers_losers_cache = TTLCache(maxsize=100, ttl=3600)
 market_data_cache = {"data": {}, "last_updated": 0}
 
 # Configure logging
@@ -413,7 +414,10 @@ async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60
 
     return limited_ema_data
 
-# Fetching live market data
+"""
+Fetching live market data -----------------------
+"""
+
 async def fetch_live_market_prices():
     global market_data_cache
     current_time = time.time()
@@ -478,3 +482,58 @@ async def fetch_live_market_prices():
     market_data_cache["last_updated"] = current_time
 
     return market_data
+
+async def fetch_top_gainers_losers(limit: int = 5):
+    """
+    Fetch the top gainers and losers from the Alpha Vantage API.
+    """
+    cache_key = f"top_gainers_losers_{limit}"
+    if cache_key in top_gainers_losers_cache:
+        return top_gainers_losers_cache[cache_key]
+    
+    try:
+        # Corrected URL without the 'symbol' parameter
+        url = f"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={API_KEY}"
+        data = await make_request(url)
+        
+        # Check if API returned a valid response
+        if "top_gainers" not in data or "top_losers" not in data:
+            raise HTTPException(status_code=500, detail="Invalid response from Alpha Vantage API")
+        
+        gainers = data["top_gainers"][:limit]
+        losers = data["top_losers"][:limit]
+
+        # Format the result
+        result = {
+            "metadata": data.get("metadata", "No metadata available"),
+            "last_updated": data.get("last_updated", "Unknown"),
+            "gainers": [
+                {
+                    "ticker": gainer["ticker"],
+                    "price": gainer["price"],
+                    "change_amount": gainer["change_amount"],
+                    "change_percentage": gainer["change_percentage"],
+                    "volume": gainer["volume"]
+                }
+                for gainer in gainers
+            ],
+            "losers": [
+                {
+                    "ticker": loser["ticker"],
+                    "price": loser["price"],
+                    "change_amount": loser["change_amount"],
+                    "change_percentage": loser["change_percentage"],
+                    "volume": loser["volume"]
+                }
+                for loser in losers
+            ]
+        }
+
+        # Cache the result
+        top_gainers_losers_cache[cache_key] = result
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Failed to fetch top gainers and losers: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch top gainers and losers: {str(e)}")

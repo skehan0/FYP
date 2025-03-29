@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/App.css';
+import './Styles/topGainersLosers.css'; 
 import Header from './Components/Header';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
-import Footer from './Components/Footer';
+import Footer from './Components/footer';
+import TopGainersLosers from './Components/TopGainersLosers'; // Import the new component
 import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
   const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);
   const [analysis, setAnalysis] = useState(null);
+  const [gainersLosers, setGainersLosers] = useState({ gainers: [], losers: [] }); // State for top gainers and losers
 
   useEffect(() => {
     const fetchLiveData = async () => {
@@ -24,6 +27,12 @@ function App() {
         const newsData = await fetchLiveNewsHeadlines();
         console.log('Live News Data:', newsData);
         setLiveNews(newsData);
+
+        // Fetch top gainers and losers
+        const response = await fetch('http://localhost:8000/top-gainers-losers?limit=5');
+        const data = await response.json();
+        console.log('Top Gainers and Losers:', data);
+        setGainersLosers(data);
       } catch (error) {
         console.error('Error fetching live data:', error);
         setError(error.message);
@@ -69,6 +78,7 @@ function App() {
             value={ticker}
             onChange={handleInputChange}
             placeholder="Enter stock ticker"
+            className='stock-input'
           />
           <datalist id="tickers">
             <option value="AAPL">Apple</option>
@@ -76,7 +86,6 @@ function App() {
             <option value="MSFT">Microsoft</option>
             <option value="AMZN">Amazon</option>
             <option value="TSLA">Tesla</option>
-            {/* Add more options as needed */}
           </datalist>
           <select value={range} onChange={handleRangeChange}>
             <option value="1d">1 Day</option>
@@ -93,65 +102,17 @@ function App() {
           </select>
           <button type="submit">Analyze Stock</button>
         </form>
-        {/* Error message */}
         {error && <div>Error: {error}</div>}
-
-        {/* Analysis section */}
-        {analysis ? (
+        {analysis && (
           <div className="analysis-section">
             <h3>Analysis</h3>
-            <pre>{JSON.stringify(analysis, null, 2)}</pre> {/* Display the full object for debugging */}
+            <pre>{JSON.stringify(analysis, null, 2)}</pre>
           </div>
-        ) : (
-          <p></p>
         )}
-
-        {/* Live market data */}
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
-
-        {/* Live news */}
+        <TopGainersLosers gainers={gainersLosers.gainers} losers={gainersLosers.losers} />
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
       </header>
-      <section id="features" className="features-section">
-        <h2>Features</h2>
-        <ul>
-          <li>Real-time stock market data</li>
-          <li>Comprehensive stock analysis</li>
-          <li>Latest financial news</li>
-          <li>Historical stock data</li>
-        </ul>
-      </section>
-      <section id="testimonials" className="testimonials-section">
-        <h2>Testimonials</h2>
-        <blockquote>
-          <p>"Tradeskee has transformed the way I invest in the stock market. The insights are invaluable!"</p>
-          <footer>- Jane Doe, Investor</footer>
-        </blockquote>
-        <blockquote>
-          <p>"A must-have tool for anyone serious about stock trading."</p>
-          <footer>- John Smith, Trader</footer>
-        </blockquote>
-      </section>
-      <section id="cta" className="cta-section">
-        <h2>Get Started Today</h2>
-        <p>Sign up now and take your stock trading to the next level.</p>
-        <button>Sign Up</button>
-      </section>
-      <section id="faq" className="faq-section">
-        <h2>Frequently Asked Questions</h2>
-        <div className="faq-item">
-          <h3>What is Tradeskee?</h3>
-          <p>Tradeskee is a platform that provides real-time stock market data, comprehensive analysis, and the latest financial news.</p>
-        </div>
-        <div className="faq-item">
-          <h3>How do I get started?</h3>
-          <p>Simply sign up for an account and start exploring the features of Tradeskee.</p>
-        </div>
-      </section>
-      <section id="contact" className="contact-section">
-        <h2>Contact Us</h2>
-        <p>If you have any questions or need assistance, feel free to reach out to us at support@tradeskee.com.</p>
-      </section>
       <Footer />
     </div>
   );

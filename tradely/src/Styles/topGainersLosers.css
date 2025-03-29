@@ -1,0 +1,136 @@
+.top-gainers-losers {
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 1200px;
+    background: linear-gradient(145deg, #1e1e2f, #2a2a3d);
+    color: #ffffff;
+}
+
+.top-gainers-losers h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #00d1ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tables-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.table-section {
+    flex: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1e1e2f;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Gainers Table */
+.gainers-table {
+    background-color: #1e1e2f;
+}
+
+.gainers-table th {
+    background: linear-gradient(145deg, #28a745, #218838);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px;
+}
+
+.gainers-table td {
+    color: #28a745;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.gainers-table tr:nth-child(even) {
+    background-color: #242435;
+}
+
+.gainers-table tr:hover {
+    background-color: #34344d; 
+    transform: scale(1.01); 
+    transition: all 0.3s ease;
+}
+
+/* Losers Table */
+.losers-table {
+    background-color: #1e1e2f;
+}
+
+.losers-table th {
+    background: linear-gradient(145deg, #dc3545, #c82333);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px;
+}
+
+.losers-table td {
+    color: #dc3545;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.losers-table tr:nth-child(even) {
+    background-color: #242435;
+}
+
+.losers-table tr:hover {
+    background-color: #34344d; 
+    transform: scale(1.01); 
+    transition: all 0.3s ease;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align: center;
+    border: 1px solid #333;
+}
+
+table th {
+    letter-spacing: 0.5px;
+}
+
+table td {
+    font-family: 'Roboto', sans-serif;
+}
+
+.stock-input {
+    width: 250px;
+    padding: 15px 20px; 
+    font-size: 18px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #1e1e2f; 
+    color: #ffffff; 
+    outline: none;
+    transition: all 0.3s ease; 
+}
+
+.stock-input::placeholder {
+    font-size: 18px;
+    color: #cccccc; 
+    font-style: italic; 
+}
+
+.stock-input:focus {
+    border-color: #00d1ff;
+    box-shadow: 0 0 5px rgba(0, 209, 255, 0.5); 
+    background: #2a2a3d; 
+}
+  

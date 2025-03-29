@@ -1,5 +1,5 @@
 .footer {
-    background-color: #282c34;
+    background: linear-gradient(145deg, #1e1e2f, #2a2a3d);
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -40,3 +40,8 @@
   .footer-social a:hover {
     text-decoration: underline;
   }
+
+  footer a:hover {
+    text-decoration: underline;
+    color: #00d1ff;
+}
