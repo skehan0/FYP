@@ -89,11 +89,45 @@ body {
   color: #ffffff;
 }
 
-
-
 .hero-section,
 .form-container,
 .live-market-prices {
   background: transparent;
   box-shadow: none;
 }
+
+.question-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #1e1e2f;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.question-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.question-button {
+  padding: 10px 15px;
+  background-color: #00d1ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.question-button:hover {
+  background-color: #00a3cc;
+}
+
+.answer {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #00ff7f;
+}
+

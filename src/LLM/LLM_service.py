@@ -55,6 +55,7 @@ async def send_prompt_to_llm(prompt: str, model="gemma3:4b") -> str:
             if response.status_code == 200:
                 llm_response = ""
                 async for content in process_streaming_response(response):
+                    print(content, end="", flush=True)  # Print each chunk as it arrives
                     llm_response += content
                 return llm_response
             else:

@@ -1,0 +1,65 @@
+/* Container styling for the question section */
+.question-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1e1e2f;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  
+  /* Input field styling */
+  .question-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #2a2a3b;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .question-input:focus {
+    border-color: #00d1ff;
+  }
+  
+  /* Button styling */
+  .question-button {
+    padding: 12px 20px;
+    background-color: #00d1ff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .question-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }
+  
+  .question-button:hover:not(:disabled) {
+    background-color: #00a3cc;
+    transform: translateY(-2px);
+  }
+  
+  /* Answer text styling */
+  .answer {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #00ff7f;
+    text-align: left;
+    line-height: 1.5;
+    background-color: #2a2a3b;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }

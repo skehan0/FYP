@@ -13,10 +13,16 @@ from src.alphaVantage.services.stock_services import (
     fetch_all_stock_data,
     fetch_top_gainers_losers
 )
-from src.LLM.LLM_service import fetch_and_analyze_all_stock_data
-from src.mongoDB.database import database 
+from src.LLM.LLM_service import send_prompt_to_llm
+from src.mongoDB.database import database
+from pydantic import BaseModel
 
 router = APIRouter()
+
+# Request model for the Ask Question endpoint
+class QuestionRequest(BaseModel):
+    question: str
+    context: str = None  # Optional context (e.g., stock analysis)
 
 # Main Endpoint
 @router.get("/analyze_all")
@@ -26,7 +32,7 @@ async def analyze_all_stock_data(ticker: str = Query(..., description="Stock tic
     """
     try:
         # Call the service function to fetch, analyze, and send data to the LLM
-        result = await fetch_and_analyze_all_stock_data(ticker)
+        result = await fetch_all_stock_data(ticker)
 
         # Return the result
         return result
@@ -52,16 +58,16 @@ async def get_income_statement(ticker: str, limit: int = Query(5, description="N
     return await fetch_income_statement(ticker, limit)
 
 @router.get("/balance/{ticker}")
-async def get_balance_sheet(ticker: str,  limit: int = Query(5, description="Number of years and quarters to return")):
+async def get_balance_sheet(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_balance_sheet(ticker)
 
 @router.get("/cashflow/{ticker}")
 async def get_cash_flow(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
-    return await fetch_cash_flow(ticker)
+    return await fetch_cash_flow(ticker, limit)
 
 @router.get("/earnings/{ticker}")
 async def get_earnings(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
-    return await fetch_earnings(ticker)
+    return await fetch_earnings(ticker, limit)
 
 @router.get("/live-market-prices")
 async def get_live_market_prices():
@@ -86,6 +92,30 @@ async def get_all_stock_data(ticker: str):
 @router.get("/top-gainers-losers")
 async def get_top_gainers_losers(limit: int = Query(5, description="Number of gainers and losers to return")):
     return await fetch_top_gainers_losers(limit)
+
+@router.post("/ask-question")
+async def ask_question(request: QuestionRequest):
+    """
+    Endpoint to process a user's question and return an answer using the LLM.
+    """
+    try:
+        # Construct the prompt for the LLM
+        prompt = f"""
+        You are a stock market assistant. Answer the following question concisely:
+
+        Question: {request.question}
+        """
+        if request.context:
+            prompt += f"\nContext: {request.context}\n"
+
+        # Send the prompt to the LLM
+        llm_response = await send_prompt_to_llm(prompt)
+
+        # Return the LLM's response
+        return {"answer": llm_response}
+    except Exception as e:
+        print(f"Error in ask_question: {e}")
+        raise HTTPException(status_code=500, detail="Failed to process the question.")
 
 @router.get("/status")
 async def check_db_status():

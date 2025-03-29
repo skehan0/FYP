@@ -5,11 +5,11 @@ import Header from './Components/Header';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/footer';
-import TradingViewChart from './Components/TradingViewChart';
-import TopGainersLosers from './Components/TopGainersLosers'; // Import the new component
-import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, analyzeStock } from './Services/api';
+import TopGainersLosers from './Components/TopGainersLosers';
+import { fetchLiveMarketPrices, fetchLiveNewsHeadlines } from './Services/api';
 import AnalysisSection from './Components/AnalysisSection';
 import ChartSection from './Components/ChartSection';
+import QuestionSection from './Components/QuestionSection'; // Import the new QuestionSection component
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -54,47 +54,12 @@ function App() {
     setRange(event.target.value);
   };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   setAnalysis('');
-  //   setError(null);
-  //   setIsLoading(true);
-
-  //   try {
-  //     const response = await fetch(`http://localhost:8000/analyze-stock?ticker=${ticker}`, {
-  //       method: 'GET',
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error('Failed to fetch analysis');
-  //     }
-
-  //     const reader = response.body.getReader();
-  //     const decoder = new TextDecoder('utf-8');
-  //     let result = '';
-
-  //     while (true) {
-  //       const { done, value } = await reader.read();
-  //       if (done) break;
-
-  //       const chunk = decoder.decode(value, { stream: true });
-  //       result += chunk;
-  //       setAnalysis((prev) => prev + chunk); // Update analysis as it streams
-  //     }
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the form from reloading the page
+    event.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      // Simulate fetching analysis
       const mockAnalysis = `
         Analyzing stock data for ticker: ${ticker}...
         Step 1: Fetching metadata...
@@ -107,7 +72,7 @@ function App() {
       setTimeout(() => {
         setAnalysis(mockAnalysis);
         setIsLoading(false);
-      }, 2000); // Simulate a 2-second delay
+      }, 2000);
     } catch (err) {
       setError('Failed to fetch analysis. Please try again.');
       setIsLoading(false);
@@ -155,6 +120,7 @@ function App() {
         {error && <div>Error: {error}</div>}
         <AnalysisSection analysis={analysis} isLoading={isLoading} error={error} />
         <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} />
+        <QuestionSection analysis={analysis} />
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
         <TopGainersLosers gainers={gainersLosers.gainers} losers={gainersLosers.losers} />
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
