@@ -10,6 +10,7 @@ const TradingViewChart = ({ symbol }) => {
         container_id: 'tradingview_chart',
         width: '100%',
         height: 500,
+        "symbol": symbol,
         interval: 'D',
         timezone: 'Etc/UTC',
         theme: 'dark',

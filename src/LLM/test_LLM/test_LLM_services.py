@@ -67,6 +67,7 @@ class TestIndividualEndpoints:
         print("DeepThinking response:", response)
 
 # Testing output response
+
     @pytest.mark.asyncio
     async def test_fetch_and_analyze_all_stock_data(self):
         ticker = "AAPL"  # Example ticker symbol
@@ -77,7 +78,7 @@ class TestIndividualEndpoints:
         assert "deepthinking_response" in result, "Result should contain 'deepthinking_response'"
         assert "stock_data" in result, "Result should contain 'stock_data'"
         print("Fetch and analyze result:", result)
-        
+
 # Mocking both LLM response to check if being passed
 @pytest.mark.asyncio
 @patch("src.LLM.LLM_service.send_prompt_to_llm", new_callable=AsyncMock)

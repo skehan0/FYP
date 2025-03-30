@@ -117,3 +117,7 @@ class SMA(BaseModel):
 class EMA(BaseModel):
     data: str
     EMA: float    
+    
+class QuestionRequest(BaseModel):
+    question: str
+    context: str = None

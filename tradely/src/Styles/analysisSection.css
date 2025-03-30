@@ -1,4 +1,4 @@
-/* General Reset */
+General Reset
 * {
   box-sizing: border-box;
   margin: 0;
@@ -35,8 +35,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow-y: auto;
-  max-height: 600px;
+  overflow-y: visible;
+  /* max-height: 600px; */
   padding-right: 10px;
 }
 
@@ -143,7 +143,7 @@
 
 .save-analysis-button {
   padding: 10px 15px;
-  background-color: #00d1ff;
+  background-color: #00d0ff9c;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -153,4 +153,19 @@
 
 .save-analysis-button:hover {
   background-color: #00a3cc;
+}
+
+.stop-animation-button {
+  background-color: #d800009d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.stop-animation-button:hover {
+  background-color: #ff020275;
 }

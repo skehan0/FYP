@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/App.css';
 import './Styles/topGainersLosers.css';
+import './Styles/questionSection.css';
 import Header from './Components/Header';
 import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/footer';
 import TopGainersLosers from './Components/TopGainersLosers';
-import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, fetchTopGainersLosers } from './Services/api';
+import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, fetchTopGainersLosers, analyzeStock, askQuestion } from './Services/api';
 import AnalysisSection from './Components/AnalysisSection';
 import ChartSection from './Components/ChartSection';
-import QuestionSection from './Components/QuestionSection'; // Import the new QuestionSection component
+import QuestionSection from './Components/QuestionSection';
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -20,23 +21,27 @@ function App() {
   const [analysis, setAnalysis] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [gainersLosers, setGainersLosers] = useState({ gainers: [], losers: [] });
+  const [userQuestion, setUserQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
 
   useEffect(() => {
     const fetchLiveData = async () => {
       try {
+        // Fetch live market prices
         const marketData = await fetchLiveMarketPrices();
         console.log('Live Market Data:', marketData);
         setLiveMarketPrices(marketData);
 
+        // Fetch live news
         const newsData = await fetchLiveNewsHeadlines();
         console.log('Live News Data:', newsData);
         setLiveNews(newsData);
 
         // Fetch top gainers and losers
-        const response = await fetch('http://localhost:8000/top-gainers-losers?limit=5');
-        const data = await response.json();
-        console.log('Top Gainers and Losers:', data);
-        setGainersLosers(data);
+        const gainersLosersData = await fetchTopGainersLosers(5);
+        console.log('Top Gainers and Losers:', gainersLosersData);
+        setGainersLosers(gainersLosersData);
+
       } catch (error) {
         console.error('Error fetching live data:', error);
         setError(error.message);
@@ -56,28 +61,107 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Debug: handleSubmit triggered');
     setIsLoading(true);
     setError(null);
 
     try {
-      const mockAnalysis = `
-        Analyzing stock data for ticker: ${ticker}...
-        Step 1: Fetching metadata...
-        Step 2: Performing technical analysis...
-        Step 3: Generating insights...
-        Analysis complete! Here's the summary:
-        ${ticker} is a leading technology company...
-        Recommendation: Strong Buy based on current trends.
-      `;
-      setTimeout(() => {
-        setAnalysis(mockAnalysis);
-        setIsLoading(false);
-      }, 2000);
+      const analysisData = await analyzeStock(ticker);
+      console.log('Debug: Stock Analysis Data:', analysisData);
+      setAnalysis(analysisData); // Update the state
+      console.log('Debug: Updated analysis state:', analysisData); // Confirm state update
+      setIsLoading(false);
     } catch (err) {
-      setError('Failed to fetch analysis. Please try again.');
+      console.error('Debug: Error fetching stock analysis:', err);
+      setError(err.response?.data?.message || 'Failed to fetch analysis. Please try again.');
       setIsLoading(false);
     }
   };
+
+  const handleAskQuestion = async (question) => {
+    if (!analysis) {
+      setAnswer('Please analyze a stock first before asking a question.');
+      return;
+    }
+  
+    try {
+      setIsLoading(true);
+      setAnswer(''); // Clear the previous answer
+  
+      // Use a simple string as the context
+      const context = 'stock analysis';
+  
+      console.log('Debug: Sending question:', question);
+      console.log('Debug: Sending context:', context);
+  
+      const response = await askQuestion(question, context);
+      console.log('Debug: Response from askQuestion:', response);
+  
+      if (response && response.answer) {
+        setAnswer(response.answer);
+      } else {
+        setAnswer('No answer received from the backend.');
+      }
+    } catch (err) {
+      console.error('Debug: Error in handleAskQuestion:', err);
+      setAnswer('An error occurred while fetching the answer. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     // Make an API call to fetch the analysis
+  //     const response = await fetch(`http://localhost:8000/analyze_all/${ticker}`, {
+  //       method: 'GET',
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch analysis');
+  //     }
+
+  //     const data = await response.json();
+  //     setAnalysis(data.analysis); // Use the real analysis data from the backend
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     setError('Failed to fetch analysis. Please try again.');
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // /* Mock Data */
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     // Mock LLM response
+  //     const mockLlmResponse = `
+  //       Mock LLM response for ${ticker}:
+  //       - Tesla (TSLA) is a leader in the EV market.
+  //       - Strong revenue growth and high profit margins.
+  //       - Recommendation: Buy with caution due to market volatility.
+  //     `;
+  //     console.log("Debug: Mock LLM response:", mockLlmResponse);
+
+  //     // Send the mock LLM response to DeepSeek
+  //     const deepThinkingResponse = await mockSendToDeepSeek(mockLlmResponse);
+
+  //     // Set the analysis and DeepThinking response in the state
+  //     setAnalysis(deepThinkingResponse);
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     console.error("Debug: Error in handleSubmit:", err);
+  //     setError('Failed to fetch analysis. Please try again.');
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="App">
@@ -119,11 +203,18 @@ function App() {
         </form>
         {error && <div>Error: {error}</div>}
         <AnalysisSection analysis={analysis} isLoading={isLoading} error={error} />
-        <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} />
-        <QuestionSection analysis={analysis} />
+        {/* <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} /> */}
+        <QuestionSection
+          analysis={analysis}
+          userQuestion={userQuestion}
+          setUserQuestion={setUserQuestion}
+          answer={answer}
+          handleAskQuestion={handleAskQuestion}
+        />
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
         <TopGainersLosers gainers={gainersLosers.gainers} losers={gainersLosers.losers} />
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
+        {/* <News fetchNews={fetchLiveNewsHeadlines} isLiveNews={true} /> */}
       </header>
       <Footer />
     </div>
@@ -131,3 +222,22 @@ function App() {
 }
 
 export default App;
+
+
+// const mockSendToDeepSeek = async (llmResponse) => {
+//   console.log("Debug: Mock LLM response being sent to DeepSeek:", llmResponse);
+
+//   // Simulate a delay to mimic an API call
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       const deepThinkingResponse = `
+//         Deeper analysis based on the LLM response:
+//         - Tesla (TSLA) is a leader in the EV market.
+//         - Strong revenue growth and high profit margins.
+//         - Recommendation: Buy with caution due to market volatility.
+//       `;
+//       console.log("Debug: Mock DeepThinking response:", deepThinkingResponse);
+//       resolve(deepThinkingResponse);
+//     }, 2000); // Simulate a 2-second delay
+//   });
+// };
