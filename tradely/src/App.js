@@ -6,7 +6,7 @@ import News from './Components/News';
 import LiveMarketData from './Components/LiveMarketPrices';
 import Footer from './Components/footer';
 import TopGainersLosers from './Components/TopGainersLosers';
-import { fetchLiveMarketPrices, fetchLiveNewsHeadlines } from './Services/api';
+import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, fetchTopGainersLosers } from './Services/api';
 import AnalysisSection from './Components/AnalysisSection';
 import ChartSection from './Components/ChartSection';
 import QuestionSection from './Components/QuestionSection'; // Import the new QuestionSection component
