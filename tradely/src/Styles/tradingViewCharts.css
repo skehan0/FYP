@@ -1,11 +1,10 @@
-/* Chart Container */
 .chart-container {
     margin: 20px auto;
     padding: 20px;
     border-radius: 12px;
     background-color: #1e1e2f;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 800px;
+    max-width: 1000px;
     text-align: center;
   }
   

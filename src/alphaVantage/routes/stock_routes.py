@@ -22,7 +22,7 @@ router = APIRouter()
 # Request model for the Ask Question endpoint
 class QuestionRequest(BaseModel):
     question: str
-    context: str = None  # Optional context (e.g., stock analysis)
+    context: str = 'You are a stock market enthusiast'  # Optional context (e.g., stock analysis)
 
 # Main Endpoint
 @router.get("/analyze_all")

@@ -9,8 +9,7 @@ const TradingViewChart = ({ symbol }) => {
       new window.TradingView.widget({
         container_id: 'tradingview_chart',
         width: '100%',
-        height: 400,
-        symbol: symbol || 'NASDAQ:AAPL',
+        height: 500,
         interval: 'D',
         timezone: 'Etc/UTC',
         theme: 'dark',

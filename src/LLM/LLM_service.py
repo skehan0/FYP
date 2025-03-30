@@ -17,21 +17,17 @@ load_dotenv()
 client = AsyncIOMotorClient(os.getenv("MONGODB_URI"))
 db = client.tradely
 
-# # MongoDB setup
-# client = MongoClient("mongodb://localhost:27017/")
-# db = client.stock_analysis
-
 def perform_analysis(stock_data: dict) -> str:
     """
     Perform analysis on the stock data.
     """
     sections = [
-        # "Metadata", 
-        # "Historical Data", "Income Statement", "Balance Sheet",
-        # "News", "Cash Flow", "Earnings", "SMA", "EMA"
+        "Metadata", 
+        # "Historical Data", "Income Statement", "Balance Sheet", "Cash Flow", "Earnings",
+        # "SMA", "EMA",
+        # "News"
     ]
-    # analysis = "Analyze the following stock data:\n\n"
-    analysis = "Im testing the system, just say hi!:\n\n"
+    analysis = "Analyze the following stock data:\n\n"
     for section in sections:
         data = stock_data.get(section.lower().replace(" ", "_"), "No data available")
         analysis += f"{section}: {data}\n"
@@ -73,9 +69,7 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     payload = {
         "model": model,
         "messages": [
-            {"role": "user", "content": "Im testing just say hi"},
-            # {"role": "user", "content": "As a financial advicer with years of experience with stock markets, please perform a deeper analysis based on the following response, keep it short and to the point:"},
-           
+            {"role": "user", "content": "As a financial advicer with years of experience with stock markets, please perform a deeper analysis based on the following response, keep it short and to the point:"},
             {"role": "user", "content": llm_response}
         ]
     }
@@ -107,47 +101,6 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     except Exception as e:
         print(f"Debug: General exception: {str(e)}")
         raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")
-    
-# async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
-#     """
-#     Send the LLM response to the DeepThinking model for final analysis.
-#     """
-#     url = "http://localhost:11434/api/chat"
-#     payload = {
-#         "model": model,
-#         "messages": [
-#             {"role": "user", "content": "As a financial advicer with years of experience with stock markets, please perform a deeper analysis based on the following response, keep it short and to the point:"},
-#             {"role": "user", "content": llm_response}]
-#     }
-    
-#     # Optionally include stock data in the prompt
-#     # if stock_data:
-#     #     payload["messages"].insert(0, {"role": "user", "content": f"Stock Data: {stock_data}"})
-    
-#     print("Debug: Payload being sent to DeepThinking API:", payload)
-
-#     try:
-#         async with httpx.AsyncClient() as client:
-#             async with client.stream("POST", url, json=payload, timeout=100.0) as response:
-#                 async for chunk in response.aiter_text():
-#                     print(chunk)  # Process each chunk as it arrives
-#             # response = await client.post(url, json=payload, timeout=100.0)
-
-#             if response.status_code == 200:
-#                 deepthinking_response = ""
-#                 async for content in process_streaming_response(response):
-#                     deepthinking_response += content
-#                 return deepthinking_response
-#             else:
-#                 print(f"Debug: DeepThinking API response status: {response.status_code}")
-#                 print(f"Debug: DeepThinking API response text: {response.text}")
-#                 raise RuntimeError(f"Error {response.status_code}: {response.text}")
-#     except httpx.RequestError as e:
-#         print(f"Debug: HTTP request error: {str(e)}")
-#         raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")
-#     except Exception as e:
-#         print(f"Debug: General exception: {str(e)}")
-#         raise RuntimeError(f"Failed to send data to DeepThinking model: {str(e)}")
     
 def store_analysis(symbol, analysis):
     """

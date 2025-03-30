@@ -31,34 +31,6 @@ export const analyzeStock = async (ticker) => {
   }
 };
 
-// // Fetch historical stock data
-// export const fetchHistoricalData = async (ticker, period = '1mo') => {
-//   const response = await fetch(`http://localhost:8000/historical/${ticker}?period=${period}`);
-//   if (!response.ok) {
-//     throw new Error('Network response was not ok');
-//   }
-//   return response.json();
-// };
-
-// // Fetch stock metadata
-// export const fetchStockMetadata = async (ticker) => {
-//   const response = await fetch(`http://localhost:8000/metadata/${ticker}`);
-//   if (!response.ok) {
-//     throw new Error('Network response was not ok');
-//   }
-//   return response.json();
-// };
-
-// // Fetch news headlines
-// export const fetchNewsHeadlines = async (ticker, limit = 8) => {
-//   const response = await fetch(`http://localhost:8000/news/${ticker}?limit=${limit}`);
-//   if (!response.ok) {
-//     throw new Error('Network response was not ok');
-//   }
-//   return response.json();
-// };
-
-
 /* Live Market Functions for the Home Page */
 
 export const fetchLiveMarketPrices = async () => {
@@ -90,6 +62,20 @@ export const fetchLiveNewsHeadlines = async (limit = 3) => {
     return data.feed;
   } catch (error) {
     console.error('Error fetching live news headlines:', error);
-    throw error;
+    return { news: [] }; // Return expmty array
+  }
+};
+
+export const fetchTopGainersLosers = async (limit = 5) => {
+  try {
+    const response = await fetch(`http://localhost:8000/top-gainers-losers?limit=${limit}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch top gainers and losers');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching top gainers and losers:', error);
+    return { gainers: [], losers: [] }; // Return empty arrays
   }
 };
