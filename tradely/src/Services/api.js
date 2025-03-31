@@ -12,7 +12,7 @@ export default api;
 const handleApiError = (error) => {
   if (error.response) {
     // Server responded with a status code outside the 2xx range
-    throw new Error(error.response.data.message || 'An error occurred');
+    throw new Error(error.response.data.message);
   } else if (error.request) {
     // Request was made but no response was received
     throw new Error('No response from server. Please try again.');

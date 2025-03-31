@@ -14,10 +14,6 @@ from src.utils.validate_stock_data_utils import validate_stock_data
 # Load environment variables from .env file
 load_dotenv()
 
-# Define USE_MOCK variable (set to True for testing or False for production)
-USE_MOCK = os.getenv("USE_MOCK", "False").lower() == "true"
-
-
 # MongoDB setup
 client = AsyncIOMotorClient(os.getenv("MONGODB_URI"))
 db = client.tradely
@@ -32,11 +28,14 @@ def perform_analysis(stock_data: dict) -> str:
         # "SMA", "EMA",
         # "News"
     ]
-    analysis = "if 'N/A' just say 'noooooo':\n\n"
+    analysis = """
+        You are a stock analyist, provide a concise summery of the data:\n\n
+    """
+    
     for section in sections:
         data = stock_data.get(section.lower().replace(" ", "_"), "No data available")
         analysis += f"{section}: {data}\n"
-    analysis += "\nThis is a preliminary analysis. Please consult a financial advisor for investment decisions."
+    analysis += "\nThis is a preliminary Artificail Intelligence (AI) analysis. Please consult a financial advisor for investment decisions."
     return analysis
 
 async def send_prompt_to_llm(prompt: str, model="gemma3:4b") -> str:
@@ -58,7 +57,6 @@ async def send_prompt_to_llm(prompt: str, model="gemma3:4b") -> str:
                 async for content in process_streaming_response(response):
                     print(content, end="", flush=True)  # Print each chunk as it arrives
                     llm_response += content
-                    llm_response = 'I am testing'
                 return llm_response
             else:
                 raise RuntimeError(f"Error {response.status_code}: {response.text}")
@@ -75,12 +73,17 @@ async def send_to_deepseek(llm_response, model='deepseek-r1:7b'):
     payload = {
         "model": model,
         "messages": [
-            {"role": "user", "content": "I am testing, dont think, just provide a one line response"},
+            {"role": "user", 
+             "content": """
+                You are a financial manager reviewing the analysis of an employee, polish the analysis, providing visuals where appropriate. 
+                Determine wether the given stock is a short-term or long-term asset or liability. Give a prediction what you think the price
+                will be short-term and long-term.
+                Dont exceed 1000 words. Dont take longer than 10 minutes max!
+                """
+            },
             {"role": "user", "content": llm_response}
         ]
     }
-
-    print("Debug: Payload being sent to DeepThinking API:", payload)
 
     # Optionally include stock data in the prompt
     # if stock_data:
@@ -123,41 +126,32 @@ def store_analysis(symbol, analysis):
     
 async def fetch_and_analyze_all_stock_data(ticker: str):
     try:
-        print("Debug: Using hardcoded responses for testing.")
+        print(f"Debug: Fetching and analyzing stock data for ticker: {ticker}")
 
-        # Hardcoded stock data
-        stock_data = {
-            "metadata": {
-                "ticker": ticker,
-                "industry": "Technology",
-                "market_cap": "2.5T",
-                "dividend_yield": "0.5%",
-                "pe_ratio": "30.5",
-                "eps": "5.25",
-                "beta": "1.2",
-                "52_week_high": "200",
-                "52_week_low": "100",
-                "current_price": "150",
-                "analyst_ratings": "Strong Buy",
-                "price_targets": "180",
-                "events": "Earnings report next week",
-                "about_AAPL": "Apple Inc. is a technology company.",
-                "last_updated": datetime.now(),
-            }
-        }
-        print("Debug: Hardcoded stock data:", stock_data)
+        # Fetch real stock data using the stock services
+        stock_data = validate_stock_data(await fetch_all_stock_data(ticker))
+        print("Debug: Fetched stock data:", stock_data)
 
-        # Hardcoded analysis
-        analysis = ""
-        print("Debug: Hardcoded analysis:", analysis)
+        if not stock_data or "metadata" not in stock_data:
+            print("Debug: No stock data available, using default analysis.")
+            analysis = "No stock data available for analysis."
+            llm_response = "No stock data available for analysis."
+            deepthinking_response = "No stock data available for analysis."
+        else:
+            # Perform analysis on the fetched stock data
+            metadata = stock_data["metadata"]
+            print("Debug: Metadata:", metadata)
 
-        # Hardcoded LLM response
-        llm_response = f"Hardcoded LLM response."
-        print("Debug: Hardcoded LLM response:", llm_response)
+            analysis = perform_analysis(stock_data)
+            print("Debug: Analysis result:", analysis)
 
-        # Hardcoded DeepThinking response
-        deepthinking_response = f"Hardcoded DeepThinking response for {ticker}: Apple is a strong buy due to its market dominance and consistent growth."
-        print("Debug: Hardcoded DeepThinking response:", deepthinking_response)
+            # Generate LLM response
+            llm_response = await send_prompt_to_llm(analysis)
+            print("Debug: LLM response:", llm_response)
+
+            # Generate DeepThinking response
+            deepthinking_response = 'await send_to_deepseek(llm_response)'
+            print("Debug: DeepThinking response:", deepthinking_response)
 
         return {
             "symbol": ticker,
@@ -194,88 +188,3 @@ async def process_question_with_llm(question: str, context: str = None) -> str:
     except Exception as e:
         print(f"Error in process_question_with_llm: {e}")
         raise HTTPException(status_code=500, detail=f"Error processing question: {str(e)}")
-
-# async def fetch_and_analyze_all_stock_data(ticker: str):
-#     try:
-#         if USE_MOCK:
-#             print("Debug: Using mocked responses for testing.")
-
-#             # Mocked stock data
-#             stock_data = {
-#                 "metadata": {
-#                     "ticker": ticker,
-#                     "industry": "Technology",
-#                     "market_cap": "2.5T",
-#                     "dividend_yield": "0.5%",
-#                     "pe_ratio": "30.5",
-#                     "eps": "5.25",
-#                     "beta": "1.2",
-#                     "52_week_high": "200",
-#                     "52_week_low": "100",
-#                     "current_price": "150",
-#                     "analyst_ratings": "Strong Buy",
-#                     "price_targets": "180",
-#                     "events": "Earnings report next week",
-#                     "about_AAPL": "Apple Inc. is a technology company.",
-#                     "last_updated": datetime.now(),
-#                 }
-#             }
-#             print("Debug: Mocked stock data:", stock_data)
-
-#             # Mocked analysis
-#             analysis = "Analyze the following stock data:\n\nMetadata: Mocked metadata for testing.\n\nThis is a preliminary analysis. Please consult a financial advisor for investment decisions."
-#             print("Debug: Mocked analysis:", analysis)
-
-#             # Mocked LLM response
-#             llm_response = f"Mock LLM response for {ticker}: Apple is a leader in the technology sector with strong fundamentals."
-#             print("Debug: Mocked LLM response:", llm_response)
-
-#             # Mocked DeepThinking response
-#             deepthinking_response = f"Mock DeepThinking response for {ticker}: Apple is a strong buy due to its market dominance and consistent growth."
-#             print("Debug: Mocked DeepThinking response:", deepthinking_response)
-
-#             return {
-#                 "symbol": ticker,
-#                 "analysis": analysis,
-#                 "llm_response": llm_response,
-#                 "deepthinking_response": deepthinking_response,
-#                 "stock_data": stock_data,
-#             }
-
-#         # Real implementation
-#         stock_data = validate_stock_data(await fetch_all_stock_data(ticker))
-#         print("Debug: Fetched stock data:", stock_data)
-
-#         if not stock_data or "metadata" not in stock_data:
-#             print("Debug: No stock data available, using default prompt.")
-#             prompt = "I'm testing the system, just say hi!"
-#         else:
-#             metadata = stock_data["metadata"]
-#             print("Debug: Metadata:", metadata)
-
-#             analysis = perform_analysis(metadata)
-#             print("Debug: Analysis result:", analysis)
-
-#             prompt = f"""
-#             Analyze the following stock data:
-
-#             Metadata: {metadata}
-#             """
-#             print("Debug: Prompt for LLM:", prompt)
-
-#         llm_response = await send_prompt_to_llm(prompt)
-#         print("Debug: LLM response:", llm_response)
-
-#         deepthinking_response = await send_to_deepseek(llm_response)
-#         print("Debug: DeepThinking response:", deepthinking_response)
-
-#         return {
-#             "symbol": ticker,
-#             "analysis": analysis if 'analysis' in locals() else "No analysis performed",
-#             "llm_response": llm_response,
-#             "deepthinking_response": deepthinking_response,
-#             "stock_data": stock_data if stock_data else "No stock data available"
-#         }
-#     except Exception as e:
-#         print(f"Debug: Exception occurred: {e}")
-#         raise RuntimeError(f"Error in fetch_and_analyze_all_stock_data: {str(e)}")

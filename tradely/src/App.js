@@ -11,6 +11,8 @@ import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, fetchTopGainersLosers, a
 import AnalysisSection from './Components/AnalysisSection';
 import ChartSection from './Components/ChartSection';
 import QuestionSection from './Components/QuestionSection';
+import logo from './Assets/Tradeskee_logo_transparent.png'; 
+
 
 function App() {
   const [ticker, setTicker] = useState('');
@@ -61,7 +63,6 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Debug: handleSubmit triggered');
     setIsLoading(true);
     setError(null);
 
@@ -73,7 +74,7 @@ function App() {
       setIsLoading(false);
     } catch (err) {
       console.error('Debug: Error fetching stock analysis:', err);
-      setError(err.response?.data?.message || 'Failed to fetch analysis. Please try again.');
+      setError(err.response?.data?.message);
       setIsLoading(false);
     }
   };
@@ -91,11 +92,7 @@ function App() {
       // Use a simple string as the context
       const context = 'stock analysis';
   
-      console.log('Debug: Sending question:', question);
-      console.log('Debug: Sending context:', context);
-  
       const response = await askQuestion(question, context);
-      console.log('Debug: Response from askQuestion:', response);
   
       if (response && response.answer) {
         setAnswer(response.answer);
@@ -103,7 +100,6 @@ function App() {
         setAnswer('No answer received from the backend.');
       }
     } catch (err) {
-      console.error('Debug: Error in handleAskQuestion:', err);
       setAnswer('An error occurred while fetching the answer. Please try again.');
     } finally {
       setIsLoading(false);
@@ -168,6 +164,7 @@ function App() {
       <Header />
       <header className="App-header">
         <div className="hero-section">
+        <img src={logo} alt="Logo" className="logo" />
           <h2>Welcome to Tradeskee</h2>
           <p>Your go-to platform for stock market analysis and insights.</p>
         </div>
@@ -203,7 +200,7 @@ function App() {
         </form>
         {error && <div>Error: {error}</div>}
         <AnalysisSection analysis={analysis} isLoading={isLoading} error={error} />
-        {/* <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} /> */}
+        <ChartSection ticker={ticker} isLoading={isLoading} analysis={analysis} />
         <QuestionSection
           analysis={analysis}
           userQuestion={userQuestion}

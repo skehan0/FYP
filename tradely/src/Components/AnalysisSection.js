@@ -30,8 +30,6 @@ const AnalysisSection = ({ analysis, isLoading, error }) => {
     }
   }, [analysis]);
 
-  console.log('Debug: Visible lines:', visibleLines);
-
   // Stop/Reset the animation
   const handleStop = () => {
     timeouts.forEach((timeout) => clearTimeout(timeout)); // Clear all timeouts

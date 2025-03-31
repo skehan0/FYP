@@ -101,13 +101,9 @@ async def get_top_gainers_losers(limit: int = Query(5, description="Number of ga
 @router.post("/ask-question")
 async def post_process_question_with_llm(request: QuestionRequest):
     try:
-        print(f"Debug: Received question: {request.question}")
-        print(f"Debug: Received context: {request.context}")
-
         # Call the LLM service
         llm_response = await process_question_with_llm(request.question, request.context)
 
-        print(f"Debug: Returning response: {llm_response}")
         return {"answer": llm_response}  # Wrap the response in a JSON object
     except Exception as e:
         print(f"Error in post_process_question_with_llm: {e}")
