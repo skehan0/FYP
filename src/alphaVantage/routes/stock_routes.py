@@ -54,9 +54,14 @@ async def get_historical_data(ticker: str):
 async def get_news_headlines(ticker: str, limit: int = Query(8, description="Number of news items to return")):
     return await fetch_news_headlines(ticker, limit)
 
+# @router.get("/live-news-headlines")
+# async def get_live_news_headlines(limit: int = Query(3, description="Number of news items to return")):
+#     return await fetch_live_news_headlines(limit)
+
 @router.get("/live-news-headlines")
 async def get_live_news_headlines(limit: int = Query(3, description="Number of news items to return")):
-    return await fetch_live_news_headlines(limit)
+    news = await fetch_live_news_headlines(limit)
+    return {"feed": news}
 
 @router.get("/income/{ticker}")
 async def get_income_statement(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):

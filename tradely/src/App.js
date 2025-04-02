@@ -16,7 +16,7 @@ import logo from './Assets/Tradeskee_logo_transparent.png';
 
 function App() {
   const [ticker, setTicker] = useState('');
-  const [range, setRange] = useState('1mo');
+  const [range, setRange] = useState('1y');
   const [liveMarketData, setLiveMarketPrices] = useState(null);
   const [liveNews, setLiveNews] = useState(null);
   const [error, setError] = useState(null);

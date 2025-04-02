@@ -48,7 +48,7 @@ export const fetchLiveMarketPrices = async () => {
 // Fetch Live News Headlines
 export const fetchLiveNewsHeadlines = async (limit = 3) => {
   try {
-    const response = await api.get(`/live_news_headlines`, { params: { limit } });
+    const response = await api.get(`/live-news-headlines`, { params: { limit } });
     return response.data.feed; // Assuming the API returns a `feed` property
   } catch (error) {
     handleApiError(error);
@@ -77,7 +77,7 @@ export const askQuestion = async (question, context) => {
     });
 
     console.log('Debug: Response from /ask-question:', response.data);
-    return response.data; // Ensure the response data is returned
+    return response.data;
   } catch (error) {
     console.error('Debug: Error in askQuestion API:', error);
     throw error;
