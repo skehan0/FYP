@@ -211,7 +211,6 @@ function App() {
         {liveMarketData && <LiveMarketData data={liveMarketData} />}
         <TopGainersLosers gainers={gainersLosers.gainers} losers={gainersLosers.losers} />
         {liveNews && <News fetchNews={fetchLiveNewsHeadlines} />}
-        {/* <News fetchNews={fetchLiveNewsHeadlines} isLiveNews={true} /> */}
       </header>
       <Footer />
     </div>

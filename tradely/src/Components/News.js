@@ -37,11 +37,17 @@ const News = ({ fetchNews, isLiveNews = false }) => {
   }, [fetchNews, isLiveNews]);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? data.length - 3 : prevIndex - 3));
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex - 3;
+      return newIndex < 0 ? Math.max(0, data.length - (data.length % 3 || 3)) : newIndex;
+    });
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === data.length - 3 ? 0 : prevIndex + 3));
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex + 3;
+      return newIndex >= data.length ? 0 : newIndex;
+    });
   };
 
   const renderDots = () => {
@@ -72,6 +78,17 @@ const News = ({ fetchNews, isLiveNews = false }) => {
           <div className="news-container">
             <button className="arrow left" onClick={handlePrev}>&#9664;</button>
             {data.slice(currentIndex, currentIndex + 3).map((article, index) => (
+              <div key={index} className="news-article">
+                {article.banner_image && <img src={article.banner_image} alt="Thumbnail" />}
+                <div className="news-content">
+                  <h3>{article.title}</h3>
+                  <p className="summary">{article.summary}</p>
+                  <a href={article.url} target="_blank" rel="noopener noreferrer">Read more</a>
+                </div>
+              </div>
+            ))}
+
+            {data.length < 3 && data.map((article, index) => (
               <div key={index} className="news-article">
                 {article.banner_image && <img src={article.banner_image} alt="Thumbnail" />}
                 <div className="news-content">

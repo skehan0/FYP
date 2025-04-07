@@ -1,0 +1,340 @@
+{
+  "symbol": "aapl",
+  "analysis": "\n        Goal: Conduct a concise financial analysis of {ticker} based on recent market trends, historical data, and technical indicators.  \n\nReturn Format:\n    - Summary: A brief overview of the stock’s current trend.  \n    - Key Financial Indicators: Price movements, moving averages (SMA/EMA), RSI, and MACD.  \n    - Market Sentiment: A summary of recent news and sentiment trends.  \n    - Risk Factors: Highlight any volatility, earnings reports, or macroeconomic risks.  \n\n    Warnings:\n    - Do not provide direct financial advice.  \n    - Ensure the response is fact-based and avoids speculation.  \n    - Dont exceed 600 words\n\n    Context:\n    - Stock Data: {stock_data}  \n    - Technical Indicators: Provide insights based on available technical data.   \n    - Sentiment Analysis: Summarize the sentiment around recent news articles.\n    - Macroeconomic Trends: Highlight broader economic influences impacting this stock.\n\n    Return the response in a structured JSON format for further processing.  \n    \n\n\n    Metadata: {'ticker': 'aapl', 'industry': 'ELECTRONIC COMPUTERS', 'market_cap': '3052340511000', 'dividend_yield': '0.0045', 'pe_ratio': '32.3', 'eps': '6.29', 'beta': '1.259', '52_week_high': '259.81', '52_week_low': '163.31', 'current_price': '229.73', 'analyst_ratings': '250.4', 'price_targets': '250.4', 'events': '0.101', 'about_aapl': \"Apple Inc. is an American multinational technology company that specializes in consumer electronics, computer software, and online services. Apple is the world's largest technology company by revenue (totalling $274.5 billion in 2020) and, since January 2021, the world's most valuable company. As of 2021, Apple is the world's fourth-largest PC vendor by unit sales, and fourth-largest smartphone manufacturer. It is one of the Big Five American information technology companies, along with Amazon, Google, Microsoft, and Facebook.\", 'last_updated': datetime.datetime(2025, 4, 5, 0, 2, 52, 20279)}\nHistorical Data: {'_id': '67dc198ebbec215dd865bf30', 'ticker': 'aapl', 'historical_data': [{'date': '2025-03-19', 'open': '213.3100', 'high': '218.7600', 'low': '209.9700', 'close': '215.2400', 'adjusted_close': '215.2400', 'volume': '144891243', 'dividend_amount': '0.0000'}, {'date': '2025-03-14', 'open': '235.5400', 'high': '236.1600', 'low': '208.4200', 'close': '213.4900', 'adjusted_close': '213.4900', 'volume': '331612070', 'dividend_amount': '0.0000'}, {'date': '2025-03-07', 'open': '241.7900', 'high': '244.0272', 'low': '229.2300', 'close': '239.0700', 'adjusted_close': '239.0700', 'volume': '239653674', 'dividend_amount': '0.0000'}, {'date': '2025-02-28', 'open': '244.9250', 'high': '250.0000', 'low': '230.2000', 'close': '241.8400', 'adjusted_close': '241.8400', 'volume': '241760231', 'dividend_amount': '0.0000'}, {'date': '2025-02-21', 'open': '244.1500', 'high': '248.6900', 'low': '241.8400', 'close': '245.5500', 'adjusted_close': '245.5500', 'volume': '166541044', 'dividend_amount': '0.0000'}], 'last_updated': datetime.datetime(2025, 3, 20, 13, 35, 10, 574000)}\nIncome Statement: {'_id': '67dea599bbec215dd865bf31', 'ticker': 'aapl', 'annual_reports': [{'fiscalDateEnding': '2024-09-30', 'reportedCurrency': 'USD', 'grossProfit': '180683000000', 'totalRevenue': '391035000000', 'costOfRevenue': '236449000000', 'costofGoodsAndServicesSold': '210352000000', 'operatingIncome': '123216000000', 'sellingGeneralAndAdministrative': '26097000000', 'researchAndDevelopment': '31370000000', 'operatingExpenses': '57467000000', 'investmentIncomeNet': 'None', 'netInterestIncome': 'None', 'interestIncome': 'None', 'interestExpense': 'None', 'nonInterestIncome': '391035000000', 'otherNonOperatingIncome': 'None', 'depreciation': '8200000000', 'depreciationAndAmortization': '11445000000', 'incomeBeforeTax': '123485000000', 'incomeTaxExpense': '29749000000', 'interestAndDebtExpense': 'None', 'netIncomeFromContinuingOperations': '93736000000', 'comprehensiveIncomeNetOfTax': '98016000000', 'ebit': '123216000000', 'ebitda': '134661000000', 'netIncome': '93736000000'}, {'fiscalDateEnding': '2023-09-30', 'reportedCurrency': 'USD', 'grossProfit': '169148000000', 'totalRevenue': '379352000000', 'costOfRevenue': '239069000000', 'costofGoodsAndServicesSold': '214137000000', 'operatingIncome': '114301000000', 'sellingGeneralAndAdministrative': '24932000000', 'researchAndDevelopment': '29915000000', 'operatingExpenses': '54847000000', 'investmentIncomeNet': '3750000000', 'netInterestIncome': '-3933000000', 'interestIncome': '3750000000', 'interestExpense': '3933000000', 'nonInterestIncome': '383285000000', 'otherNonOperatingIncome': '-382000000', 'depreciation': '8500000000', 'depreciationAndAmortization': '11519000000', 'incomeBeforeTax': '113736000000', 'incomeTaxExpense': '16741000000', 'interestAndDebtExpense': '3933000000', 'netIncomeFromContinuingOperations': '96995000000', 'comprehensiveIncomeNetOfTax': '96652000000', 'ebit': '117669000000', 'ebitda': '125820000000', 'netIncome': '96995000000'}]}\nBalance Sheet: {'_id': '67dea59abbec215dd865bf32', 'ticker': 'aapl', 'annual_reports': [{'fiscalDateEnding': '2024-09-30', 'reportedCurrency': 'USD', 'totalAssets': '364980000000', 'totalCurrentAssets': '152987000000', 'cashAndCashEquivalentsAtCarryingValue': '29943000000', 'cashAndShortTermInvestments': '65171000000', 'inventory': '7286000000', 'currentNetReceivables': '66243000000', 'totalNonCurrentAssets': '211993000000', 'propertyPlantEquipment': '45680000000', 'accumulatedDepreciationAmortizationPPE': '73448000000', 'intangibleAssets': 'None', 'intangibleAssetsExcludingGoodwill': 'None', 'goodwill': 'None', 'investments': '254763000000', 'longTermInvestments': '91479000000', 'shortTermInvestments': '35228000000', 'otherCurrentAssets': '14287000000', 'otherNonCurrentAssets': '74834000000', 'totalLiabilities': '308030000000', 'totalCurrentLiabilities': '176392000000', 'currentAccountsPayable': '68960000000', 'deferredRevenue': '21049000000', 'currentDebt': '21023000000', 'shortTermDebt': '9967000000', 'totalNonCurrentLiabilities': '131638000000', 'capitalLeaseObligations': '752000000', 'longTermDebt': '96700000000', 'currentLongTermDebt': '10912000000', 'longTermDebtNoncurrent': '85750000000', 'shortLongTermDebtTotal': '106629000000', 'otherCurrentLiabilities': '78304000000', 'otherNonCurrentLiabilities': '45888000000', 'totalShareholderEquity': '56950000000', 'treasuryStock': 'None', 'retainedEarnings': '-19154000000', 'commonStock': '83276000000', 'commonStockSharesOutstanding': '15116786000'}]}\nCash Flow: {'_id': '67dea59abbec215dd865bf33', 'ticker': 'aapl', 'annual_reports': [{'fiscalDateEnding': '2024-09-30', 'reportedCurrency': 'USD', 'operatingCashflow': '118254000000', 'paymentsForOperatingActivities': '1900000000', 'proceedsFromOperatingActivities': 'None', 'changeInOperatingLiabilities': '21572000000', 'changeInOperatingAssets': '17921000000', 'depreciationDepletionAndAmortization': '11445000000', 'capitalExpenditures': '9447000000', 'changeInReceivables': '5144000000', 'changeInInventory': '1046000000', 'profitLoss': '93736000000', 'cashflowFromInvestment': '2935000000', 'cashflowFromFinancing': '-121983000000', 'proceedsFromRepaymentsOfShortTermDebt': '7920000000', 'paymentsForRepurchaseOfCommonStock': '94949000000', 'paymentsForRepurchaseOfEquity': '94949000000', 'paymentsForRepurchaseOfPreferredStock': 'None', 'dividendPayout': '15234000000', 'dividendPayoutCommonStock': '15234000000', 'dividendPayoutPreferredStock': 'None', 'proceedsFromIssuanceOfCommonStock': 'None', 'proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet': '0', 'proceedsFromIssuanceOfPreferredStock': 'None', 'proceedsFromRepurchaseOfEquity': '-94949000000', 'proceedsFromSaleOfTreasuryStock': 'None', 'changeInCashAndCashEquivalents': 'None', 'changeInExchangeRate': 'None', 'netIncome': '93736000000'}]}\nEarnings: {'_id': '67dea59bbbec215dd865bf34', 'ticker': 'aapl', 'annual_reports': []}\nSMA: {'2025-04-04': {'SMA': '213.9143'}, '2025-03-28': {'SMA': '213.9073'}, '2025-03-21': {'SMA': '213.3547'}, '2025-03-14': {'SMA': '212.9047'}, '2025-03-07': {'SMA': '212.5202'}, '2025-02-28': {'SMA': '211.6159'}, '2025-02-21': {'SMA': '210.5869'}, '2025-02-14': {'SMA': '209.6841'}, '2025-02-07': {'SMA': '208.8148'}, '2025-01-31': {'SMA': '208.2983'}, '2025-01-24': {'SMA': '207.6117'}, '2025-01-17': {'SMA': '207.0711'}}\nEMA: {'2025-04-04': {'EMA': '216.4379'}, '2025-03-28': {'EMA': '217.3890'}, '2025-03-21': {'EMA': '217.3717'}, '2025-03-14': {'EMA': '217.3413'}, '2025-03-07': {'EMA': '217.4718'}, '2025-02-28': {'EMA': '216.7397'}, '2025-02-21': {'EMA': '215.8888'}, '2025-02-14': {'EMA': '214.8834'}, '2025-02-07': {'EMA': '213.8760'}, '2025-01-31': {'EMA': '213.4182'}, '2025-01-24': {'EMA': '212.6615'}, '2025-01-17': {'EMA': '212.3268'}}\nNews: [{'article': 1, 'title': \"This Solar Company's 5-Year Return Makes Bitcoin, Dogecoin, Tesla, Disney, Apple, Microsoft, Ford And Amazon Look Trivial\", 'summary': \"Enphase Energy Inc ( NASDAQ: ENPH ) is known as a global leader in solar energy solutions, and over the past five years, delivered beaming returns for traders and investors. Since May 2017, Enphase Energy stock's 5-year return has outperformed several of the world's most popular cryptocurrencies,\", 'pubDate': '20220521T175105', 'url': 'https://www.benzinga.com/markets/cryptocurrency/22/05/27337504/this-solar-companys-5-year-return-makes-bitcoin-dogecoin-tesla-disney-apple-microsoft-ford', 'thumbnail': 'https://cdn.benzinga.com/files/images/story/2022/05/21/man-2425121.jpg?width=1200&height=800&fit=crop', 'sentimentScore': 0.114801, 'sentimentLabel': 'Neutral'}, {'article': 2, 'title': 'US Warns China Against Helping Russia In Ukraine War', 'summary': \"Russia sought China's military equipment to support its invasion of Ukraine, Financial Times reports citing U.S. officials. \\nThe U.S. looks to caution its allies against China's possible assistance to Russia. \\nRussia could also have fallen short of weaponry as the war extended into its third week.\\nB\", 'pubDate': '20220314T122305', 'url': 'https://www.benzinga.com/government/22/03/26119946/us-warns-china-against-helping-russia-in-ukraine-war', 'thumbnail': 'https://cdn.benzinga.com/files/imagecache/og_image_social_share_1200x630/images/story/2012/us_china_7.png', 'sentimentScore': -0.057713, 'sentimentLabel': 'Neutral'}, {'article': 3, 'title': 'This Oil Company Has A Better 1-Year Return Than Tesla, Lucid, Apple, Microsoft, Bitcoin And Ethereum', 'summary': 'Occidental Petroleum Corporation OXY is a global leader in hydrocarbon exploration, and over the past year, treated investors to eye-popping returns.', 'pubDate': '20220628T132300', 'url': 'https://www.benzinga.com/markets/cryptocurrency/22/03/26211164/this-oil-company-has-a-better-1-year-return-than-tesla-lucid-bitcoin-ethereum-and-apple', 'thumbnail': 'https://cdn.benzinga.com/files/images/story/2012/stock-624712_2.jpg?width=1200&height=800&fit=crop', 'sentimentScore': 0.016777, 'sentimentLabel': 'Neutral'}]\n\nThis is a preliminary Artificail Intelligence (AI) analysis. Please consult a financial advisor for investment decisions.",
+  "llm_response": "Okay, here's a breakdown of the data you've provided, categorized and summarized for clarity:\n\n**1. Financial Data (Key Metrics)**\n\n*   **Company:** Apple (Implied - based on the data)\n*   **Common Stock Information:**\n    *   **Shares Outstanding:** Not explicitly stated, but implied to be the base for calculations.\n    *   **Price:** Not provided.\n*   **Financial Ratios/Metrics (Derived from the Returns):**\n    *   **5-Year Return:**  (This is the most significant data point) – The company has delivered a 5-year return that outperforms Bitcoin, Dogecoin, Tesla, Disney, Apple, Microsoft, Ford, and Amazon.\n    *   **1-Year Return:** The company has delivered a 1-year return that outperforms Tesla, Lucid, Bitcoin, Ethereum, and Apple.\n\n**2. News Sentiment Analysis**\n\n*   **Article 1:**\n    *   **Title:** \"This Solar Company's 5-Year Return Makes Bitcoin, Dogecoin, Tesla, Disney, Apple, Microsoft, Ford And Amazon Look Trivial\"\n    *   **Source:** Benzinga\n    *   **Company Mentioned:** Enphase Energy (ENPH) – A solar energy company.\n    *   **Sentiment Score:** 0.114801 (Neutral) – Indicates a generally neutral sentiment.\n*   **Article 2:**\n    *   **Title:** \"US Warns China Against Helping Russia In Ukraine War\"\n    *   **Source:** Benzinga\n    *   **Company Mentioned:** None directly.\n    *   **Sentiment Score:** -0.057713 (Neutral) – Indicates a generally neutral sentiment.\n*   **Article 3:**\n    *   **Title:** \"This Oil Company Has A Better 1-Year Return Than Tesla, Lucid, Apple, Microsoft, Bitcoin And Ethereum\"\n    *   **Source:** Benzinga\n    *   **Company Mentioned:** Occidental Petroleum Corporation (OXY) – An oil company.\n    *   **Sentiment Score:** 0.016777 (Neutral) – Indicates a generally neutral sentiment.\n\n**3. Overall Summary & Implications**\n\n*   **Strong Performance:** The data suggests Apple (or the company being analyzed) has demonstrated strong investment returns over various time horizons (5 years and 1 year).\n*   **Sector Diversification:** The company's performance is highlighted in both the solar energy (Enphase) and oil (Occidental Petroleum) sectors, indicating potential diversification benefits.\n*   **Macroeconomic Context:** The news articles provide a broader context, with one focusing on the performance of the solar sector and another on geopolitical events (US warning to China regarding Russia).\n\n**Important Disclaimer:** As you correctly stated, this is a preliminary AI analysis.  It's crucial to remember that:\n\n*   **Missing Data:**  The analysis is incomplete without the actual stock price, shares outstanding, and other key financial metrics.\n*   **Past Performance is Not Predictive:**  Historical returns are not guarantees of future performance.\n*   **Risk Assessment:**  A full investment analysis would require a thorough risk assessment, considering factors like market volatility, company-specific risks, and macroeconomic conditions.\n\nTo get a more complete picture, you'd need to provide the missing financial data and conduct a more in-depth investigation.\n\nDo you want me to:\n\n*   Generate a more detailed report based on the provided data (if you can fill in the missing information)?\n*   Focus on a specific aspect of the analysis (e.g., a deeper dive into the news sentiment)?",
+  "deepthinking_response": "<think>\nOkay, so I need to help enhance the clarity, conciseness, and efficiency of a stock analysis output generated by Gemini. The goal is to make it more clear and efficient while keeping it accurate. Let me break down what needs to be done.\n\nFirst, there's this data provided in three sections: Financial Data, News Sentiment Analysis, and Overall Summary & Implications. Each has its own set of information but seems a bit disjointed. My job is to reorganize and make it more structured without losing any important details.\n\nLooking at the Financial Data, it mentions Apple but doesn't provide specific numbers like price or shares outstanding. That's problematic because without key metrics such as P/E ratio or revenue growth, it's hard to assess performance accurately. Maybe I can ask if those data points are available for a more detailed analysis.\n\nThe News Sentiment Analysis has three articles with different sentiments. The Enphase Energy article was neutral, which doesn't add much value since the sentiment score is close to zero. The second article about US warnings to China also had a neutral sentiment. These don't seem significant enough to mention, so perhaps I can disregard them unless more context is given.\n\nIn the Overall Summary, it talks about Apple's strong performance and diversification across sectors like solar and oil. However, without specific numbers or comparisons, this summary feels too vague. It would be better if it included metrics like year-over-year returns or percentage gains to give a clearer picture.\n\nI also notice that the macroeconomic context from the news articles is minimal. The warnings about geopolitical tensions could impact stock performance, but since there's no data on how these events affect the company directly, it might not be worth including unless more information is provided.\n\nAnother thing is the emphasis on missing data points like shares outstanding and price. Without knowing how many shares are outstanding or the current price per share, calculating metrics like market capitalization becomes tricky. Maybe I can suggest that Gemini obtain this information for a more robust analysis.\n\nThe risk warnings mention probability factors but don't specify what those probabilities are based on. It would be helpful to have more context about how likely each risk is and what mitigation strategies could be considered.\n\nFor actionable insights, the original response suggests bullish scenarios without specifics. Adding detailed action steps or specific targets for growth would make these insights more actionable and useful.\n\nI also think that structuring the response with clear headings and bullet points will improve readability. Using concise language while retaining all essential information is key to making the analysis both efficient and effective.\n\nIn summary, I need to reorganize the provided data into a structured format that includes missing financial metrics for clarity, focuses on significant sentiment analyses, highlights diversification benefits clearly, incorporates relevant macroeconomic context without overstepping, emphasizes the importance of additional data points, and provides actionable steps with specific targets. This way, the analysis becomes more comprehensive and useful for decision-making.\n\nI should also ensure that all the warnings are neutral and based on facts rather than speculative opinions, as per the instructions. Maintaining a professional tone while making sure everything is accurate and easy to read will be important too.\n</think>\n\n**Enhanced Stock Analysis Report:**\n\n---\n\n### Financial Data Overview:\n- **Company:** Apple (Implied)\n- **Key Metrics Needed:** \n  - Current stock price\n  - Shares outstanding\n  - Revenue growth, P/E ratio, and market capitalization.\n\nWithout these metrics, a detailed analysis is not possible. Please provide the missing data for a more robust assessment.\n\n### News Sentiment Analysis:\n1. **Enphase Energy Article** (Neutral Sentiment): This article discusses a solar energy company with minimal impact on broader stock sentiment.\n2. **US Warning to China** (Neutral Sentiment): No direct mention of a specific company, so it's not relevant for this analysis.\n\n### Overall Summary & Implications:\n- Apple exhibits strong investment performance over the past five years and one year.\n- The company's diversification across sectors like solar energy and oil could offer potential benefits, though without specific metrics, this remains speculative.\n\n### Macroeconomic Context:\n- The warning regarding geopolitical tensions between the US and China may influence global markets but lacks direct impact on Apple unless more context is provided.\n\n### Missing Data Emphasis:\n- **Critical Metrics:** Shares outstanding and current price per share are essential for calculating market value and performance metrics. Please provide these data points to enhance analysis accuracy.\n\n### Risk Assessment:\n- Probabilities of risks were not specified, making it difficult to assess potential impacts on investment decisions. More context is needed to provide meaningful risk mitigation strategies.\n\n### Actionable Insights:\n- **Bullish Scenario:** Suggest exploring opportunities in Apple's expanding sectors with specific targets for growth.\n- **Neutral Scenario:** Monitor market trends and company performance closely without assuming broader implications.\n- **Bearish Scenario:** Consider the impact of macroeconomic factors on investment decisions, though this remains speculative.\n\n### Structuring the Response:\nFor clarity and effectiveness, organize the report with clear headings and bullet points. Use concise language to ensure all essential information is retained while enhancing readability.\n\n---\n\nPlease provide the missing financial data for a comprehensive analysis that guides actionable insights effectively.",
+  "stock_data": {
+    "metadata": {
+      "ticker": "aapl",
+      "industry": "ELECTRONIC COMPUTERS",
+      "market_cap": "3052340511000",
+      "dividend_yield": "0.0045",
+      "pe_ratio": "32.3",
+      "eps": "6.29",
+      "beta": "1.259",
+      "52_week_high": "259.81",
+      "52_week_low": "163.31",
+      "current_price": "229.73",
+      "analyst_ratings": "250.4",
+      "price_targets": "250.4",
+      "events": "0.101",
+      "about_aapl": "Apple Inc. is an American multinational technology company that specializes in consumer electronics, computer software, and online services. Apple is the world's largest technology company by revenue (totalling $274.5 billion in 2020) and, since January 2021, the world's most valuable company. As of 2021, Apple is the world's fourth-largest PC vendor by unit sales, and fourth-largest smartphone manufacturer. It is one of the Big Five American information technology companies, along with Amazon, Google, Microsoft, and Facebook.",
+      "last_updated": "2025-04-05T00:02:52.020279"
+    },
+    "historical_data": {
+      "_id": "67dc198ebbec215dd865bf30",
+      "ticker": "aapl",
+      "historical_data": [
+        {
+          "date": "2025-03-19",
+          "open": "213.3100",
+          "high": "218.7600",
+          "low": "209.9700",
+          "close": "215.2400",
+          "adjusted_close": "215.2400",
+          "volume": "144891243",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-14",
+          "open": "235.5400",
+          "high": "236.1600",
+          "low": "208.4200",
+          "close": "213.4900",
+          "adjusted_close": "213.4900",
+          "volume": "331612070",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-07",
+          "open": "241.7900",
+          "high": "244.0272",
+          "low": "229.2300",
+          "close": "239.0700",
+          "adjusted_close": "239.0700",
+          "volume": "239653674",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-02-28",
+          "open": "244.9250",
+          "high": "250.0000",
+          "low": "230.2000",
+          "close": "241.8400",
+          "adjusted_close": "241.8400",
+          "volume": "241760231",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-02-21",
+          "open": "244.1500",
+          "high": "248.6900",
+          "low": "241.8400",
+          "close": "245.5500",
+          "adjusted_close": "245.5500",
+          "volume": "166541044",
+          "dividend_amount": "0.0000"
+        }
+      ],
+      "last_updated": "2025-03-20T13:35:10.574000"
+    },
+    "news": [
+      {
+        "article": 1,
+        "title": "This Solar Company's 5-Year Return Makes Bitcoin, Dogecoin, Tesla, Disney, Apple, Microsoft, Ford And Amazon Look Trivial",
+        "summary": "Enphase Energy Inc ( NASDAQ: ENPH ) is known as a global leader in solar energy solutions, and over the past five years, delivered beaming returns for traders and investors. Since May 2017, Enphase Energy stock's 5-year return has outperformed several of the world's most popular cryptocurrencies,",
+        "pubDate": "20220521T175105",
+        "url": "https://www.benzinga.com/markets/cryptocurrency/22/05/27337504/this-solar-companys-5-year-return-makes-bitcoin-dogecoin-tesla-disney-apple-microsoft-ford",
+        "thumbnail": "https://cdn.benzinga.com/files/images/story/2022/05/21/man-2425121.jpg?width=1200&height=800&fit=crop",
+        "sentimentScore": 0.114801,
+        "sentimentLabel": "Neutral"
+      },
+      {
+        "article": 2,
+        "title": "US Warns China Against Helping Russia In Ukraine War",
+        "summary": "Russia sought China's military equipment to support its invasion of Ukraine, Financial Times reports citing U.S. officials. \nThe U.S. looks to caution its allies against China's possible assistance to Russia. \nRussia could also have fallen short of weaponry as the war extended into its third week.\nB",
+        "pubDate": "20220314T122305",
+        "url": "https://www.benzinga.com/government/22/03/26119946/us-warns-china-against-helping-russia-in-ukraine-war",
+        "thumbnail": "https://cdn.benzinga.com/files/imagecache/og_image_social_share_1200x630/images/story/2012/us_china_7.png",
+        "sentimentScore": -0.057713,
+        "sentimentLabel": "Neutral"
+      },
+      {
+        "article": 3,
+        "title": "This Oil Company Has A Better 1-Year Return Than Tesla, Lucid, Apple, Microsoft, Bitcoin And Ethereum",
+        "summary": "Occidental Petroleum Corporation OXY is a global leader in hydrocarbon exploration, and over the past year, treated investors to eye-popping returns.",
+        "pubDate": "20220628T132300",
+        "url": "https://www.benzinga.com/markets/cryptocurrency/22/03/26211164/this-oil-company-has-a-better-1-year-return-than-tesla-lucid-bitcoin-ethereum-and-apple",
+        "thumbnail": "https://cdn.benzinga.com/files/images/story/2012/stock-624712_2.jpg?width=1200&height=800&fit=crop",
+        "sentimentScore": 0.016777,
+        "sentimentLabel": "Neutral"
+      }
+    ],
+    "income_statement": {
+      "_id": "67dea599bbec215dd865bf31",
+      "ticker": "aapl",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-09-30",
+          "reportedCurrency": "USD",
+          "grossProfit": "180683000000",
+          "totalRevenue": "391035000000",
+          "costOfRevenue": "236449000000",
+          "costofGoodsAndServicesSold": "210352000000",
+          "operatingIncome": "123216000000",
+          "sellingGeneralAndAdministrative": "26097000000",
+          "researchAndDevelopment": "31370000000",
+          "operatingExpenses": "57467000000",
+          "investmentIncomeNet": "None",
+          "netInterestIncome": "None",
+          "interestIncome": "None",
+          "interestExpense": "None",
+          "nonInterestIncome": "391035000000",
+          "otherNonOperatingIncome": "None",
+          "depreciation": "8200000000",
+          "depreciationAndAmortization": "11445000000",
+          "incomeBeforeTax": "123485000000",
+          "incomeTaxExpense": "29749000000",
+          "interestAndDebtExpense": "None",
+          "netIncomeFromContinuingOperations": "93736000000",
+          "comprehensiveIncomeNetOfTax": "98016000000",
+          "ebit": "123216000000",
+          "ebitda": "134661000000",
+          "netIncome": "93736000000"
+        },
+        {
+          "fiscalDateEnding": "2023-09-30",
+          "reportedCurrency": "USD",
+          "grossProfit": "169148000000",
+          "totalRevenue": "379352000000",
+          "costOfRevenue": "239069000000",
+          "costofGoodsAndServicesSold": "214137000000",
+          "operatingIncome": "114301000000",
+          "sellingGeneralAndAdministrative": "24932000000",
+          "researchAndDevelopment": "29915000000",
+          "operatingExpenses": "54847000000",
+          "investmentIncomeNet": "3750000000",
+          "netInterestIncome": "-3933000000",
+          "interestIncome": "3750000000",
+          "interestExpense": "3933000000",
+          "nonInterestIncome": "383285000000",
+          "otherNonOperatingIncome": "-382000000",
+          "depreciation": "8500000000",
+          "depreciationAndAmortization": "11519000000",
+          "incomeBeforeTax": "113736000000",
+          "incomeTaxExpense": "16741000000",
+          "interestAndDebtExpense": "3933000000",
+          "netIncomeFromContinuingOperations": "96995000000",
+          "comprehensiveIncomeNetOfTax": "96652000000",
+          "ebit": "117669000000",
+          "ebitda": "125820000000",
+          "netIncome": "96995000000"
+        }
+      ]
+    },
+    "balance_sheet": {
+      "_id": "67dea59abbec215dd865bf32",
+      "ticker": "aapl",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-09-30",
+          "reportedCurrency": "USD",
+          "totalAssets": "364980000000",
+          "totalCurrentAssets": "152987000000",
+          "cashAndCashEquivalentsAtCarryingValue": "29943000000",
+          "cashAndShortTermInvestments": "65171000000",
+          "inventory": "7286000000",
+          "currentNetReceivables": "66243000000",
+          "totalNonCurrentAssets": "211993000000",
+          "propertyPlantEquipment": "45680000000",
+          "accumulatedDepreciationAmortizationPPE": "73448000000",
+          "intangibleAssets": "None",
+          "intangibleAssetsExcludingGoodwill": "None",
+          "goodwill": "None",
+          "investments": "254763000000",
+          "longTermInvestments": "91479000000",
+          "shortTermInvestments": "35228000000",
+          "otherCurrentAssets": "14287000000",
+          "otherNonCurrentAssets": "74834000000",
+          "totalLiabilities": "308030000000",
+          "totalCurrentLiabilities": "176392000000",
+          "currentAccountsPayable": "68960000000",
+          "deferredRevenue": "21049000000",
+          "currentDebt": "21023000000",
+          "shortTermDebt": "9967000000",
+          "totalNonCurrentLiabilities": "131638000000",
+          "capitalLeaseObligations": "752000000",
+          "longTermDebt": "96700000000",
+          "currentLongTermDebt": "10912000000",
+          "longTermDebtNoncurrent": "85750000000",
+          "shortLongTermDebtTotal": "106629000000",
+          "otherCurrentLiabilities": "78304000000",
+          "otherNonCurrentLiabilities": "45888000000",
+          "totalShareholderEquity": "56950000000",
+          "treasuryStock": "None",
+          "retainedEarnings": "-19154000000",
+          "commonStock": "83276000000",
+          "commonStockSharesOutstanding": "15116786000"
+        }
+      ]
+    },
+    "cash_flow": {
+      "_id": "67dea59abbec215dd865bf33",
+      "ticker": "aapl",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-09-30",
+          "reportedCurrency": "USD",
+          "operatingCashflow": "118254000000",
+          "paymentsForOperatingActivities": "1900000000",
+          "proceedsFromOperatingActivities": "None",
+          "changeInOperatingLiabilities": "21572000000",
+          "changeInOperatingAssets": "17921000000",
+          "depreciationDepletionAndAmortization": "11445000000",
+          "capitalExpenditures": "9447000000",
+          "changeInReceivables": "5144000000",
+          "changeInInventory": "1046000000",
+          "profitLoss": "93736000000",
+          "cashflowFromInvestment": "2935000000",
+          "cashflowFromFinancing": "-121983000000",
+          "proceedsFromRepaymentsOfShortTermDebt": "7920000000",
+          "paymentsForRepurchaseOfCommonStock": "94949000000",
+          "paymentsForRepurchaseOfEquity": "94949000000",
+          "paymentsForRepurchaseOfPreferredStock": "None",
+          "dividendPayout": "15234000000",
+          "dividendPayoutCommonStock": "15234000000",
+          "dividendPayoutPreferredStock": "None",
+          "proceedsFromIssuanceOfCommonStock": "None",
+          "proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet": "0",
+          "proceedsFromIssuanceOfPreferredStock": "None",
+          "proceedsFromRepurchaseOfEquity": "-94949000000",
+          "proceedsFromSaleOfTreasuryStock": "None",
+          "changeInCashAndCashEquivalents": "None",
+          "changeInExchangeRate": "None",
+          "netIncome": "93736000000"
+        }
+      ]
+    },
+    "earnings": {
+      "_id": "67dea59bbbec215dd865bf34",
+      "ticker": "aapl",
+      "annual_reports": []
+    },
+    "sma": {
+      "2025-04-04": {
+        "SMA": "213.9143"
+      },
+      "2025-03-28": {
+        "SMA": "213.9073"
+      },
+      "2025-03-21": {
+        "SMA": "213.3547"
+      },
+      "2025-03-14": {
+        "SMA": "212.9047"
+      },
+      "2025-03-07": {
+        "SMA": "212.5202"
+      },
+      "2025-02-28": {
+        "SMA": "211.6159"
+      },
+      "2025-02-21": {
+        "SMA": "210.5869"
+      },
+      "2025-02-14": {
+        "SMA": "209.6841"
+      },
+      "2025-02-07": {
+        "SMA": "208.8148"
+      },
+      "2025-01-31": {
+        "SMA": "208.2983"
+      },
+      "2025-01-24": {
+        "SMA": "207.6117"
+      },
+      "2025-01-17": {
+        "SMA": "207.0711"
+      }
+    },
+    "ema": {
+      "2025-04-04": {
+        "EMA": "216.4379"
+      },
+      "2025-03-28": {
+        "EMA": "217.3890"
+      },
+      "2025-03-21": {
+        "EMA": "217.3717"
+      },
+      "2025-03-14": {
+        "EMA": "217.3413"
+      },
+      "2025-03-07": {
+        "EMA": "217.4718"
+      },
+      "2025-02-28": {
+        "EMA": "216.7397"
+      },
+      "2025-02-21": {
+        "EMA": "215.8888"
+      },
+      "2025-02-14": {
+        "EMA": "214.8834"
+      },
+      "2025-02-07": {
+        "EMA": "213.8760"
+      },
+      "2025-01-31": {
+        "EMA": "213.4182"
+      },
+      "2025-01-24": {
+        "EMA": "212.6615"
+      },
+      "2025-01-17": {
+        "EMA": "212.3268"
+      }
+    }
+  }
+}

@@ -217,7 +217,9 @@ async def fetch_news_headlines(ticker: str, limit: int = 3):
         return news_cache[cache_key]
 
     url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={API_KEY}&sort=RELEVANCE"
+
     data = await make_request(url)
+
     news_data = data.get("feed", [])
 
     cleaned_news = [
@@ -233,6 +235,10 @@ async def fetch_news_headlines(ticker: str, limit: int = 3):
         }
         for index, item in enumerate(news_data[:limit])
     ]
+
+    # Cache the result
+    news_cache[cache_key] = cleaned_news
+    return cleaned_news
     
 # Fetch fetchLiveNewsHeadlines
 async def fetch_live_news_headlines(limit: int = 3):

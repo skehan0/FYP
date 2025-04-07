@@ -49,9 +49,18 @@ export const fetchLiveMarketPrices = async () => {
 export const fetchLiveNewsHeadlines = async (limit = 3) => {
   try {
     const response = await api.get(`/live-news-headlines`, { params: { limit } });
-    return response.data.feed; // Assuming the API returns a `feed` property
+    console.log('Debug response from /live-news-headlines', response.data);
+
+    // Access the nested "news" array inside "feed"
+    if (response.data && response.data.feed && response.data.feed.news) {
+      return response.data.feed.news; // Return the "news" array
+    } else {
+      console.warn('Debug: No news found in response:', response.data);
+      return []; // Return an empty array if "news" is missing
+    }
   } catch (error) {
     handleApiError(error);
+    return []; // Ensure a fallback in case of an error
   }
 };
 
