@@ -113,6 +113,9 @@ async def fetch_all_stock_data(ticker: str):
 
 # Specific Data Calls
 async def fetch_stock_metadata(ticker: str):
+    """
+    Fetching stock metadata of a specific ticker input symbol
+    """
     if ticker in metadata_cache:
         return metadata_cache[ticker]
     
@@ -212,6 +215,9 @@ async def fetch_historical_data(ticker: str, limit: int = 5):
 
 # Fetch news headlines
 async def fetch_news_headlines(ticker: str, limit: int = 3):
+    """
+    Stock news for specific ticker input
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in news_cache:
         return news_cache[cache_key]
@@ -242,6 +248,9 @@ async def fetch_news_headlines(ticker: str, limit: int = 3):
     
 # Fetch fetchLiveNewsHeadlines
 async def fetch_live_news_headlines(limit: int = 3):
+    """
+    Fetching live market news for the frontend, no specific stock ticker
+    """
     cache_key = f"{limit}"
     if cache_key in news_cache:
         return news_cache[cache_key]
@@ -410,6 +419,14 @@ async def fetch_earnings(ticker: str, limit: int = 1):
 
 # Fetch SMA
 async def fetch_SMA(ticker: str, interval: str = "weekly", time_period: int = 60, series_type: str = "close", limit: int = 12):
+    """
+    SMA (Simple Moving Average) is represented by a line on a stock chart that follows that previous n days closing price
+        - When a stock goes below the line, it represents a bearish market (downward trend)
+        - When a stock goes above the line, it represents a bullish market (upward trend)
+        Trading Technique:
+            - Buy when a goes above line
+            - Sell when it goes below the line
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in sma_cache:
         return sma_cache[cache_key]
@@ -428,6 +445,16 @@ async def fetch_SMA(ticker: str, interval: str = "weekly", time_period: int = 60
 
 # Fetch EMA
 async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60, series_type: str = "close", limit: int = 12):
+    """
+    EMA (Exponential Moving Average) is represented by a line on a stock chart that follows that previous n days closing price
+        The difference here compared to SMA is that the EMA places a bigger weight on more recent days,
+            and less weight on days further away
+        - When a stock goes below the line, it represents a bearish market (downward trend)
+        - When a stock goes above the line, it represents a bullish market (upward trend)
+        Trading Technique:
+            - Buy when a goes above line
+            - Sell when it goes below the line
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in ema_cache:
         return ema_cache[cache_key]
@@ -449,6 +476,9 @@ Fetching live market data -----------------------
 """
 
 async def fetch_live_market_prices():
+    """
+    Fetching live market prices for specified stocks to display in the frontend
+    """
     global market_data_cache
     current_time = time.time()
     

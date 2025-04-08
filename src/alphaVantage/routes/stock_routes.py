@@ -29,7 +29,7 @@ class QuestionRequest(BaseModel):
 @router.get("/analyze_all/{ticker}")
 async def analyze_all_stock_data(ticker: str):
     """
-    Endpoint to fetch all stock data, analyze it, and send it to the LLM.
+    Endpoint to fetch all stock data, analyze it (stage 1), send it to the LLM to analyze (stage 2)
     """
     try:
         # Call the service function to fetch, analyze, and send data to the LLM
@@ -63,18 +63,22 @@ async def get_live_news_headlines(limit: int = Query(3, description="Number of n
     news = await fetch_live_news_headlines(limit)
     return {"feed": news}
 
+# Financial Statement
 @router.get("/income/{ticker}")
 async def get_income_statement(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_income_statement(ticker, limit)
 
+# Financial Statement
 @router.get("/balance/{ticker}")
 async def get_balance_sheet(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_balance_sheet(ticker)
 
+# Financial Statement
 @router.get("/cashflow/{ticker}")
 async def get_cash_flow(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_cash_flow(ticker, limit)
 
+# Financial Statement
 @router.get("/earnings/{ticker}")
 async def get_earnings(ticker: str, limit: int = Query(5, description="Number of years and quarters to return")):
     return await fetch_earnings(ticker, limit)
@@ -87,10 +91,12 @@ async def get_live_market_prices():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Financial Indicator
 @router.get("/sma/{ticker}")
 async def get_SMA(ticker: str):
     return await fetch_SMA(ticker)
 
+# Financial Indicator
 @router.get("/ema/{ticker}")
 async def get_EMA(ticker: str):
     return await fetch_EMA(ticker)

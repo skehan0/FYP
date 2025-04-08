@@ -40,7 +40,6 @@
   background: linear-gradient(90deg, transparent, #00D1FF, transparent);
 }
 
-/* ====== Chat Bubble Container ====== */
 .analysis-output {
   display: flex;
   flex-direction: column;
@@ -53,7 +52,6 @@
   background: rgba(26, 26, 42, 0.5);
 }
 
-/* ====== Scrollbar Styling ====== */
 .analysis-output::-webkit-scrollbar {
   width: 8px;
 }
@@ -72,7 +70,7 @@
   background: #00D1FF;
 }
 
-/* ====== Chat Bubbles ====== */
+/* Chat Bubble */
 .analysis-output p {
   padding: 15px 20px;
   border-radius: 18px;
@@ -106,7 +104,6 @@
   box-shadow: 0 6px 16px rgba(0, 209, 255, 0.2);
 }
 
-/* ====== Highlighted Chat Bubble ====== */
 .analysis-output p.highlight {
   align-self: flex-end;
   background: linear-gradient(135deg, rgba(0, 123, 255, 0.3), rgba(0, 209, 255, 0.3));
@@ -121,7 +118,6 @@
   background: linear-gradient(135deg, rgba(0, 123, 255, 0.3), rgba(0, 209, 255, 0.3));
 }
 
-/* ====== First/Last Line Styling ====== */
 .analysis-output p:first-child {
   font-style: italic;
   color: #8a9ba8;
@@ -137,7 +133,6 @@
   border: 1px solid rgba(0, 255, 170, 0.2);
 }
 
-/* ====== Loading Animation ====== */
 .loading {
   border: 4px solid rgba(30, 30, 47, 0.3);
   border-top: 4px solid #00D1FF;
@@ -154,7 +149,6 @@
   100% { transform: rotate(360deg); }
 }
 
-/* ====== Button Styles ====== */
 .save-buttons {
   margin-top: 25px;
   display: flex;
@@ -173,6 +167,7 @@
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  margin: 5px;
 }
 
 .save-analysis-button:hover {
@@ -190,6 +185,7 @@
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(255, 65, 108, 0.3);
+  margin: 5px;
 }
 
 .stop-animation-button:hover {
@@ -197,7 +193,6 @@
   box-shadow: 0 6px 12px rgba(255, 75, 43, 0.4);
 }
 
-/* ====== Responsive Design ====== */
 @media (max-width: 768px) {
   .analysis-section {
     padding: 20px;
