@@ -1,13 +1,37 @@
-# FYP
-My final year project repository
+# Final Year Project (FYP) - Tradeskee - AI Data Analysis Tool
 
-# Yahoo Finance
-    period: data period to download (either use period parameter or use start and end) Valid periods are:
-        “1d”, “5d”, “1mo”, “3mo”, “6mo”, “1y”, “2y”, “5y”, “10y”, “ytd”, “max”
-    interval: data interval (1m data is only for available for last 7 days, and data interval <1d for the last 60 days) Valid intervals are:
-        “1m”, “2m”, “5m”, “15m”, “30m”, “60m”, “90m”, “1h”, “1d”, “5d”, “1wk”, “1mo”, “3mo”
-    start: If not using period – in the format (yyyy-mm-dd) or datetime.
-    end: If not using period – in the format (yyyy-mm-dd) or datetime.
-    prepost: Include Pre and Post regular market data in results? (Default is False)- no need usually to change this from False
-    auto_adjust: Adjust all OHLC (Open/High/Low/Close prices) automatically? (Default is True)- just leave this always as true and don’t worry about it
-    actions: Download stock dividends and stock splits events? (Default is True)
+## Project Overview
+This repository contains the source code and documentation for my final year project. The project aims to develop an AI-powered stock analysis platform that leverages real-time contextual data to enhance AI decision-making and provide actionable insights for users.
+
+## Features
+    - Real-time stock data analytics
+    - Integration with Alpha Vantage APIs
+    - Ollama AI model integration
+    - MongoDB for data storage
+    - FastAPI backend
+    - React frontend for user interaction
+
+## Tech Stack
+    - Frontend: React.js
+    - Backend: FastAPI (Python)
+    - Database: MongoDB
+    - APIs: Alpha Vantage
+    - AI Models: Ollama
+
+## Installation
+1. Clone the repository:
+   git clone https://github.com/skehan0/FYP.git
+   cd FYP
+
+## Set Up
+Currently to run on your own laptop: You must generate your own personal API keys for Alpha Vantage, Ollama and create a database with MongoDB
+You must also download Ollama Models of your choice onto your local machine, ensure your have enough dedicated RAM to run
+
+1. python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+2. Run 'pip install -r requirements.txt'
+3. Set up Node.js environment
+    'cd tradely'
+    'npm install'
+4. Run FastAPI 'uvicorn src.main:app --reload'
+5. Run App 'cd tradely' 'npm run'

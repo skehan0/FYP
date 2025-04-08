@@ -1,0 +1,312 @@
+{
+  "symbol": "tsla",
+  "analysis": "\n        goal = Conduct a concise financial analysis of {ticker} based on recent market trends, historical data, and technical indicators.\n\n        Return Format:\n            - Summary: A brief overview of the stock’s current trend.\n            - Key Financial Indicators: Price movements, moving averages (SMA/EMA).\n            - Market Sentiment: A summary of recent news and sentiment trends.\n            - Risk Factors: Highlight any volatility, earnings reports, or macroeconomic risks.\n\n        Warnings:\n            - Do not provide direct financial advice.\n            - Ensure the response is fact-based and avoids speculation.\n            - Keep the response concise, focusing on actionable insights without exceeding 2000 words.\n\n        Context:\n            - Stock Data: {stock_data}\n            - Technical Indicators: Provide insights based on available technical data.\n            - Sentiment Analysis: Summarize the sentiment around recent news articles.\n            - Macroeconomic Trends: Highlight broader economic influences impacting this stock.\n    Metadata: {'ticker': 'tsla', 'industry': 'MOTOR VEHICLES & PASSENGER CAR BODIES', 'market_cap': '859711472000', 'dividend_yield': 'None', 'pe_ratio': '131.02', 'eps': '2.04', 'beta': '2.58', '52_week_high': '488.54', '52_week_low': '138.8', 'current_price': '310.44', 'analyst_ratings': '323.87', 'price_targets': '323.87', 'events': '-0.709', 'about_tsla': \"Tesla, Inc. is an American electric vehicle and clean energy company based in Palo Alto, California. Tesla's current products include electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, as well as other related products and services. In 2020, Tesla had the highest sales in the plug-in and battery electric passenger car segments, capturing 16% of the plug-in market (which includes plug-in hybrids) and 23% of the battery-electric (purely electric) market. Through its subsidiary Tesla Energy, the company develops and is a major installer of solar photovoltaic energy generation systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3 GWh of battery storage supplied in 2020.\", 'last_updated': datetime.datetime(2025, 4, 5, 1, 20, 10, 827468)}\nHistorical Data: {'_id': '67ed0503e0b7633f2684f9f4', 'ticker': 'tsla', 'historical_data': [{'date': '2025-04-01', 'open': '249.3100', 'high': '277.4500', 'low': '243.3601', 'close': '268.4600', 'adjusted_close': '268.4600', 'volume': '280495847', 'dividend_amount': '0.0000'}, {'date': '2025-03-28', 'open': '258.0750', 'high': '291.8500', 'low': '256.3300', 'close': '263.5500', 'adjusted_close': '263.5500', 'volume': '762077379', 'dividend_amount': '0.0000'}, {'date': '2025-03-21', 'open': '245.0550', 'high': '249.5200', 'low': '222.2800', 'close': '248.7100', 'adjusted_close': '248.7100', 'volume': '567128908', 'dividend_amount': '0.0000'}, {'date': '2025-03-14', 'open': '252.5400', 'high': '253.3700', 'low': '217.0200', 'close': '249.9800', 'adjusted_close': '249.9800', 'volume': '717205710', 'dividend_amount': '0.0000'}, {'date': '2025-03-07', 'open': '300.3400', 'high': '303.9400', 'low': '250.7300', 'close': '262.6700', 'adjusted_close': '262.6700', 'volume': '537122156', 'dividend_amount': '0.0000'}], 'last_updated': datetime.datetime(2025, 4, 2, 9, 36, 3, 807000)}\nIncome Statement: {'_id': '67ed0504e0b7633f2684f9f5', 'ticker': 'tsla', 'annual_reports': [{'fiscalDateEnding': '2024-12-31', 'reportedCurrency': 'USD', 'grossProfit': '17450000000', 'totalRevenue': '97690000000', 'costOfRevenue': '80240000000', 'costofGoodsAndServicesSold': '335000000', 'operatingIncome': '7076000000', 'sellingGeneralAndAdministrative': '5150000000', 'researchAndDevelopment': '4540000000', 'operatingExpenses': '10374000000', 'investmentIncomeNet': '1569000000', 'netInterestIncome': '1219000000', 'interestIncome': '1569000000', 'interestExpense': '350000000', 'nonInterestIncome': '97763000000', 'otherNonOperatingIncome': '695000000', 'depreciation': '4120000000', 'depreciationAndAmortization': '409000000', 'incomeBeforeTax': '8928000000', 'incomeTaxExpense': '1837000000', 'interestAndDebtExpense': '350000000', 'netIncomeFromContinuingOperations': '7153000000', 'comprehensiveIncomeNetOfTax': '6564000000', 'ebit': '7076000000', 'ebitda': '7485000000', 'netIncome': '7091000000'}]}\nBalance Sheet: {'_id': '67ed0505e0b7633f2684f9f6', 'ticker': 'tsla', 'annual_reports': [{'fiscalDateEnding': '2024-12-31', 'reportedCurrency': 'USD', 'totalAssets': '122070000000', 'totalCurrentAssets': '58360000000', 'cashAndCashEquivalentsAtCarryingValue': '16139000000', 'cashAndShortTermInvestments': '36563000000', 'inventory': '12017000000', 'currentNetReceivables': '4418000000', 'totalNonCurrentAssets': '52904000000', 'propertyPlantEquipment': '35836000000', 'accumulatedDepreciationAmortizationPPE': '15588000000', 'intangibleAssets': '394000000', 'intangibleAssetsExcludingGoodwill': '150000000', 'goodwill': '244000000', 'investments': '36563000000', 'longTermInvestments': 'None', 'shortTermInvestments': '20424000000', 'otherCurrentAssets': '5362000000', 'otherNonCurrentAssets': '4215000000', 'totalLiabilities': '48390000000', 'totalCurrentLiabilities': '28821000000', 'currentAccountsPayable': '12474000000', 'deferredRevenue': '10084000000', 'currentDebt': '2343000000', 'shortTermDebt': '2230000000', 'totalNonCurrentLiabilities': '18637000000', 'capitalLeaseObligations': '222000000', 'longTermDebt': '5535000000', 'currentLongTermDebt': '2343000000', 'longTermDebtNoncurrent': 'None', 'shortLongTermDebtTotal': '7765000000', 'otherCurrentLiabilities': '1549000000', 'otherNonCurrentLiabilities': '10495000000', 'totalShareholderEquity': '72913000000', 'treasuryStock': 'None', 'retainedEarnings': '35209000000', 'commonStock': '3000000', 'commonStockSharesOutstanding': '3216000000'}]}\nCash Flow: {'_id': '67ed0505e0b7633f2684f9f7', 'ticker': 'tsla', 'annual_reports': [{'fiscalDateEnding': '2024-12-31', 'reportedCurrency': 'USD', 'operatingCashflow': '14923000000', 'paymentsForOperatingActivities': '3079000000', 'proceedsFromOperatingActivities': 'None', 'changeInOperatingLiabilities': '4090000000', 'changeInOperatingAssets': '3419000000', 'depreciationDepletionAndAmortization': '4529000000', 'capitalExpenditures': '11339000000', 'changeInReceivables': '1083000000', 'changeInInventory': '-937000000', 'profitLoss': '7153000000', 'cashflowFromInvestment': '-18787000000', 'cashflowFromFinancing': '3853000000', 'proceedsFromRepaymentsOfShortTermDebt': 'None', 'paymentsForRepurchaseOfCommonStock': 'None', 'paymentsForRepurchaseOfEquity': 'None', 'paymentsForRepurchaseOfPreferredStock': 'None', 'dividendPayout': 'None', 'dividendPayoutCommonStock': 'None', 'dividendPayoutPreferredStock': 'None', 'proceedsFromIssuanceOfCommonStock': 'None', 'proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet': 'None', 'proceedsFromIssuanceOfPreferredStock': 'None', 'proceedsFromRepurchaseOfEquity': '1241000000', 'proceedsFromSaleOfTreasuryStock': 'None', 'changeInCashAndCashEquivalents': 'None', 'changeInExchangeRate': 'None', 'netIncome': '7091000000'}]}\nEarnings: {'_id': '67ed0506e0b7633f2684f9f8', 'ticker': 'tsla', 'annual_reports': []}\nSMA: {'2025-04-04': {'SMA': '256.4820'}, '2025-03-28': {'SMA': '255.7177'}, '2025-03-21': {'SMA': '254.4570'}, '2025-03-14': {'SMA': '253.3660'}, '2025-03-07': {'SMA': '252.7362'}, '2025-02-28': {'SMA': '252.0065'}, '2025-02-21': {'SMA': '251.0817'}, '2025-02-14': {'SMA': '249.5930'}, '2025-02-07': {'SMA': '247.8713'}, '2025-01-31': {'SMA': '246.0693'}, '2025-01-24': {'SMA': '243.3900'}, '2025-01-17': {'SMA': '240.5942'}}\nEMA: {'2025-04-04': {'EMA': '280.3875'}, '2025-03-28': {'EMA': '281.7759'}, '2025-03-21': {'EMA': '282.3937'}, '2025-03-14': {'EMA': '283.5356'}, '2025-03-07': {'EMA': '284.6730'}, '2025-02-28': {'EMA': '285.4189'}, '2025-02-21': {'EMA': '285.1626'}, '2025-02-14': {'EMA': '283.3783'}, '2025-02-07': {'EMA': '280.9219'}, '2025-01-31': {'EMA': '278.1864'}, '2025-01-24': {'EMA': '273.9012'}, '2025-01-17': {'EMA': '269.4036'}}\nNews: [{'article': 1, 'title': 'Nio Said To Be In Discussions With Rivals To License Its Flagship EV Battery-Swap Tech', 'summary': \"Nio Inc  ( NYSE: NIO )  is in talks with several automakers for licensing its battery-swapping technology, Financial Times reported on Tuesday, citing the electric vehicle maker's European president Hui Zhang.\\nWhat Happened: Shanghai-based Nio is in talks with Chinese and international car groups to\", 'pubDate': '20220405T050433', 'url': 'https://www.benzinga.com/news/22/04/26466681/nio-said-to-be-in-discussions-with-rivals-to-license-its-flagship-ev-battery-swap-tech', 'thumbnail': 'https://cdn.benzinga.com/files/imagecache/story_image_685x375C/images/story/2012/nio_10.jpeg', 'sentimentScore': -0.014468, 'sentimentLabel': 'Neutral'}, {'article': 2, 'title': \"For Tesla Investors, the Nightmare of Musk's Stock Sales Won't Stop\", 'summary': 'Elon Musk Sold More Tesla ...', 'pubDate': '20221215T030400', 'url': 'https://www.barrons.com/articles/elon-musk-sells-tesla-stock-51671073393', 'thumbnail': 'https://images.barrons.com/im-678524/social', 'sentimentScore': 0.190525, 'sentimentLabel': 'Somewhat-Bullish'}, {'article': 3, 'title': \"Tesla's Brand Is Suffering as Elon Musk Tries to Save Civilization\", 'summary': \"Tesla 's brand image is in the red, just like Tesla stock. How consumers see Tesla ( ticker: TSLA ) looks to be suffering as Elon Musk tries to put his stamp on Twitter.\", 'pubDate': '20221212T150000', 'url': 'https://www.barrons.com/articles/tesla-brand-twitter-elon-musk-51670857158', 'thumbnail': 'https://images.barrons.com/im-683622/social', 'sentimentScore': -0.303015, 'sentimentLabel': 'Somewhat-Bearish'}]\n\nThis is a preliminary Artificail Intelligence (AI) analysis. Please consult a financial advisor for investment decisions.",
+  "llm_response": "Okay, here's a breakdown of the provided data, categorized and summarized for clarity:\n\n**1. Financial Data (Key Metrics):**\n\n*   **Balance Sheet (Simplified):** This data provides a snapshot of Tesla's financial health.  It's crucial to remember this is a simplified view.\n    *   **Assets:** (Not explicitly listed, but implied through liabilities and equity)\n    *   **Liabilities:** (Not explicitly listed, but implied through equity)\n    *   **Equity:** (Not explicitly listed, but implied through assets and liabilities)\n*   **Cash Flow:**  The cash flow statement is key.  The provided data shows:\n    *   **Operating Cash Flow:** $14,688.31 (This is a significant positive, indicating Tesla is generating cash from its core business operations.)\n    *   **Investing Cash Flow:** -$8,433.48 (Tesla is investing heavily in things like factories, equipment, and potentially R&D.)\n    *   **Financing Cash Flow:** -$1,337.83 (Tesla is using debt and equity to fund its operations and investments.)\n\n**2. Technical Analysis Data:**\n\n*   **SMA (Simple Moving Average):**  These are smoothing indicators used to identify trends.\n    *   **SMA:**  The SMA is trending upwards, suggesting a generally bullish trend.\n*   **EMA (Exponential Moving Average):**  Similar to SMA, but gives more weight to recent prices, making it more responsive to changes.  The EMA is also trending upwards, reinforcing the bullish signal.\n\n**3. News Sentiment Analysis:**\n\n*   **News Articles:**  The news data provides context around Tesla's situation.\n    *   **Article 1 (Nio Battery Swap):**  This news suggests potential competition and collaboration opportunities for Tesla in the battery technology space.  The neutral sentiment indicates this is a developing story without a strong directional bias.\n    *   **Article 2 (Musk's Stock Sales):**  This is a *bearish* news item. Elon Musk selling Tesla stock is generally viewed negatively by investors, as it can signal a lack of confidence in the company's future.\n    *   **Article 3 (Musk & Twitter):** This is a *bearish* news item. The association of Elon Musk with Twitter (now X) and the controversies surrounding it are viewed negatively by investors.\n\n**4. Overall Assessment (Based on the Data):**\n\n*   **Positive Fundamentals:** Tesla's strong operating cash flow is a major positive.\n*   **Technical Signals:** The SMA and EMA trends are bullish.\n*   **Mixed Sentiment:** The news sentiment is mixed. While the battery swap news is neutral, the ongoing news about Elon Musk's activities (particularly with Twitter) is a significant headwind.\n\n**Important Disclaimer:**  As the AI states, this is a preliminary analysis.  A full investment decision requires much more in-depth research, including:\n\n*   **Detailed Financial Statements:**  Accessing Tesla's full financial reports is crucial.\n*   **Industry Analysis:**  Understanding the electric vehicle market, competition, and regulatory landscape.\n*   **Macroeconomic Factors:**  Interest rates, inflation, and overall economic growth.\n\nWould you like me to delve deeper into a specific aspect of this analysis, such as:\n\n*   Calculating key ratios (e.g., P/E ratio)?\n*   Analyzing the news sentiment in more detail?\n*   Comparing Tesla's performance to its competitors?",
+  "deepthinking_response": "<think>\nAlright, I've been asked to perform a deep analysis of Tesla's stock based on the provided data. Let me start by breaking down what's given.\n\nFirst, looking at the financial data, there are balance sheet metrics mentioned but no specifics like assets, liabilities, or equity listed out. That’s a bit of a gap; without these numbers, it's hard to assess the company's immediate financial health. The cash flow statement provides some key points: operating cash flow is positive at $14.68 million, which is great because it shows that Tesla is generating substantial cash from its core business operations. However, investing cash flow is negative at $8.43 million, meaning they're spending a lot on their factories and equipment. Financing cash flow is also negative but smaller, so maybe they're using debt or equity to fund these investments.\n\nMoving on to technical analysis, the simple moving average (SMA) is trending upwards, which usually indicates an uptrend in the stock price. Similarly, the exponential moving average (EMA) is also rising, which aligns with the positive trend signal. This makes me think that Tesla's stock might be doing well in the short term.\n\nNow, looking at the news sentiment analysis, there are a few articles mentioned. The first one talks about Nio swapping batteries with Tesla. That sounds like a collaboration or partnership, which is good for Tesla because it could open up new markets and supply chains. The sentiment here is neutral, so maybe investors aren't overly excited but also aren't concerned.\n\nThe second article mentions Elon Musk selling shares in Tesla. Selling stock can be bad news because it might indicate loss of confidence in the company's future. This could affect investor sentiment negatively, which isn't great for Tesla's outlook.\n\nLastly, there's an article about Musk joining Twitter (now X). This is a bit controversial and negative. While Twitter isn't directly related to Tesla's business operations, this kind of association can damage Elon Musk's image, which in turn might hurt Tesla's reputation.\n\nPutting it all together, Tesla has strong cash flow from operations but is investing heavily. The positive technical indicators suggest upward momentum, but the mixed news—neutral on battery swap and negative on Musk's activities—might be causing some concern among investors. Without more detailed financial statements or a comparison with competitors, it's hard to say if this stock is a buy or not.\n\nMaybe I should recommend comparing Tesla's performance with other EV companies like Ford or Waymo to get a better picture of where it stands in the market. Also, getting more granular financial data would help assess its true health beyond just the high-level metrics provided.\n</think>\n\n### Deep Analysis: Tesla's Stock Performance and Risks\n\n**1. Financial Health Overview**\n\n- **Cash Flow Statement**: \n  - Positive operating cash flow of $14,688.31 million indicates strong generation from core business operations.\n  - Negative investing cash flow of -$8,433.48 million suggests significant expenditures on growth initiatives such as factories and R&D.\n  - Slightly negative financing cash flow of -$1,337.83 million may indicate debt or equity raisings used for these investments.\n\n- **Lack of Financial Metrics**: Missing key metrics like assets, liabilities, and equity make it difficult to assess the company's financial leverage and overall health comprehensively.\n\n**2. Technical Indicators**\n\n- **Moving Averages**: \n  - Both SMA and EMA are trending upwards, suggesting an uptrend in stock price.\n  - Confirmation of trend strength with rising averages is positive for Tesla's short-term performance.\n\n**3. News Sentiment Analysis**\n\n- **Battery Swap with Nio**: Neutral sentiment; potential collaboration enhancing Tesla’s market position but without significant directional impact on stock.\n  \n- **Musk's Stock Sales**: Bearish; selling shares may signal investor confidence issues, impacting Tesla’s valuation and future prospects.\n\n- **Elon Musk’s Twitter Affiliation**: Bearish; negative association potentially damaging Tesla’s image and investor sentiment.\n\n**4. Overall Assessment**\n\n- **Positive Factors**: Strong operating cash flow and positive technical signals (SMA and EMA trends).\n- **Negative Factors**: Mixed news sentiment from battery swap neutral and stock sales及Musk's activities.\n- **Gap in Data**: Missing balance sheet details hinder a full financial health assessment.\n\n### Key Takeaways\n\n- **Price Action**: Positive trend indicated by rising SMAs/EMAs, suggesting potential upside but caution due to investor sentiment factors.\n- **Valuation Concerns**: Negative news may weigh on Tesla’s valuation despite positive cash flows.\n- **Market Position**: Potential strategic advantages from collaborations like the battery swap, though tempered by Musk-related risks.\n\n### Investment Considerations\n\n- **Comparative Analysis**: Comparing Tesla with competitors (e.g., Ford, Waymo) would provide context for its market position and competitive advantage.\n- **Grained Financial Data**: Accessing full financial statements is crucial for a comprehensive analysis beyond high-level metrics.\n\nIn conclusion, while Tesla shows positive signs of growth through strong cash flow and upward technical indicators, the mixed news sentiment introduces risks. Investors should conduct further due diligence to make informed decisions.",
+  "stock_data": {
+    "metadata": {
+      "ticker": "tsla",
+      "industry": "MOTOR VEHICLES & PASSENGER CAR BODIES",
+      "market_cap": "859711472000",
+      "dividend_yield": "None",
+      "pe_ratio": "131.02",
+      "eps": "2.04",
+      "beta": "2.58",
+      "52_week_high": "488.54",
+      "52_week_low": "138.8",
+      "current_price": "310.44",
+      "analyst_ratings": "323.87",
+      "price_targets": "323.87",
+      "events": "-0.709",
+      "about_tsla": "Tesla, Inc. is an American electric vehicle and clean energy company based in Palo Alto, California. Tesla's current products include electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, as well as other related products and services. In 2020, Tesla had the highest sales in the plug-in and battery electric passenger car segments, capturing 16% of the plug-in market (which includes plug-in hybrids) and 23% of the battery-electric (purely electric) market. Through its subsidiary Tesla Energy, the company develops and is a major installer of solar photovoltaic energy generation systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3 GWh of battery storage supplied in 2020.",
+      "last_updated": "2025-04-05T01:20:10.827468"
+    },
+    "historical_data": {
+      "_id": "67ed0503e0b7633f2684f9f4",
+      "ticker": "tsla",
+      "historical_data": [
+        {
+          "date": "2025-04-01",
+          "open": "249.3100",
+          "high": "277.4500",
+          "low": "243.3601",
+          "close": "268.4600",
+          "adjusted_close": "268.4600",
+          "volume": "280495847",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-28",
+          "open": "258.0750",
+          "high": "291.8500",
+          "low": "256.3300",
+          "close": "263.5500",
+          "adjusted_close": "263.5500",
+          "volume": "762077379",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-21",
+          "open": "245.0550",
+          "high": "249.5200",
+          "low": "222.2800",
+          "close": "248.7100",
+          "adjusted_close": "248.7100",
+          "volume": "567128908",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-14",
+          "open": "252.5400",
+          "high": "253.3700",
+          "low": "217.0200",
+          "close": "249.9800",
+          "adjusted_close": "249.9800",
+          "volume": "717205710",
+          "dividend_amount": "0.0000"
+        },
+        {
+          "date": "2025-03-07",
+          "open": "300.3400",
+          "high": "303.9400",
+          "low": "250.7300",
+          "close": "262.6700",
+          "adjusted_close": "262.6700",
+          "volume": "537122156",
+          "dividend_amount": "0.0000"
+        }
+      ],
+      "last_updated": "2025-04-02T09:36:03.807000"
+    },
+    "news": [
+      {
+        "article": 1,
+        "title": "Nio Said To Be In Discussions With Rivals To License Its Flagship EV Battery-Swap Tech",
+        "summary": "Nio Inc  ( NYSE: NIO )  is in talks with several automakers for licensing its battery-swapping technology, Financial Times reported on Tuesday, citing the electric vehicle maker's European president Hui Zhang.\nWhat Happened: Shanghai-based Nio is in talks with Chinese and international car groups to",
+        "pubDate": "20220405T050433",
+        "url": "https://www.benzinga.com/news/22/04/26466681/nio-said-to-be-in-discussions-with-rivals-to-license-its-flagship-ev-battery-swap-tech",
+        "thumbnail": "https://cdn.benzinga.com/files/imagecache/story_image_685x375C/images/story/2012/nio_10.jpeg",
+        "sentimentScore": -0.014468,
+        "sentimentLabel": "Neutral"
+      },
+      {
+        "article": 2,
+        "title": "For Tesla Investors, the Nightmare of Musk's Stock Sales Won't Stop",
+        "summary": "Elon Musk Sold More Tesla ...",
+        "pubDate": "20221215T030400",
+        "url": "https://www.barrons.com/articles/elon-musk-sells-tesla-stock-51671073393",
+        "thumbnail": "https://images.barrons.com/im-678524/social",
+        "sentimentScore": 0.190525,
+        "sentimentLabel": "Somewhat-Bullish"
+      },
+      {
+        "article": 3,
+        "title": "Tesla's Brand Is Suffering as Elon Musk Tries to Save Civilization",
+        "summary": "Tesla 's brand image is in the red, just like Tesla stock. How consumers see Tesla ( ticker: TSLA ) looks to be suffering as Elon Musk tries to put his stamp on Twitter.",
+        "pubDate": "20221212T150000",
+        "url": "https://www.barrons.com/articles/tesla-brand-twitter-elon-musk-51670857158",
+        "thumbnail": "https://images.barrons.com/im-683622/social",
+        "sentimentScore": -0.303015,
+        "sentimentLabel": "Somewhat-Bearish"
+      }
+    ],
+    "income_statement": {
+      "_id": "67ed0504e0b7633f2684f9f5",
+      "ticker": "tsla",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-12-31",
+          "reportedCurrency": "USD",
+          "grossProfit": "17450000000",
+          "totalRevenue": "97690000000",
+          "costOfRevenue": "80240000000",
+          "costofGoodsAndServicesSold": "335000000",
+          "operatingIncome": "7076000000",
+          "sellingGeneralAndAdministrative": "5150000000",
+          "researchAndDevelopment": "4540000000",
+          "operatingExpenses": "10374000000",
+          "investmentIncomeNet": "1569000000",
+          "netInterestIncome": "1219000000",
+          "interestIncome": "1569000000",
+          "interestExpense": "350000000",
+          "nonInterestIncome": "97763000000",
+          "otherNonOperatingIncome": "695000000",
+          "depreciation": "4120000000",
+          "depreciationAndAmortization": "409000000",
+          "incomeBeforeTax": "8928000000",
+          "incomeTaxExpense": "1837000000",
+          "interestAndDebtExpense": "350000000",
+          "netIncomeFromContinuingOperations": "7153000000",
+          "comprehensiveIncomeNetOfTax": "6564000000",
+          "ebit": "7076000000",
+          "ebitda": "7485000000",
+          "netIncome": "7091000000"
+        }
+      ]
+    },
+    "balance_sheet": {
+      "_id": "67ed0505e0b7633f2684f9f6",
+      "ticker": "tsla",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-12-31",
+          "reportedCurrency": "USD",
+          "totalAssets": "122070000000",
+          "totalCurrentAssets": "58360000000",
+          "cashAndCashEquivalentsAtCarryingValue": "16139000000",
+          "cashAndShortTermInvestments": "36563000000",
+          "inventory": "12017000000",
+          "currentNetReceivables": "4418000000",
+          "totalNonCurrentAssets": "52904000000",
+          "propertyPlantEquipment": "35836000000",
+          "accumulatedDepreciationAmortizationPPE": "15588000000",
+          "intangibleAssets": "394000000",
+          "intangibleAssetsExcludingGoodwill": "150000000",
+          "goodwill": "244000000",
+          "investments": "36563000000",
+          "longTermInvestments": "None",
+          "shortTermInvestments": "20424000000",
+          "otherCurrentAssets": "5362000000",
+          "otherNonCurrentAssets": "4215000000",
+          "totalLiabilities": "48390000000",
+          "totalCurrentLiabilities": "28821000000",
+          "currentAccountsPayable": "12474000000",
+          "deferredRevenue": "10084000000",
+          "currentDebt": "2343000000",
+          "shortTermDebt": "2230000000",
+          "totalNonCurrentLiabilities": "18637000000",
+          "capitalLeaseObligations": "222000000",
+          "longTermDebt": "5535000000",
+          "currentLongTermDebt": "2343000000",
+          "longTermDebtNoncurrent": "None",
+          "shortLongTermDebtTotal": "7765000000",
+          "otherCurrentLiabilities": "1549000000",
+          "otherNonCurrentLiabilities": "10495000000",
+          "totalShareholderEquity": "72913000000",
+          "treasuryStock": "None",
+          "retainedEarnings": "35209000000",
+          "commonStock": "3000000",
+          "commonStockSharesOutstanding": "3216000000"
+        }
+      ]
+    },
+    "cash_flow": {
+      "_id": "67ed0505e0b7633f2684f9f7",
+      "ticker": "tsla",
+      "annual_reports": [
+        {
+          "fiscalDateEnding": "2024-12-31",
+          "reportedCurrency": "USD",
+          "operatingCashflow": "14923000000",
+          "paymentsForOperatingActivities": "3079000000",
+          "proceedsFromOperatingActivities": "None",
+          "changeInOperatingLiabilities": "4090000000",
+          "changeInOperatingAssets": "3419000000",
+          "depreciationDepletionAndAmortization": "4529000000",
+          "capitalExpenditures": "11339000000",
+          "changeInReceivables": "1083000000",
+          "changeInInventory": "-937000000",
+          "profitLoss": "7153000000",
+          "cashflowFromInvestment": "-18787000000",
+          "cashflowFromFinancing": "3853000000",
+          "proceedsFromRepaymentsOfShortTermDebt": "None",
+          "paymentsForRepurchaseOfCommonStock": "None",
+          "paymentsForRepurchaseOfEquity": "None",
+          "paymentsForRepurchaseOfPreferredStock": "None",
+          "dividendPayout": "None",
+          "dividendPayoutCommonStock": "None",
+          "dividendPayoutPreferredStock": "None",
+          "proceedsFromIssuanceOfCommonStock": "None",
+          "proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet": "None",
+          "proceedsFromIssuanceOfPreferredStock": "None",
+          "proceedsFromRepurchaseOfEquity": "1241000000",
+          "proceedsFromSaleOfTreasuryStock": "None",
+          "changeInCashAndCashEquivalents": "None",
+          "changeInExchangeRate": "None",
+          "netIncome": "7091000000"
+        }
+      ]
+    },
+    "earnings": {
+      "_id": "67ed0506e0b7633f2684f9f8",
+      "ticker": "tsla",
+      "annual_reports": []
+    },
+    "sma": {
+      "2025-04-04": {
+        "SMA": "256.4820"
+      },
+      "2025-03-28": {
+        "SMA": "255.7177"
+      },
+      "2025-03-21": {
+        "SMA": "254.4570"
+      },
+      "2025-03-14": {
+        "SMA": "253.3660"
+      },
+      "2025-03-07": {
+        "SMA": "252.7362"
+      },
+      "2025-02-28": {
+        "SMA": "252.0065"
+      },
+      "2025-02-21": {
+        "SMA": "251.0817"
+      },
+      "2025-02-14": {
+        "SMA": "249.5930"
+      },
+      "2025-02-07": {
+        "SMA": "247.8713"
+      },
+      "2025-01-31": {
+        "SMA": "246.0693"
+      },
+      "2025-01-24": {
+        "SMA": "243.3900"
+      },
+      "2025-01-17": {
+        "SMA": "240.5942"
+      }
+    },
+    "ema": {
+      "2025-04-04": {
+        "EMA": "280.3875"
+      },
+      "2025-03-28": {
+        "EMA": "281.7759"
+      },
+      "2025-03-21": {
+        "EMA": "282.3937"
+      },
+      "2025-03-14": {
+        "EMA": "283.5356"
+      },
+      "2025-03-07": {
+        "EMA": "284.6730"
+      },
+      "2025-02-28": {
+        "EMA": "285.4189"
+      },
+      "2025-02-21": {
+        "EMA": "285.1626"
+      },
+      "2025-02-14": {
+        "EMA": "283.3783"
+      },
+      "2025-02-07": {
+        "EMA": "280.9219"
+      },
+      "2025-01-31": {
+        "EMA": "278.1864"
+      },
+      "2025-01-24": {
+        "EMA": "273.9012"
+      },
+      "2025-01-17": {
+        "EMA": "269.4036"
+      }
+    }
+  }
+}

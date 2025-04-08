@@ -6,3 +6,10 @@ __pycache__/
 .env
 dist/
 build/
+node_modules
+alpaca
+lumibot
+mock_data
+services/crypto_services
+services/economic_services
+Output_json

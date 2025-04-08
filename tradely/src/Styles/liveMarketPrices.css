@@ -1,0 +1,82 @@
+.live-market-prices {
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 800px;
+  background: linear-gradient(145deg, #1e1e2f, #2a2a3d);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.live-market-prices h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1e1e2f;
+  color: #ffffff;
+  padding: 15px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.item-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.item-container h3 {
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #0378fd;
+}
+
+.price-info {
+  text-align: left;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.price-info p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+.price-change {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: right;
+}
+
+.price-change.positive {
+  color: #28a745; 
+}
+
+.price-change.negative {
+  color: #dc3545; 
+}
+
+.arrow {
+  font-size: 1.2em;
+  margin-left: 5px;
+}
+
+.arrow.up {
+  color: #28a745; 
+}
+
+.arrow.down {
+  color: #dc3545; 
+}
