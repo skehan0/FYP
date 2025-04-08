@@ -1,4 +1,4 @@
-/* ====== Global Styles ====== */
+/* Global Styles */
 body {
   background: linear-gradient(145deg, #0f0f1a, #1a1a2a);
   color: #ffffff;
@@ -8,7 +8,7 @@ body {
   padding: 20px;
 }
 
-/* ====== Hero Section ====== */
+/* Hero Section */
 .hero-section {
   text-align: center;
   padding: 40px 20px;
@@ -25,6 +25,7 @@ body {
   font-weight: 800;
   background: linear-gradient(45deg, #00D1FF, #007BFF);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
   letter-spacing: -0.5px;
@@ -38,7 +39,7 @@ body {
   line-height: 1.8;
 }
 
-/* ====== Logo Styles ====== */
+/* Logo Styles */
 .logo {
   width: 420px;
   height: auto;
@@ -55,7 +56,7 @@ body {
   box-shadow: 0 0 45px rgba(0, 209, 255, 0.4);
 }
 
-/* ====== Form Styles ====== */
+/* Form Styles */
 form {
   display: flex;
   flex-wrap: wrap;
@@ -130,7 +131,7 @@ form button:hover::after {
   left: 150%;
 }
 
-/* ====== Analysis Section ====== */
+/* Analysis Section */
 .stock-analysis-section {
   background: rgba(26, 26, 42, 0.9);
   border-radius: 12px;
@@ -140,7 +141,7 @@ form button:hover::after {
   border: 1px solid rgba(0, 209, 255, 0.1);
 }
 
-/* ====== Q&A Section ====== */
+/* Q&A Section */
 .question-section {
   background: rgba(30, 30, 47, 0.8);
   border-radius: 12px;
@@ -182,7 +183,7 @@ form button:hover::after {
   margin-top: 20px;
 }
 
-/* ====== Responsive Design ====== */
+/* Responsive Design */
 @media (max-width: 768px) {
   .hero-section h2 {
     font-size: 2rem;

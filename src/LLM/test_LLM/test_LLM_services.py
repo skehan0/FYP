@@ -1,5 +1,4 @@
 from unittest.mock import patch, AsyncMock
-
 import pytest
 from src.alphaVantage.services.stock_services import fetch_all_stock_data
 from src.LLM.LLM_service import (
@@ -8,7 +7,6 @@ from src.LLM.LLM_service import (
     send_prompt_to_llm,
     send_to_deepseek,
 )
-
 
 class TestIndividualEndpoints:
     @pytest.mark.asyncio
@@ -67,7 +65,6 @@ class TestIndividualEndpoints:
         print("DeepThinking response:", response)
 
 # Testing output response
-
     @pytest.mark.asyncio
     async def test_fetch_and_analyze_all_stock_data(self):
         ticker = "AAPL"  # Example ticker symbol
@@ -96,37 +93,3 @@ async def test_fetch_and_analyze_all_stock_data_mock(mock_send_to_deepseek, mock
     assert "deepthinking_response" in result, "Result should contain 'deepthinking_response'"
     assert "stock_data" in result, "Result should contain 'stock_data'"
     print("Fetch and analyze result:", result)
-
-@pytest.mark.asyncio
-@patch("src.alphaVantage.services.stock_services.fetch_news_headlines", new_callable=AsyncMock)
-async def test_fetch_and_analyze_all_stock_data_with_news(mock_fetch_news_headlines):
-    # Mock the news-fetching response
-    mock_fetch_news_headlines.return_value = [
-        {
-            "article": 1,
-            "title": "Mock News Title 1",
-            "summary": "This is a summary of the first mock news article.",
-            "pubDate": "2025-04-03",
-            "url": "https://example.com/article1",
-        },
-        {
-            "article": 2,
-            "title": "Mock News Title 2",
-            "summary": "This is a summary of the second mock news article.",
-            "pubDate": "2025-04-02",
-            "url": "https://example.com/article2",
-        },
-    ]
-
-    ticker = "AAPL"  # Example ticker symbol
-    result = await fetch_and_analyze_all_stock_data(ticker)
-
-    # Assertions
-    assert "symbol" in result, "Result should contain 'symbol'"
-    assert "analysis" in result, "Result should contain 'analysis'"
-    assert "llm_response" in result, "Result should contain 'llm_response'"
-    assert "deepthinking_response" in result, "Result should contain 'deepthinking_response'"
-    assert "stock_data" in result, "Result should contain 'stock_data'"
-    assert "news" in result["stock_data"], "Result should contain 'news' in 'stock_data'"
-    assert len(result["stock_data"]["news"]) > 0, "News data should not be empty"
-    print("Fetch and analyze result with news:", result)

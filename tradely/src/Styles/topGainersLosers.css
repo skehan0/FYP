@@ -1,4 +1,4 @@
-/* ====== Top Gainers & Losers Section ====== */
+/* Top Gainers & Losers Section */
 .top-gainers-losers {
     margin: 60px auto;
     padding: 40px;
@@ -54,7 +54,7 @@
     background: linear-gradient(90deg, transparent, #00D1FF, transparent);
   }
   
-  /* ====== Tables Container ====== */
+  /* Tables Container */
   .tables-container {
     display: flex;
     justify-content: space-between;
@@ -69,7 +69,7 @@
     }
   }
   
-  /* ====== Table Sections ====== */
+  /* Table Sections */
   .table-section {
     flex: 1;
     border-radius: 16px;
@@ -85,7 +85,7 @@
     box-shadow: 0 12px 28px rgba(0, 209, 255, 0.2);
   }
   
-  /* ====== Tables ====== */
+  /* Tables */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -110,7 +110,7 @@
     transition: all 0.2s ease;
   }
   
-  /* ====== Gainers Table ====== */
+  /* Gainers Table */
   .gainers-table th {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(33, 136, 56, 0.8));
     color: white;
@@ -130,7 +130,7 @@
     transform: none;
   }
   
-  /* ====== Losers Table ====== */
+  /* Losers Table */
   .losers-table th {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.8), rgba(192, 35, 51, 0.8));
     color: white;
@@ -150,7 +150,7 @@
     transform: none;
   }
   
-  /* ====== Table Row Animation ====== */
+  /* Table Row Animation */
   table tr {
     transition: all 0.3s ease;
   }
@@ -163,7 +163,7 @@
     transform: translateX(5px);
   }
   
-  /* ====== Stock Input ====== */
+  /* Stock Input */
   .stock-input-container {
     display: flex;
     justify-content: center;
@@ -195,7 +195,7 @@
     transform: scale(1.02);
   }
   
-  /* ====== Responsive Design ====== */
+  /* Responsive Design */
   @media (max-width: 768px) {
     .top-gainers-losers {
       padding: 30px 20px;

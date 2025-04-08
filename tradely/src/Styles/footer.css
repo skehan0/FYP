@@ -1,4 +1,4 @@
-/* ====== Footer Styles ====== */
+/* Footer Styles */
 .footer {
   background: linear-gradient(145deg, #0f0f1a, #1a1a2a);
   color: #ffffff;
@@ -103,7 +103,7 @@
   color: #6b7985;
 }
 
-/* ====== Responsive Design ====== */
+/* Responsive Design */
 @media (max-width: 768px) {
   .footer {
     padding: 30px 15px;

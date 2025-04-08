@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/analysisSection.css';
-import { saveAsTXT, saveAsJSON, saveAsCSV, saveAsPDF } from '../Utils/fileUtils'; // Import the utility functions
+import { saveAsTXT, saveAsJSON, saveAsCSV, saveAsPDF } from '../Utils/fileUtils';
 
 const AnalysisSection = ({ analysis, isLoading, error }) => {
   const [visibleLines, setVisibleLines] = useState([]);

@@ -43,7 +43,13 @@ logger = logging.getLogger(__name__)
 
 # Helper function for API requests with retries
 async def make_request(url: str, retries: int = 3, backoff_factor: float = 0.5):
-    """Handles API requests and rate limit errors with retries."""
+    """
+    Handles API requests and rate limit errors with retries
+        429 == rate limit exceeded
+        200 == success
+        Not 429 || 200 == HTTPException
+        500 == retry attempts fail
+    """
     for attempt in range(retries):
         response = requests.get(url)
         if response.status_code == 429:
