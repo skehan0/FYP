@@ -11,7 +11,7 @@ import { fetchLiveMarketPrices, fetchLiveNewsHeadlines, fetchTopGainersLosers, a
 import AnalysisSection from './Components/AnalysisSection';
 import ChartSection from './Components/ChartSection';
 import QuestionSection from './Components/QuestionSection';
-import logo from './Assets/Tradeskee_logo_transparent.png'; 
+import logo from './Assets/Tradeskee_logo_transparent.png';
 
 
 function App() {

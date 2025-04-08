@@ -17,6 +17,7 @@ from src.alphaVantage.services.stock_services import (
 from src.LLM.LLM_service import fetch_and_analyze_all_stock_data, process_question_with_llm
 from src.mongoDB.database import database
 from pydantic import BaseModel
+from src.alphaVantage.test.mock_live_news import mock_news_data
 
 router = APIRouter()
 
@@ -51,17 +52,20 @@ async def get_historical_data(ticker: str):
     return await fetch_historical_data(ticker)
 
 @router.get("/news/{ticker}")
-async def get_news_headlines(ticker: str, limit: int = Query(8, description="Number of news items to return")):
+async def get_news_headlines(ticker: str, limit: int = Query(5, description="Number of news items to return")):
     return await fetch_news_headlines(ticker, limit)
-
-# @router.get("/live-news-headlines")
-# async def get_live_news_headlines(limit: int = Query(3, description="Number of news items to return")):
-#     return await fetch_live_news_headlines(limit)
 
 @router.get("/live-news-headlines")
 async def get_live_news_headlines(limit: int = Query(3, description="Number of news items to return")):
     news = await fetch_live_news_headlines(limit)
     return {"feed": news}
+
+# Mock News Return
+# @router.get("/live-news-headlines")
+# async def get_live_news_headlines(limit: int = Query(3, description="Number of news items to return")):
+#     news = await fetch_live_news_headlines(limit)
+#     # return {"feed": news}
+#     return mock_news_data["feed"]["news"][:limit]
 
 # Financial Statement
 @router.get("/income/{ticker}")

@@ -94,8 +94,22 @@
   
   table th, table td {
     text-align: center;
-    padding: 15px;
+    padding: 12px;
     border-bottom: 1px solid rgba(0, 209, 255, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    table th, table td {
+      padding: 10px 6px; /* Further reduce padding for smaller screens */
+      font-size: 0.85rem; /* Smaller font size for mobile */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    table th, table td {
+      padding: 8px 4px; /* Minimal padding for very small screens */
+      font-size: 0.8rem; /* Smallest font size */
+    }
   }
   
   table th {
