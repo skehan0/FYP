@@ -45,7 +45,6 @@ mockLiveMarketData = {
         "events": "0.201",
         "about": "Alphabet Inc. is an American multinational conglomerate headquartered in Mountain View, California. It was created through a corporate restructuring of Google on October 2, 2015, and became the parent company of Google and several former Google subsidiaries. Alphabet is the world's third-largest technology company by revenue and one of the world's most valuable companies."
     }
-    # Add more mock data for other symbols as needed
 }
 
 # Set up the base URL for the local Ollama API

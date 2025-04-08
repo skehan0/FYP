@@ -43,7 +43,13 @@ logger = logging.getLogger(__name__)
 
 # Helper function for API requests with retries
 async def make_request(url: str, retries: int = 3, backoff_factor: float = 0.5):
-    """Handles API requests and rate limit errors with retries."""
+    """
+    Handles API requests and rate limit errors with retries
+        429 == rate limit exceeded
+        200 == success
+        Not 429 || 200 == HTTPException
+        500 == retry attempts fail
+    """
     for attempt in range(retries):
         response = requests.get(url)
         if response.status_code == 429:
@@ -64,44 +70,44 @@ async def fetch_all_stock_data(ticker: str):
         # Step 1: Fetch metadata
         metadata = await fetch_stock_metadata(ticker)
 
-        # # Step 2: Fetch historical data
-        # historical_data = await fetch_historical_data(ticker)
-        #
-        # # # Step 3: Fetch news headlines
-        # # news = await fetch_news_headlines(ticker)
-        #
-        # # Step 4: Fetch income statement
-        # income_statement = await fetch_income_statement(ticker)
-        #
-        # # Step 5: Fetch balance sheet
-        # balance_sheet = await fetch_balance_sheet(ticker)
+        # Step 2: Fetch historical data
+        historical_data = await fetch_historical_data(ticker)
+        
+        # Step 3: Fetch news headlines
+        news = await fetch_news_headlines(ticker)
+        
+        # Step 4: Fetch income statement
+        income_statement = await fetch_income_statement(ticker)
+        
+        # Step 5: Fetch balance sheet
+        balance_sheet = await fetch_balance_sheet(ticker)
 
-        # # Step 6: Fetch cash flow
-        # cash_flow = await fetch_cash_flow(ticker)
+        # Step 6: Fetch cash flow
+        cash_flow = await fetch_cash_flow(ticker)
 
-        # # Step 7: Fetch earnings
-        # earnings = await fetch_earnings(ticker)
+        # Step 7: Fetch earnings
+        earnings = await fetch_earnings(ticker)
 
-        # # Step 8: Fetch SMA (Simple Moving Average)
-        # sma = await fetch_SMA(ticker)
+        # Step 8: Fetch SMA (Simple Moving Average)
+        sma = await fetch_SMA(ticker)
 
-        # # Step 9: Fetch EMA (Exponential Moving Average)
-        # ema = await fetch_EMA(ticker)
+        # Step 9: Fetch EMA (Exponential Moving Average)
+        ema = await fetch_EMA(ticker)
 
-        # # Step 10: Fetch live market prices
-        # live_market_prices = await fetch_live_market_prices()
+        # Step 10: Fetch live market prices
+        live_market_prices = await fetch_live_market_prices()
 
         # Step 11: Consolidate all data into a single dictionary
         consolidated_data = {
             "metadata": metadata,
-            # "historical_data": historical_data,
-            # "news": news,
-            # "income_statement": income_statement,
-            # "balance_sheet": balance_sheet,
-            # "cash_flow": cash_flow,
-            # "earnings": earnings,
-            # "sma": sma,
-            # "ema": ema,
+            "historical_data": historical_data,
+            "news": news,
+            "income_statement": income_statement,
+            "balance_sheet": balance_sheet,
+            "cash_flow": cash_flow,
+            "earnings": earnings,
+            "sma": sma,
+            "ema": ema,
         }
 
         return consolidated_data
@@ -113,6 +119,9 @@ async def fetch_all_stock_data(ticker: str):
 
 # Specific Data Calls
 async def fetch_stock_metadata(ticker: str):
+    """
+    Fetching stock metadata of a specific ticker input symbol
+    """
     if ticker in metadata_cache:
         return metadata_cache[ticker]
     
@@ -212,11 +221,47 @@ async def fetch_historical_data(ticker: str, limit: int = 5):
 
 # Fetch news headlines
 async def fetch_news_headlines(ticker: str, limit: int = 3):
+    """
+    Stock news for specific ticker input
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in news_cache:
         return news_cache[cache_key]
 
     url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers={ticker}&apikey={API_KEY}&sort=RELEVANCE"
+
+    data = await make_request(url)
+
+    news_data = data.get("feed", [])
+
+    cleaned_news = [
+        {
+            "article": index + 1,
+            "title": item.get("title", "N/A"),
+            "summary": item.get("summary", "N/A"),
+            "pubDate": item.get("time_published", "N/A"),
+            "url": item.get("url", "N/A"),
+            "thumbnail": item.get("banner_image", "N/A"),
+            "sentimentScore": item.get("overall_sentiment_score", "N/A"),
+            "sentimentLabel": item.get("overall_sentiment_label", "N/A"),
+        }
+        for index, item in enumerate(news_data[:limit])
+    ]
+
+    # Cache the result
+    news_cache[cache_key] = cleaned_news
+    return cleaned_news
+    
+# Fetch fetchLiveNewsHeadlines
+async def fetch_live_news_headlines(limit: int = 3):
+    """
+    Fetching live market news for the frontend, no specific stock ticker
+    """
+    cache_key = f"{limit}"
+    if cache_key in news_cache:
+        return news_cache[cache_key]
+
+    url = f"https://www.alphavantage.co/query?function=NEWS_SENTIMENT&apikey={API_KEY}"
     data = await make_request(url)
     news_data = data.get("feed", [])
 
@@ -234,7 +279,7 @@ async def fetch_news_headlines(ticker: str, limit: int = 3):
         for index, item in enumerate(news_data[:limit])
     ]
 
-    result = {"company": ticker, "news": cleaned_news}
+    result = {"news": cleaned_news}
     news_cache[cache_key] = result
     return result
 
@@ -380,6 +425,14 @@ async def fetch_earnings(ticker: str, limit: int = 1):
 
 # Fetch SMA
 async def fetch_SMA(ticker: str, interval: str = "weekly", time_period: int = 60, series_type: str = "close", limit: int = 12):
+    """
+    SMA (Simple Moving Average) is represented by a line on a stock chart that follows that previous n days closing price
+        - When a stock goes below the line, it represents a bearish market (downward trend)
+        - When a stock goes above the line, it represents a bullish market (upward trend)
+        Trading Technique:
+            - Buy when a goes above line
+            - Sell when it goes below the line
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in sma_cache:
         return sma_cache[cache_key]
@@ -398,6 +451,16 @@ async def fetch_SMA(ticker: str, interval: str = "weekly", time_period: int = 60
 
 # Fetch EMA
 async def fetch_EMA(ticker: str, interval: str = "weekly", time_period: int = 60, series_type: str = "close", limit: int = 12):
+    """
+    EMA (Exponential Moving Average) is represented by a line on a stock chart that follows that previous n days closing price
+        The difference here compared to SMA is that the EMA places a bigger weight on more recent days,
+            and less weight on days further away
+        - When a stock goes below the line, it represents a bearish market (downward trend)
+        - When a stock goes above the line, it represents a bullish market (upward trend)
+        Trading Technique:
+            - Buy when a goes above line
+            - Sell when it goes below the line
+    """
     cache_key = f"{ticker}_{limit}"
     if cache_key in ema_cache:
         return ema_cache[cache_key]
@@ -419,6 +482,9 @@ Fetching live market data -----------------------
 """
 
 async def fetch_live_market_prices():
+    """
+    Fetching live market prices for specified stocks to display in the frontend
+    """
     global market_data_cache
     current_time = time.time()
     

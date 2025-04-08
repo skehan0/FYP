@@ -1,0 +1,164 @@
+/* Chart Section */
+.chart-section {
+  margin: 60px auto;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(30, 30, 47, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 209, 255, 0.15);
+  box-shadow: 0 16px 32px rgba(0, 209, 255, 0.1);
+  max-width: 900px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 209, 255, 0.15);
+}
+
+.chart-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00D1FF, transparent);
+}
+
+.chart-section h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #00D1FF, #007BFF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.chart-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  width: 30%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00D1FF, transparent);
+}
+
+/* Chart Container */
+.chart-container {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(26, 26, 42, 0.5);
+  border: 1px solid rgba(0, 209, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  border-color: rgba(0, 209, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 209, 255, 0.1);
+}
+
+/* Timeframe Selector */
+.timeframe-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.timeframe-btn {
+  padding: 8px 16px;
+  background: rgba(42, 42, 59, 0.6);
+  color: #c2e9fb;
+  border: 1px solid rgba(0, 209, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.timeframe-btn:hover {
+  background: rgba(0, 209, 255, 0.2);
+  color: #ffffff;
+}
+
+.timeframe-btn.active {
+  background: linear-gradient(135deg, #007BFF, #00D1FF);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.5);
+}
+
+/* Chart Loading State */
+.chart-loading {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #00D1FF;
+}
+
+.chart-loading-spinner {
+  border: 4px solid rgba(0, 209, 255, 0.1);
+  border-top: 4px solid #00D1FF;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1.2s linear infinite;
+  margin-bottom: 20px;
+}
+
+/* Chart Error State */
+.chart-error {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #FF6B7D;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 12px;
+  border: 1px dashed rgba(220, 53, 69, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart-section {
+    padding: 30px 20px;
+    margin: 40px 15px;
+  }
+  
+  .chart-section h3 {
+    font-size: 1.5rem;
+  }
+  
+  .timeframe-selector {
+    gap: 8px;
+  }
+  
+  .timeframe-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-section h3 {
+    font-size: 1.3rem;
+  }
+  
+  .chart-container {
+    padding: 15px 10px;
+  }
+}

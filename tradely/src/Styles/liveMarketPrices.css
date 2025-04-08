@@ -13,7 +13,7 @@
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
-  color: #00d1ff;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -40,7 +40,7 @@
   margin: 0;
   font-size: 1.4em;
   font-weight: bold;
-  color: #00d1ff;
+  color: #0378fd;
 }
 
 .price-info {
@@ -61,11 +61,11 @@
 }
 
 .price-change.positive {
-  color: #28a745; /* Green for positive change */
+  color: #28a745; 
 }
 
 .price-change.negative {
-  color: #dc3545; /* Red for negative change */
+  color: #dc3545; 
 }
 
 .arrow {
@@ -74,9 +74,9 @@
 }
 
 .arrow.up {
-  color: #28a745; /* Green arrow for positive change */
+  color: #28a745; 
 }
 
 .arrow.down {
-  color: #dc3545; /* Red arrow for negative change */
+  color: #dc3545; 
 }

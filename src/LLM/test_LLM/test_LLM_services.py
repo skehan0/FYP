@@ -1,5 +1,4 @@
 from unittest.mock import patch, AsyncMock
-
 import pytest
 from src.alphaVantage.services.stock_services import fetch_all_stock_data
 from src.LLM.LLM_service import (
@@ -8,7 +7,6 @@ from src.LLM.LLM_service import (
     send_prompt_to_llm,
     send_to_deepseek,
 )
-
 
 class TestIndividualEndpoints:
     @pytest.mark.asyncio
@@ -77,7 +75,7 @@ class TestIndividualEndpoints:
         assert "deepthinking_response" in result, "Result should contain 'deepthinking_response'"
         assert "stock_data" in result, "Result should contain 'stock_data'"
         print("Fetch and analyze result:", result)
-        
+
 # Mocking both LLM response to check if being passed
 @pytest.mark.asyncio
 @patch("src.LLM.LLM_service.send_prompt_to_llm", new_callable=AsyncMock)
