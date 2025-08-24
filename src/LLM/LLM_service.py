@@ -21,40 +21,44 @@ db = client.tradely
 
 def perform_analysis(stock_data: dict) -> str:
     """
-    Perform analysis on the stock data.
+    Perform analysis on the stock data and return a formatted prompt.
     """
+    
+    # Define the sections to analyze
     sections = [
-        "Metadata",
-        "Historical Data", "Income Statement", "Balance Sheet", "Cash Flow", "Earnings",
-        "SMA", "EMA",
-        "News"
+        "Price Data",
+        "Technical Indicators", 
+        "Market Sentiment",
+        "Financial Metrics",
+        "Risk Factors"
     ]
-    analysis = """
-        goal = Conduct a concise financial analysis of {ticker} based on recent market trends, historical data, and technical indicators.
+    
+    analysis = f"""
+    Goal: Conduct a concise financial analysis of {stock_data.get('metadata', {}).get('symbol', 'UNKNOWN')} based on recent market trends, historical data, and technical indicators.
 
-        Return Format:
-            - Summary: A brief overview of the stock’s current trend.
-            - Key Financial Indicators: Price movements, moving averages (SMA/EMA).
-            - Market Sentiment: A summary of recent news and sentiment trends.
-            - Risk Factors: Highlight any volatility, earnings reports, or macroeconomic risks.
+    Return Format:
+        - Summary: A brief overview of the stock's current trend.
+        - Key Financial Indicators: Price movements, moving averages (SMA/EMA).
+        - Market Sentiment: A summary of recent news and sentiment trends.
+        - Risk Factors: Highlight any volatility, earnings reports, or macroeconomic risks.
 
-        Warnings:
-            - Do not provide direct financial advice.
-            - Ensure the response is fact-based and avoids speculation.
-            - Keep the response concise, focusing on actionable insights without exceeding 2000 words.
+    Warnings:
+        - Do not provide direct financial advice.
+        - Ensure the response is fact-based and avoids speculation.
+        - Keep the response concise, focusing on actionable insights without exceeding 2000 words.
 
-        Context:
-            - Stock Data: {stock_data}
-            - Technical Indicators: Provide insights based on available technical data.
-            - Sentiment Analysis: Summarize the sentiment around recent news articles.
-            - Macroeconomic Trends: Highlight broader economic influences impacting this stock.
+    Context:
+        - Stock Data: {stock_data}
+        - Technical Indicators: Provide insights based on available technical data.
+        - Sentiment Analysis: Summarize the sentiment around recent news articles.
+        - Macroeconomic Trends: Highlight broader economic influences impacting this stock.
     """
 
     for section in sections:
-        data = stock_data.get(section.lower().replace(
-            " ", "_"), "No data available")
-        analysis += f"{section}: {data}\n"
-    analysis += "\nThis is a preliminary Artificail Intelligence (AI) analysis. Please consult a financial advisor for investment decisions."
+        data = stock_data.get(section.lower().replace(" ", "_"), "No data available")
+        analysis += f"\n{section}: {data}"
+    
+    analysis += "\nThis is a preliminary Artificial Intelligence (AI) analysis. Please consult a financial advisor for investment decisions."
     return analysis
 
 
